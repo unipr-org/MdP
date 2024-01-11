@@ -38,3 +38,11 @@ Vi ricordo che gli appunti presenti in questa cartella sono forniti a titolo inf
 Buono studio!
 
 > Altri appunti: _[merendamattia.com/uni](https://www.merendamattia.com/uni.html)_
+
+---
+
+## Contributors
+<a href="https://github.com/unipr-org/MdP/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=unipr-org/MdP" />
+</a>
+Made with [contrib.rocks](https://contrib.rocks).
