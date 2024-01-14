@@ -8,17 +8,6 @@ Guida directory:
 └── vecchi_esami: vecchie prove per esercitarsi 
 ```
 
-## Contributi
-<a href="https://paypal.me/manueldiagostino?country.x=IT&locale.x=it_IT" target="_blank">
-    <img alt="Static Badge" src="https://img.shields.io/badge/%40manueldiagostino-3558C1?style=flat&logo=paypal&link=https%3A%2F%2Fpaypal.me%2Fmanueldiagostino%3Fcountry.x%3DIT%26locale.x%3Dit_IT">
-</a>
-<a href="https://paypal.me/SimoColli?country.x=IT&locale.x=it_IT" target="_blank">
-    <img alt="Static Badge" src="https://img.shields.io/badge/%40simonecolli-3558C1?style=flat&logo=paypal&link=https://paypal.me/SimoColli?country.x=IT&locale.x=it_IT">
-</a>
-<a href="https://paypal.me/merendasaveriomattia?country.x=IT&locale.x=it_IT" target="_blank">
-    <img alt="Static Badge" src="https://img.shields.io/badge/%40merendamattia-3558C1?style=flat&logo=paypal&link=https%3A%2F%2Fpaypal.me%merendasaveriomattia%3Fcountry.x%3DIT%26locale.x%3Dit_IT">
-</a>
-
 # Appunti di MdP - Metodologie di Programmazione
 
 Benvenuti nella repository degli appunti presi a lezione della materia "MdP - Metodologie di Programmazione". In questa cartella troverete una raccolta di appunti e materiali utili per lo studio di questa disciplina.
@@ -37,4 +26,7 @@ Vi ricordo che gli appunti presenti in questa cartella sono forniti a titolo inf
 
 Buono studio!
 
-> Altri appunti: _[merendamattia.com/uni](https://www.merendamattia.com/uni.html)_
+## Contributors
+<a href="https://github.com/unipr-org/MdP/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=unipr-org/IdS" />
+</a>
