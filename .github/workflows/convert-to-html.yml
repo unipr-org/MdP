@@ -74,22 +74,23 @@ jobs:
             sed -i '/<\/head>/i <script> MathJax = { tex: { inlineMath: [["$", "$"]] } }; </script>' $html_file
             sed -i '/<\/head>/i <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>' $html_file
           done
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: docs-html
-          path: artifacts
-
-      - name: Commit and Push artifacts
+    
+      - name: Create a new branch and commit changes
         run: |
           git pull
+          git checkout -b update-files
           git add artifacts/
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
             git commit -m "Add generated artifacts [HTML]"
-            git push
+            git push origin update-files
           fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+      - name: Create pull request
+        run: |
+          gh pr create --title "Added generated artifacts [HTML]" --body "Automated update via GitHub Actions" --base main --head update-files
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
