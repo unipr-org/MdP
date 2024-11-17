@@ -110,4 +110,3 @@ In generale, le funzioni `inline` dovrebbero essere utilizzate con cautela, e do
 _[Torna all'indice](#definizioni)_
 
 ---
-
