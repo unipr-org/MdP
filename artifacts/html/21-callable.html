@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+		<title>21-callable</title>
+		<style>
+			/* PDF Specific */
+
+@media print {
+  body {
+    min-width: initial;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+}
+
+/* General */
+
+.octicon {
+  display: inline-block;
+  fill: currentColor;
+  vertical-align: text-bottom;
+}
+
+.anchor {
+  float: left;
+  line-height: 1;
+  margin-left: -20px;
+  padding-right: 4px;
+}
+
+.anchor:focus {
+  outline: none;
+}
+
+h1 .octicon-link,
+h2 .octicon-link,
+h3 .octicon-link,
+h4 .octicon-link,
+h5 .octicon-link,
+h6 .octicon-link {
+  color: #1b1f23;
+  vertical-align: middle;
+  visibility: hidden;
+}
+
+h1:hover .anchor,
+h2:hover .anchor,
+h3:hover .anchor,
+h4:hover .anchor,
+h5:hover .anchor,
+h6:hover .anchor {
+  text-decoration: none;
+}
+
+h1:hover .anchor .octicon-link,
+h2:hover .anchor .octicon-link,
+h3:hover .anchor .octicon-link,
+h4:hover .anchor .octicon-link,
+h5:hover .anchor .octicon-link,
+h6:hover .anchor .octicon-link {
+  visibility: visible;
+}
+
+h1:hover .anchor .octicon-link:before,
+h2:hover .anchor .octicon-link:before,
+h3:hover .anchor .octicon-link:before,
+h4:hover .anchor .octicon-link:before,
+h5:hover .anchor .octicon-link:before,
+h6:hover .anchor .octicon-link:before {
+  width: 16px;
+  height: 16px;
+  content: ' ';
+  display: inline-block;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' version='1.1' width='16' height='16' aria-hidden='true'%3E%3Cpath fill-rule='evenodd' d='M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z'%3E%3C/path%3E%3C/svg%3E");
+}
+
+body {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -webkit-print-color-adjust: exact;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
+    sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #24292e;
+  word-wrap: break-word;
+  box-sizing: border-box;
+  min-width: 200px;
+  max-width: 980px;
+  margin: 1rem auto;
+}
+
+details {
+  display: block;
+}
+
+summary {
+  display: list-item;
+}
+
+a {
+  background-color: initial;
+}
+
+a:active,
+a:hover {
+  outline-width: 0;
+}
+
+strong {
+  font-weight: inherit;
+  font-weight: bolder;
+}
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+img {
+  border-style: none;
+}
+
+code,
+kbd,
+pre {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+hr {
+  box-sizing: initial;
+  height: 0;
+  overflow: visible;
+}
+
+input {
+  font: inherit;
+  margin: 0;
+}
+
+input {
+  overflow: visible;
+}
+
+[type='checkbox'] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+input {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+a {
+  color: #0366d6;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+strong {
+  font-weight: 600;
+}
+
+hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #dfe2e5;
+}
+
+hr:after,
+hr:before {
+  display: table;
+  content: '';
+}
+
+hr:after {
+  clear: both;
+}
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+td,
+th {
+  padding: 0;
+}
+
+details summary {
+  cursor: pointer;
+}
+
+kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #d1d5da;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+h1 {
+  font-size: 32px;
+}
+
+h1,
+h2 {
+  font-weight: 600;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+h3 {
+  font-size: 20px;
+}
+
+h3,
+h4 {
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h5,
+h6 {
+  font-weight: 600;
+}
+
+h6 {
+  font-size: 12px;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+blockquote {
+  margin: 0;
+}
+
+ol,
+ul {
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+ol ol,
+ul ol {
+  list-style-type: lower-roman;
+}
+
+ol ol ol,
+ol ul ol,
+ul ol ol,
+ul ul ol {
+  list-style-type: lower-alpha;
+}
+
+dd {
+  margin-left: 0;
+}
+
+code,
+pre {
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 12px;
+}
+
+pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+:checked + .radio-label {
+  position: relative;
+  z-index: 1;
+  border-color: #0366d6;
+}
+
+.border {
+  border: 1px solid #e1e4e8 !important;
+}
+
+.border-0 {
+  border: 0 !important;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #e1e4e8 !important;
+}
+
+.rounded-1 {
+  border-radius: 3px !important;
+}
+
+.bg-white {
+  background-color: #fff !important;
+}
+
+.bg-gray-light {
+  background-color: #fafbfc !important;
+}
+
+.text-gray-light {
+  color: #6a737d !important;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+
+.my-2 {
+  margin-top: 8px !important;
+  margin-bottom: 8px !important;
+}
+
+.pl-0 {
+  padding-left: 0 !important;
+}
+
+.py-0 {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.pl-1 {
+  padding-left: 4px !important;
+}
+
+.pl-2 {
+  padding-left: 8px !important;
+}
+
+.py-2 {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+.pl-3,
+.px-3 {
+  padding-left: 16px !important;
+}
+
+.px-3 {
+  padding-right: 16px !important;
+}
+
+.pl-4 {
+  padding-left: 24px !important;
+}
+
+.pl-5 {
+  padding-left: 32px !important;
+}
+
+.pl-6 {
+  padding-left: 40px !important;
+}
+
+.f6 {
+  font-size: 12px !important;
+}
+
+.lh-condensed {
+  line-height: 1.25 !important;
+}
+
+.text-bold {
+  font-weight: 600 !important;
+}
+
+.pl-c {
+  color: #6a737d;
+}
+
+.pl-c1,
+.pl-s .pl-v {
+  color: #005cc5;
+}
+
+.pl-e,
+.pl-en {
+  color: #6f42c1;
+}
+
+.pl-s .pl-s1,
+.pl-smi {
+  color: #24292e;
+}
+
+.pl-ent {
+  color: #22863a;
+}
+
+.pl-k {
+  color: #d73a49;
+}
+
+.pl-pds,
+.pl-s,
+.pl-s .pl-pse .pl-s1,
+.pl-sr,
+.pl-sr .pl-cce,
+.pl-sr .pl-sra,
+.pl-sr .pl-sre {
+  color: #032f62;
+}
+
+.pl-smw,
+.pl-v {
+  color: #e36209;
+}
+
+.pl-bu {
+  color: #b31d28;
+}
+
+.pl-ii {
+  color: #fafbfc;
+  background-color: #b31d28;
+}
+
+.pl-c2 {
+  color: #fafbfc;
+  background-color: #d73a49;
+}
+
+.pl-c2:before {
+  content: '^M';
+}
+
+.pl-sr .pl-cce {
+  font-weight: 700;
+  color: #22863a;
+}
+
+.pl-ml {
+  color: #735c0f;
+}
+
+.pl-mh,
+.pl-mh .pl-en,
+.pl-ms {
+  font-weight: 700;
+  color: #005cc5;
+}
+
+.pl-mi {
+  font-style: italic;
+  color: #24292e;
+}
+
+.pl-mb {
+  font-weight: 700;
+  color: #24292e;
+}
+
+.pl-md {
+  color: #b31d28;
+  background-color: #ffeef0;
+}
+
+.pl-mi1 {
+  color: #22863a;
+  background-color: #f0fff4;
+}
+
+.pl-mc {
+  color: #e36209;
+  background-color: #ffebda;
+}
+
+.pl-mi2 {
+  color: #f6f8fa;
+  background-color: #005cc5;
+}
+
+.pl-mdr {
+  font-weight: 700;
+  color: #6f42c1;
+}
+
+.pl-ba {
+  color: #586069;
+}
+
+.pl-sg {
+  color: #959da5;
+}
+
+.pl-corl {
+  text-decoration: underline;
+  color: #032f62;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+
+.my-2 {
+  margin-bottom: 8px !important;
+}
+
+.my-2 {
+  margin-top: 8px !important;
+}
+
+.pl-0 {
+  padding-left: 0 !important;
+}
+
+.py-0 {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.pl-1 {
+  padding-left: 4px !important;
+}
+
+.pl-2 {
+  padding-left: 8px !important;
+}
+
+.py-2 {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+.pl-3 {
+  padding-left: 16px !important;
+}
+
+.pl-4 {
+  padding-left: 24px !important;
+}
+
+.pl-5 {
+  padding-left: 32px !important;
+}
+
+.pl-6 {
+  padding-left: 40px !important;
+}
+
+.pl-7 {
+  padding-left: 48px !important;
+}
+
+.pl-8 {
+  padding-left: 64px !important;
+}
+
+.pl-9 {
+  padding-left: 80px !important;
+}
+
+.pl-10 {
+  padding-left: 96px !important;
+}
+
+.pl-11 {
+  padding-left: 112px !important;
+}
+
+.pl-12 {
+  padding-left: 128px !important;
+}
+
+hr {
+  border-bottom-color: #eee;
+}
+
+kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #d1d5da;
+}
+
+body:after,
+body:before {
+  display: table;
+  content: '';
+}
+
+body:after {
+  clear: both;
+}
+
+body > :first-child {
+  margin-top: 0 !important;
+}
+
+body > :last-child {
+  margin-bottom: 0 !important;
+}
+
+a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+blockquote,
+details,
+dl,
+ol,
+p,
+pre,
+table,
+ul {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+hr {
+  height: 0.25em;
+  padding: 0;
+  margin: 24px 0;
+  background-color: #e1e4e8;
+  border: 0;
+}
+
+blockquote {
+  padding: 0 1em;
+  color: #6a737d;
+  border-left: 0.25em solid #dfe2e5;
+}
+
+blockquote > :first-child {
+  margin-top: 0;
+}
+
+blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+h1,
+h2 {
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid #eaecef;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
+  font-size: 1.25em;
+}
+
+h4 {
+  font-size: 1em;
+}
+
+h5 {
+  font-size: 0.875em;
+}
+
+h6 {
+  font-size: 0.85em;
+  color: #6a737d;
+}
+
+ol,
+ul {
+  padding-left: 2em;
+}
+
+ol ol,
+ol ul,
+ul ol,
+ul ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+li {
+  word-wrap: break-all;
+}
+
+li > p {
+  margin-top: 16px;
+}
+
+li + li {
+  margin-top: 0.25em;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: 600;
+}
+
+dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+}
+
+table th {
+  font-weight: 600;
+}
+
+table td,
+table th {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+table tr {
+  background-color: #fff;
+  border-top: 1px solid #c6cbd1;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+img {
+  max-width: 80%;
+  box-sizing: initial;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #fff;
+}
+
+code {
+  padding: 0.2em 0.4em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(27, 31, 35, 0.05);
+  border-radius: 3px;
+}
+
+pre {
+  word-wrap: normal;
+}
+
+pre > code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #333;
+  -webkit-print-color-adjust: exact;
+  background: #f8f8f8;
+}
+
+.hljs pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.hljs pre,
+pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f6f8fa;
+  -webkit-print-color-adjust: exact;
+
+  border-radius: 3px;
+}
+
+pre code {
+  display: inline;
+  max-width: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: initial;
+  border: 0;
+}
+
+.commit-tease-sha {
+  display: inline-block;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 90%;
+  color: #444d56;
+}
+
+.full-commit .btn-outline:not(:disabled):hover {
+  color: #005cc5;
+  border-color: #005cc5;
+}
+
+.blob-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.blob-wrapper-embedded {
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.blob-num {
+  width: 1%;
+  min-width: 50px;
+  padding-right: 10px;
+  padding-left: 10px;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 12px;
+  line-height: 20px;
+  color: rgba(27, 31, 35, 0.3);
+  text-align: right;
+  white-space: nowrap;
+  vertical-align: top;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.blob-num:hover {
+  color: rgba(27, 31, 35, 0.6);
+}
+
+.blob-num:before {
+  content: attr(data-line-number);
+}
+
+.blob-code {
+  position: relative;
+  padding-right: 10px;
+  padding-left: 10px;
+  line-height: 20px;
+  vertical-align: top;
+}
+
+.blob-code-inner {
+  overflow: visible;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 12px;
+  color: #24292e;
+  word-wrap: normal;
+  white-space: pre;
+}
+
+.pl-token.active,
+.pl-token:hover {
+  cursor: pointer;
+  background: #ffea7f;
+}
+
+.tab-size[data-tab-size='1'] {
+  -moz-tab-size: 1;
+  tab-size: 1;
+}
+
+.tab-size[data-tab-size='2'] {
+  -moz-tab-size: 2;
+  tab-size: 2;
+}
+
+.tab-size[data-tab-size='3'] {
+  -moz-tab-size: 3;
+  tab-size: 3;
+}
+
+.tab-size[data-tab-size='4'] {
+  -moz-tab-size: 4;
+  tab-size: 4;
+}
+
+.tab-size[data-tab-size='5'] {
+  -moz-tab-size: 5;
+  tab-size: 5;
+}
+
+.tab-size[data-tab-size='6'] {
+  -moz-tab-size: 6;
+  tab-size: 6;
+}
+
+.tab-size[data-tab-size='7'] {
+  -moz-tab-size: 7;
+  tab-size: 7;
+}
+
+.tab-size[data-tab-size='8'] {
+  -moz-tab-size: 8;
+  tab-size: 8;
+}
+
+.tab-size[data-tab-size='9'] {
+  -moz-tab-size: 9;
+  tab-size: 9;
+}
+
+.tab-size[data-tab-size='10'] {
+  -moz-tab-size: 10;
+  tab-size: 10;
+}
+
+.tab-size[data-tab-size='11'] {
+  -moz-tab-size: 11;
+  tab-size: 11;
+}
+
+.tab-size[data-tab-size='12'] {
+  -moz-tab-size: 12;
+  tab-size: 12;
+}
+
+.task-list-item {
+  list-style-type: none;
+}
+
+.task-list-item + .task-list-item {
+  margin-top: 3px;
+}
+
+.task-list-item input {
+  margin: 0 0.2em 0.25em -1.6em;
+  vertical-align: middle;
+}
+/*
+github.com style (c) Vasily Polovnyov <vast@whiteants.net>
+*/
+  
+  .hljs-comment,
+  .hljs-quote {
+    color: #998;
+    font-style: italic;
+  }
+  
+  .hljs-keyword,
+  .hljs-selector-tag,
+  .hljs-subst {
+    color: #333;
+    font-weight: bold;
+  }
+  
+  .hljs-number,
+  .hljs-literal,
+  .hljs-variable,
+  .hljs-template-variable,
+  .hljs-tag .hljs-attr {
+    color: #008080;
+  }
+  
+  .hljs-string,
+  .hljs-doctag {
+    color: #d14;
+  }
+  
+  .hljs-title,
+  .hljs-section,
+  .hljs-selector-id {
+    color: #900;
+    font-weight: bold;
+  }
+  
+  .hljs-subst {
+    font-weight: normal;
+  }
+  
+  .hljs-type,
+  .hljs-class .hljs-title {
+    color: #458;
+    font-weight: bold;
+  }
+  
+  .hljs-tag,
+  .hljs-name,
+  .hljs-attribute {
+    color: #000080;
+    font-weight: normal;
+  }
+  
+  .hljs-regexp,
+  .hljs-link {
+    color: #009926;
+  }
+  
+  .hljs-symbol,
+  .hljs-bullet {
+    color: #990073;
+  }
+  
+  .hljs-built_in,
+  .hljs-builtin-name {
+    color: #0086b3;
+  }
+  
+  .hljs-meta {
+    color: #999;
+    font-weight: bold;
+  }
+  
+  .hljs-deletion {
+    background: #fdd;
+  }
+  
+  .hljs-addition {
+    background: #dfd;
+  }
+  
+  .hljs-emphasis {
+    font-style: italic;
+  }
+  
+  .hljs-strong {
+    font-weight: bold;
+  }
+		</style>
+<script> MathJax = { tex: { inlineMath: [["$", "$"]] } }; </script>
+<script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+	</head>
+	<body>
+		<nav id="table-of-contents">
+			<ul><li><a href="#callable"> Callable</a><ul><li><a href="#il-concetto-callable"> Il concetto callable</a><ul><li><a href="#i-puntatori-a-funzione"> I puntatori a funzione</a></li><li><a href="#gli-oggetti-funzione"> Gli "oggetti funzione"</a><ul><li><a href="#osservazioni"> Osservazioni</a></li></ul></li><li><a href="#le-espressioni-lambda"> Le espressioni lambda</a><ul><li><a href="#esempio"> Esempio</a></li></ul></li></ul></li></ul></li></ul>
+		</nav>
+		<main>
+			<h1 id="callable" tabindex="-1"><a class="anchor" href="#callable" aria-hidden="true"><span class="octicon octicon-link"></span></a> Callable</h1>
+<pre><code class="language-toc"></code></pre>
+<hr>
+<h2 id="il-concetto-callable" tabindex="-1"><a class="anchor" href="#il-concetto-callable" aria-hidden="true"><span class="octicon octicon-link"></span></a> Il concetto callable</h2>
+<p>Molti algoritmi generici resi disponibili dalla libreria standard sono forniti in due differenti versioni, la seconda delle quali è parametrizzata rispetto a una "policy".</p>
+<p>Ad esempio, per l'algoritmo <code>std::adjacent_find</code>, che intuitivamente ricerca all'interno di una sequenza la prima occorrenza di due elementi adiacenti ed equivalenti, abbiamo le seguenti dichiarazioni (in overloading):</p>
+<pre><code class="language-cpp"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> FwdIter&gt;
+<span class="hljs-function">FwdIter <span class="hljs-title">adjacent_find</span><span class="hljs-params">(FwdIter first, FwdIter last)</span></span>;
+
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> FwdIter, <span class="hljs-keyword">typename</span> BinPred&gt;
+<span class="hljs-function">FwdIter <span class="hljs-title">adjacent_find</span><span class="hljs-params">(FwdIter first, FwdIter last, BinPred pred)</span></span>;
+</code></pre>
+<p>Nella prima versione, il predicato binario utilizzato per il controllo di equivalenza degli elementi è <code>operator==</code>.</p>
+<blockquote>
+<p>Si noti che istanze diverse del template possono usare definizioni diverse (in overloading) di <code>operator==</code>, ma il nome della funzione usata per il controllo di equivalenza è fissato (<em>"hard-wired"</em>).</p>
+</blockquote>
+<p>La seconda versione consente invece di utilizzare un qualunque tipo di dato fornito dall'utente, a condizione che questo si comporti come predicato binario definito sugli elementi della sequenza.
+Tenendo a mente il <em>"duck typing"</em>, ci dovremmo quindi chiedere quali sono i modi legittimi di istanziare il parametro template <code>BinPred</code>.</p>
+<p>In altre parole, ci chiediamo quali siano i tipi di dato concreti ammessi per il parametro funzione <code>pred</code>, cioè quelli che consentono di compilare correttamente il test</p>
+<pre><code class="language-cpp"><span class="hljs-keyword">if</span> (<span class="hljs-built_in">pred</span>(*first, *next)) <span class="hljs-comment">//...</span>
+</code></pre>
+<p>dove <code>first</code> e <code>next</code> sono due iteratori dello stesso tipo.</p>
+<p>Considerando un caso un po' meno specifico, ci chiediamo quali siano i tipi di dato <code>Fun</code> che consentono (ai propri valori <code>fun</code>) di essere intuitivamente utilizzati come nomi di funzione in una chiamata:</p>
+<pre><code class="language-cpp"><span class="hljs-built_in">fun</span>(arg1, ..., argN);
+</code></pre>
+<p>L'insieme di questi tipi di dato forma il concetto <em>"callable"</em> (i tipi "chiamabili", cioè "invocabili" come le funzioni):</p>
+<ul>
+<li>puntatori a funzione</li>
+<li>oggetti funzione</li>
+<li>expressioni lambda (dal $C$++11)</li>
+</ul>
+<p><a href="#callable"><em>Torna all'indice</em></a></p>
+<hr>
+<h3 id="i-puntatori-a-funzione" tabindex="-1"><a class="anchor" href="#i-puntatori-a-funzione" aria-hidden="true"><span class="octicon octicon-link"></span></a> I puntatori a funzione</h3>
+<p>Nei pochi esempi concreti che abbiamo visto fino ad ora, abbiamo sempre istanziato i parametri "callable" usando un opportuno puntatore a funzione.</p>
+<p>Per esempio, quando usiamo il nome della funzione</p>
+<pre><code class="language-cpp"><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">pari</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i)</span></span>;
+</code></pre>
+<p>per istanziare il predicato unario della <code>std::find_if</code>, il parametro typename <code>UnaryPred</code> viene legato al tipo concreto <code>bool (*)(int)</code> (puntatore ad una funzione che prende un argomento intero per valore e restituisce un bool).</p>
+<blockquote>
+<p>Da un punto di vista tecnico, sarebbe pure possibile passare le funzioni per riferimento (invece che per valore), evitando il type decay ed ottenendo quindi un riferimento invece che un puntatore. Siccome questa alternativa NON porta alcun beneficio concreto (anzi, complica solo la comprensione del codice), è considerato pessimo stile.</p>
+</blockquote>
+<p><a href="#callable"><em>Torna all'indice</em></a></p>
+<hr>
+<h3 id="gli-oggetti-funzione" tabindex="-1"><a class="anchor" href="#gli-oggetti-funzione" aria-hidden="true"><span class="octicon octicon-link"></span></a> Gli "oggetti funzione"</h3>
+<p>Oltre alle vere e proprie funzioni, vi sono altri tipi di dato i cui valori possono essere invocati come le funzioni e che quindi, in base al "duck typing", soddisfano i requisiti del concetto callable.</p>
+<p>In particolare, una classe che fornisca una definizione (o anche più definizioni, in overloading) del metodo <code>operator()</code> consente ai suoi oggetti di essere utilizzati al posto delle vere funzioni nella sintassi della chiamata di funzione.</p>
+<p>Esempio:</p>
+<pre><code class="language-cpp"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Pari</span> {</span>
+	<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">operator</span><span class="hljs-params">()</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i)</span> <span class="hljs-keyword">const</span> </span>{
+	    <span class="hljs-keyword">return</span> i % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>;
+	}
+};
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">foo</span><span class="hljs-params">()</span> </span>{
+	Pari pari;
+	<span class="hljs-keyword">if</span> (<span class="hljs-built_in">pari</span>(<span class="hljs-number">12345</span>)) ...
+	...
+}
+</code></pre>
+<p>L'oggetto <code>pari</code> (di tipo <code>struct Pari</code>) non è una funzione ma, essendo fornito di un metodo <code>operator()</code>, può essere invocato come una funzione.</p>
+<blockquote>
+<p>Si noti che la dichiarazione di <code>operator()</code>, detto <em>operatore parentesi tonde</em> o anche <em>operatore di chiamata di funzione</em>, presenta due coppie di parentesi tonde: la prima fa parte del <em>nome</em> dell'operatore, la seconda fornisce la lista dei parametri per l'operatore.</p>
+</blockquote>
+<p>Spesso l'operatore è marcato <code>const</code> perché gli oggetti funzione sono spesso <em>"stateless"</em> (non hanno stato, cioè non hanno dei dati membro) e quindi non sono modificati dalle invocazioni dei loro <code>operator()</code>.</p>
+<p><a href="#callable"><em>Torna all'indice</em></a></p>
+<hr>
+<h4 id="osservazioni" tabindex="-1"><a class="anchor" href="#osservazioni" aria-hidden="true"><span class="octicon octicon-link"></span></a> Osservazioni</h4>
+<p>A prima vista, gli oggetti funzione potrebbero sembrare un modo complicato di risolvere un problema semplice: perché definire una classe con un metodo <code>operator()</code> quando posso, più semplicemente, passare direttamente il nome di una semplice funzione?</p>
+<p>Da un punto di vista tecnico, gli oggetti funzione possono essere usati per ottenere un vantaggio in termini di efficienza rispetto alle normali funzioni: in particolare, l'uso degli oggetti funzione fornisce al compilatore più opportunità per l'ottimizzazione del codice.</p>
+<p>Si consideri un programma che lavori su un <code>vector</code> di interi e istanzia più volte la funzione generica <code>std::find_if</code> per effettuare ricerche nel <code>vector</code> usando criteri di ricerca (cioè, predicati unari) diversi.</p>
+<p>Consideriamo i seguenti predicati espressi mediante funzioni:</p>
+<pre><code class="language-cpp">  <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">pari</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i)</span></span>;
+  <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">dispari</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i)</span></span>;
+  <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">positivo</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i)</span></span>;
+  <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">negativo</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i)</span></span>;
+  <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">maggiore_di_1000</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i)</span></span>;
+  <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">numero_primo</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i)</span></span>;
+</code></pre>
+<p>Queste sei funzioni hanno tutte lo stesso tipo <code>bool(int)</code>, ovvero funzione che prende un argomento <code>int</code> per valore e restituisce un <code>bool</code>.
+Di conseguenza, quando si istanzia l'algoritmo <code>std::find_if</code> sul vettore usando i sei predicati, si ottiene ogni volta la stessa identica istanza del template di funzione.</p>
+<p>Se, per comodità, usiamo i seguenti alias di tipo</p>
+<pre><code class="language-cpp"><span class="hljs-keyword">using</span> Iter = std::vector&lt;<span class="hljs-keyword">int</span>&gt;::iterator
+<span class="hljs-keyword">using</span> Ptr = <span class="hljs-built_in"><span class="hljs-keyword">bool</span></span> (*)(<span class="hljs-keyword">int</span>);
+</code></pre>
+<p>la specifica istanza ottenuta sarà la seguente:</p>
+<pre><code class="language-cpp">Iter std::find_if&lt;Iter, Ptr&gt;(Iter first, Iter last, Ptr pred);
+</code></pre>
+<p>Il codice generato, quindi, è unico e deve gestire correttamente tutte le sei possibili invocazioni: di conseguenza, la chiamata al predicato è implementata come chiamata di funzione (attraverso il puntatore a funzione).</p>
+<p>Supponiamo ora che i sei predicati siano stati invece implementati mediante oggetti funzione, ovvero definendo sei classi <code>Pari</code>, <code>Dispari</code>, <code>Positivo</code>, ecc...</p>
+<blockquote>
+<p>Nota: l'uso dell'iniziale maiuscola è solo una convenzione, utile per evitare di fare confusione.</p>
+</blockquote>
+<p>In questo caso, quando si istanzia l'algoritmo <code>std::find_if</code> sul vettore usando i sei oggetti funzione, siccome i tipi degli oggetti funzione sono distinti si otterranno sei diverse istanze del template di funzione:</p>
+<pre><code class="language-cpp">Iter std::find_if&lt;Iter, Pari&gt;(Iter first, Iter last, Pari pred);
+Iter std::find_if&lt;Iter, Dispari&gt;(Iter first, Iter last, Dispari pred);
+Iter std::find_if&lt;Iter, Positivo&gt;(Iter first, Iter last, Positivo pred);
+...
+</code></pre>
+<p>Quando genera il codice per una delle sei istanze, il compilatore vede l'invocazione di uno solo dei sei metodi <code>operator()</code> e quindi può ottimizzare il codice per quella specifica invocazione (per esempio, facendo l'espansione in linea della chiamata).
+Si ottiene quindi un codice eseguibile più grande (sei istanze invece di una sola), ma meglio ottimizzabile e quindi potenzialmente più efficiente.</p>
+<p><a href="#callable"><em>Torna all'indice</em></a></p>
+<hr>
+<h3 id="le-espressioni-lambda" tabindex="-1"><a class="anchor" href="#le-espressioni-lambda" aria-hidden="true"><span class="octicon octicon-link"></span></a> Le espressioni lambda</h3>
+<p>Capita frequentemente che una determinata funzione (o un oggetto funzione) debba essere fornita come callable ad una invocazione di un algoritmo generico.
+In alternativa, che una funzione (o oggetto funzione) debba essere definita a fronte di un unico punto del codice che la invoca.</p>
+<p>In questi casi, fornire la definizione della funzione (o della classe che implementa un oggetto funzione equivalente) presenta alcuni svantaggi:</p>
+<ul>
+<li>occorre inventare un nome appropriato;</li>
+<li>occorre fornire la definizione in un punto diverso del codice rispetto all'unico punto di uso, potenzialmente distante.</li>
+</ul>
+<p>Le espressioni lambda (dette anche funzioni lambda) forniscono una comoda sintassi abbreviata per potere definire un oggetto funzione "anonimo" e immediatamente utilizzabile.</p>
+<blockquote>
+<p>Nota: le espressioni lambda sono state introdotte con lo standard $C$++11 e sono state oggetto di estensioni negli standard $C$++14 e $C$++17.</p>
+</blockquote>
+<p>Esempio: istanziazione di <code>std::find_if</code> con una lambda expression che implementa il predicato <code>pari</code> sul tipo T.</p>
+<pre><code class="language-cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">foo</span><span class="hljs-params">(<span class="hljs-keyword">const</span> std::vector&lt;<span class="hljs-keyword">long</span>&gt;&amp; v)</span> </span>{
+	<span class="hljs-keyword">auto</span> iter = std::<span class="hljs-built_in">find_if</span>(v.<span class="hljs-built_in">begin</span>(), v.<span class="hljs-built_in">end</span>(),
+                           [](<span class="hljs-keyword">const</span> <span class="hljs-keyword">long</span>&amp; i) {
+		                        <span class="hljs-keyword">return</span> i % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>;
+	                        });
+  <span class="hljs-comment">// ... usa iter</span>
+}
+</code></pre>
+<p>L'espressione lambda è data dalla sintassi</p>
+<pre><code class="language-cpp">  [](<span class="hljs-keyword">const</span> <span class="hljs-keyword">long</span>&amp; i) { <span class="hljs-keyword">return</span> i % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>; }
+</code></pre>
+<p>dove si distiguono i seguenti elementi:</p>
+<pre><code class="language-cpp">[]                       <span class="hljs-comment">// capture list (lista delle catture)</span>
+(<span class="hljs-keyword">const</span> <span class="hljs-keyword">long</span>&amp; i)          <span class="hljs-comment">// lista dei parametri (opzionale)</span>
+{ <span class="hljs-keyword">return</span> i % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>; }   <span class="hljs-comment">// corpo della funzione</span>
+</code></pre>
+<p>In questo esempio, la lista delle catture è vuota; inoltre, il tipo di ritorno è omesso, in quanto viene dedotto dall'istruzione di return contenuta nel corpo della funzione.
+Volendo (ma di solito non si fa), è possibile specificarlo con la sintassi del <em>"trailing return type"</em>, che usa l'operatore freccia:</p>
+<pre><code class="language-cpp">  [](<span class="hljs-keyword">const</span> <span class="hljs-keyword">long</span>&amp; i) -&gt; <span class="hljs-keyword">bool</span> { <span class="hljs-keyword">return</span> i % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>; }
+</code></pre>
+<p>Questo uso della espressione lambra all'interno della invocazione della <code>std::find_if</code> corrisponde intuitivamente alle seguenti operazioni:</p>
+<ol>
+<li>Definizione di una classe "anonima" per oggetti funzione, cioè una classe dotata di un nome univoco scelto dal sistema.</li>
+<li>Definizione all'interno della classe di un metodo <code>operator()</code> che ha i parametri, il corpo e il tipo di ritorno specificati (o dedotti) dalla lambda expression.</li>
+<li>Creazione di un oggetto funzione <em>"anonimo"</em>, avente il tipo della classe anonima suddetta, da passare alla <code>std::find_if.</code></li>
+</ol>
+<p>In pratica, è come se il programmatore avesse scritto:</p>
+<pre><code class="language-cpp"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Nome_Univoco</span> {</span>
+	<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">operator</span><span class="hljs-params">()</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">long</span>&amp; i)</span> <span class="hljs-keyword">const</span> </span>{ <span class="hljs-keyword">return</span> i % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>; }
+};
+
+<span class="hljs-keyword">auto</span> iter = std::<span class="hljs-built_in">find_if</span>(v.<span class="hljs-built_in">begin</span>(), v.<span class="hljs-built_in">end</span>(), <span class="hljs-built_in">Nome_Univoco</span>());
+</code></pre>
+<p>La lista delle catture può essere usata quando l'espressione lambda deve potere accedere a variabili locali visibili nel punto in cui viene creata (che è diverso dal punto in cui verrà invocata).
+Supponiamo per esempio di volere trovare il primo valore della sequenza che sia maggiore del parametro "soglia":</p>
+<pre><code class="language-cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">foo</span><span class="hljs-params">(<span class="hljs-keyword">const</span> std::vector&lt;<span class="hljs-keyword">long</span>&gt;&amp; v, <span class="hljs-keyword">long</span> soglia)</span> </span>{
+	<span class="hljs-keyword">auto</span> iter = std::<span class="hljs-built_in">find_if</span>(v.<span class="hljs-built_in">begin</span>(), v.<span class="hljs-built_in">end</span>(),
+                           [soglia](<span class="hljs-keyword">const</span> <span class="hljs-keyword">long</span>&amp; i) {
+	                            <span class="hljs-keyword">return</span> i &gt; soglia;
+	                        });
+  <span class="hljs-comment">// ... usa iter</span>
+}
+</code></pre>
+<p>In questo caso, la definizione della lambda è equivalente ad una classe nella quale le variabili catturate sono memorizzate in dati membro, inizializzati in fase di costruzione dell'oggetto funzione:</p>
+<pre><code class="language-cpp"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Nome_Univoco</span> {</span>
+	<span class="hljs-keyword">long</span> soglia;
+    <span class="hljs-built_in">Nome_Univoco</span>(<span class="hljs-keyword">long</span> s) : <span class="hljs-built_in">soglia</span>(s) { }
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">operator</span><span class="hljs-params">()</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">long</span>&amp; i)</span> <span class="hljs-keyword">const</span> </span>{ <span class="hljs-keyword">return</span> i &gt; soglia; }
+};
+
+<span class="hljs-keyword">auto</span> iter = std::<span class="hljs-built_in">find_if</span>(v.<span class="hljs-built_in">begin</span>(), v.<span class="hljs-built_in">end</span>(), <span class="hljs-built_in">Nome_Univoco</span>(soglia));
+</code></pre>
+<p>Si possono catturare più variabili, separate da virgole.
+La notazione <code>[soglia]</code> è equivalente alla notazione <code>[=soglia]</code> e indica una cattura per valore; se invece si utilizza la notazione <code>[&amp;soglia]</code> si effettua una cattura per riferimento (utile quando si vogliono evitare copie costose).
+Nella lista delle catture è possibile indicare <code>this</code>, catturando così (per valore) il puntatore implicito all'oggetto corrente; la sintassi è ammessa se la lambda è definita all'interno di un metodo (non-statico) di una classe, dove è effettivamente disponibile il puntatore this.</p>
+<p>Esistono notazioni abbreviate per le <em>"catture implicite"</em>:</p>
+<ul>
+<li><code>[=]</code> --&gt; cattura (implicitamente) ogni variabile locale usata nel corpo per valore.</li>
+<li><code>[&amp;]</code> --&gt; cattura (implicitamente) ogni variabile locale usata nel corpo per riferimento.</li>
+<li><code>[=, &amp;pippo, &amp;pluto]</code> --&gt; cattura (implicitamente) per valore, tranne pippo e pluto che sono catturate per riferimento.</li>
+<li><code>[&amp;, =pippo, =pluto]</code> --&gt; cattura (implicitamente) per riferimento, tranne pippo e pluto che sono catturate per valore.</li>
+</ul>
+<p>Il consiglio è di effettuare sempre catture esplicite, per maggiore leggibilità del codice.</p>
+<blockquote>
+<p>Si noti che il metodo <code>operator()</code> definito nella classe è qualificato <code>const</code>; di conseguenza, le variabili catturate possono essere accedute in sola lettura. Se si vuole consentirne la modifica, occorre aggiungere alla lambda il modificatore <code>mutable</code>.</p>
+</blockquote>
+<p><a href="#callable"><em>Torna all'indice</em></a></p>
+<hr>
+<h4 id="esempio" tabindex="-1"><a class="anchor" href="#esempio" aria-hidden="true"><span class="octicon octicon-link"></span></a> Esempio</h4>
+<p>Modifichiamo la lambda dell'esempio per tenere traccia del numero di sue invocazioni.</p>
+<pre><code class="language-cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">foo</span><span class="hljs-params">(<span class="hljs-keyword">const</span> std::vector&lt;<span class="hljs-keyword">long</span>&gt;&amp; v)</span> </span>{
+	<span class="hljs-keyword">long</span> num_chiamate = <span class="hljs-number">0</span>;
+	<span class="hljs-keyword">auto</span> iter = std::<span class="hljs-built_in">find_if</span>(v.<span class="hljs-built_in">begin</span>(), v.<span class="hljs-built_in">end</span>(),
+                           [&amp;num_chiamate](<span class="hljs-keyword">const</span> <span class="hljs-keyword">long</span>&amp; i) <span class="hljs-keyword">mutable</span> {
+	                            ++num_chiamate;
+	                            <span class="hljs-keyword">return</span> i % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>;
+	                        });
+std::cout &lt;&lt; <span class="hljs-string">"Funzione lambda invocata "</span> &lt;&lt; num_chiamate &lt;&lt; <span class="hljs-string">" volte\n"</span>;
+}
+</code></pre>
+<p>Il modificatore <code>mutable</code> viene associato a tutti i dati membro catturati: esso consente anche ad un metodo marcato const di accedere in scrittura al dato membro.</p>
+<blockquote>
+<p>Si noti che abbiamo catturato per riferimento, perché vogliamo che venga modificata proprio la variabile locale della funzione <code>foo</code> (non una sua copia).</p>
+</blockquote>
+<p>La classe che viene generata implicitamente è quindi simile alla seguente:</p>
+<pre><code class="language-cpp"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Nome_Univoco</span> {</span>
+	<span class="hljs-keyword">mutable</span> <span class="hljs-keyword">long</span>&amp; num_chiamate;
+    <span class="hljs-built_in">Nome_Univoco</span>(<span class="hljs-keyword">long</span>&amp; nc) : <span class="hljs-built_in">num_chiamate</span>(nc) { }
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">operator</span><span class="hljs-params">()</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">long</span>&amp; i)</span> <span class="hljs-keyword">const</span> </span>{
+	    ++num_chiamate;
+	    <span class="hljs-keyword">return</span> i % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>;
+    }
+};
+</code></pre>
+<p>Nel caso vengano effettuate catture per riferimento, occorre prestare attenzione a NON usare la funzione lambda dopo che il tempo di vita della variabile catturata è terminato (si incorrerebbe in undefined behavior).</p>
+<blockquote>
+<p><mark style="background: #FF5582A6;">NOTA:</mark> come detto, l'espressione lambda crea un oggetto funzione anonimo di tipo anonimo. E' comunque possibile dare un nome all'oggetto lambda, anche se non se ne conosce il tipo, sfruttando <code>auto</code> per effettuare la deduzione del tipo.</p>
+</blockquote>
+<p>Nell'esempio seguente, diamo un nome alla lambda per poterla usare più volte:</p>
+<pre><code class="language-cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">copia_corte</span><span class="hljs-params">(<span class="hljs-keyword">const</span> std::vector&lt;std::string&gt;&amp; v,
+                 <span class="hljs-keyword">const</span> std::list&lt;std::string&gt;&amp; l,
+                 <span class="hljs-keyword">unsigned</span> max_size)</span> </span>{
+	<span class="hljs-keyword">auto</span> corta = [max_size](<span class="hljs-keyword">const</span> std::string&amp; s) {
+		                 <span class="hljs-keyword">return</span> s.<span class="hljs-built_in">size</span>() &lt;= max_size;
+			        };
+	<span class="hljs-function">std::ostream_iterator&lt;std::string&gt; <span class="hljs-title">out</span><span class="hljs-params">(std::cout, <span class="hljs-string">"\n"</span>)</span></span>;
+	out = std::<span class="hljs-built_in">copy_if</span>(v.<span class="hljs-built_in">begin</span>(), v.<span class="hljs-built_in">end</span>(), out, corta);
+	out = std::<span class="hljs-built_in">copy_if</span>(l.<span class="hljs-built_in">begin</span>(), l.<span class="hljs-built_in">end</span>(), out, corta);
+}
+</code></pre>
+<p><a href="#callable"><em>Torna all'indice</em></a></p>
+
+		</main>
+	</body>
+</html>

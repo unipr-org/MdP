@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+		<title>05-tipi</title>
+		<style>
+			/* PDF Specific */
+
+@media print {
+  body {
+    min-width: initial;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+}
+
+/* General */
+
+.octicon {
+  display: inline-block;
+  fill: currentColor;
+  vertical-align: text-bottom;
+}
+
+.anchor {
+  float: left;
+  line-height: 1;
+  margin-left: -20px;
+  padding-right: 4px;
+}
+
+.anchor:focus {
+  outline: none;
+}
+
+h1 .octicon-link,
+h2 .octicon-link,
+h3 .octicon-link,
+h4 .octicon-link,
+h5 .octicon-link,
+h6 .octicon-link {
+  color: #1b1f23;
+  vertical-align: middle;
+  visibility: hidden;
+}
+
+h1:hover .anchor,
+h2:hover .anchor,
+h3:hover .anchor,
+h4:hover .anchor,
+h5:hover .anchor,
+h6:hover .anchor {
+  text-decoration: none;
+}
+
+h1:hover .anchor .octicon-link,
+h2:hover .anchor .octicon-link,
+h3:hover .anchor .octicon-link,
+h4:hover .anchor .octicon-link,
+h5:hover .anchor .octicon-link,
+h6:hover .anchor .octicon-link {
+  visibility: visible;
+}
+
+h1:hover .anchor .octicon-link:before,
+h2:hover .anchor .octicon-link:before,
+h3:hover .anchor .octicon-link:before,
+h4:hover .anchor .octicon-link:before,
+h5:hover .anchor .octicon-link:before,
+h6:hover .anchor .octicon-link:before {
+  width: 16px;
+  height: 16px;
+  content: ' ';
+  display: inline-block;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' version='1.1' width='16' height='16' aria-hidden='true'%3E%3Cpath fill-rule='evenodd' d='M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z'%3E%3C/path%3E%3C/svg%3E");
+}
+
+body {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -webkit-print-color-adjust: exact;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
+    sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #24292e;
+  word-wrap: break-word;
+  box-sizing: border-box;
+  min-width: 200px;
+  max-width: 980px;
+  margin: 1rem auto;
+}
+
+details {
+  display: block;
+}
+
+summary {
+  display: list-item;
+}
+
+a {
+  background-color: initial;
+}
+
+a:active,
+a:hover {
+  outline-width: 0;
+}
+
+strong {
+  font-weight: inherit;
+  font-weight: bolder;
+}
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+img {
+  border-style: none;
+}
+
+code,
+kbd,
+pre {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+hr {
+  box-sizing: initial;
+  height: 0;
+  overflow: visible;
+}
+
+input {
+  font: inherit;
+  margin: 0;
+}
+
+input {
+  overflow: visible;
+}
+
+[type='checkbox'] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+input {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+a {
+  color: #0366d6;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+strong {
+  font-weight: 600;
+}
+
+hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #dfe2e5;
+}
+
+hr:after,
+hr:before {
+  display: table;
+  content: '';
+}
+
+hr:after {
+  clear: both;
+}
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+td,
+th {
+  padding: 0;
+}
+
+details summary {
+  cursor: pointer;
+}
+
+kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #d1d5da;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+h1 {
+  font-size: 32px;
+}
+
+h1,
+h2 {
+  font-weight: 600;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+h3 {
+  font-size: 20px;
+}
+
+h3,
+h4 {
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h5,
+h6 {
+  font-weight: 600;
+}
+
+h6 {
+  font-size: 12px;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+blockquote {
+  margin: 0;
+}
+
+ol,
+ul {
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+ol ol,
+ul ol {
+  list-style-type: lower-roman;
+}
+
+ol ol ol,
+ol ul ol,
+ul ol ol,
+ul ul ol {
+  list-style-type: lower-alpha;
+}
+
+dd {
+  margin-left: 0;
+}
+
+code,
+pre {
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 12px;
+}
+
+pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+:checked + .radio-label {
+  position: relative;
+  z-index: 1;
+  border-color: #0366d6;
+}
+
+.border {
+  border: 1px solid #e1e4e8 !important;
+}
+
+.border-0 {
+  border: 0 !important;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #e1e4e8 !important;
+}
+
+.rounded-1 {
+  border-radius: 3px !important;
+}
+
+.bg-white {
+  background-color: #fff !important;
+}
+
+.bg-gray-light {
+  background-color: #fafbfc !important;
+}
+
+.text-gray-light {
+  color: #6a737d !important;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+
+.my-2 {
+  margin-top: 8px !important;
+  margin-bottom: 8px !important;
+}
+
+.pl-0 {
+  padding-left: 0 !important;
+}
+
+.py-0 {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.pl-1 {
+  padding-left: 4px !important;
+}
+
+.pl-2 {
+  padding-left: 8px !important;
+}
+
+.py-2 {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+.pl-3,
+.px-3 {
+  padding-left: 16px !important;
+}
+
+.px-3 {
+  padding-right: 16px !important;
+}
+
+.pl-4 {
+  padding-left: 24px !important;
+}
+
+.pl-5 {
+  padding-left: 32px !important;
+}
+
+.pl-6 {
+  padding-left: 40px !important;
+}
+
+.f6 {
+  font-size: 12px !important;
+}
+
+.lh-condensed {
+  line-height: 1.25 !important;
+}
+
+.text-bold {
+  font-weight: 600 !important;
+}
+
+.pl-c {
+  color: #6a737d;
+}
+
+.pl-c1,
+.pl-s .pl-v {
+  color: #005cc5;
+}
+
+.pl-e,
+.pl-en {
+  color: #6f42c1;
+}
+
+.pl-s .pl-s1,
+.pl-smi {
+  color: #24292e;
+}
+
+.pl-ent {
+  color: #22863a;
+}
+
+.pl-k {
+  color: #d73a49;
+}
+
+.pl-pds,
+.pl-s,
+.pl-s .pl-pse .pl-s1,
+.pl-sr,
+.pl-sr .pl-cce,
+.pl-sr .pl-sra,
+.pl-sr .pl-sre {
+  color: #032f62;
+}
+
+.pl-smw,
+.pl-v {
+  color: #e36209;
+}
+
+.pl-bu {
+  color: #b31d28;
+}
+
+.pl-ii {
+  color: #fafbfc;
+  background-color: #b31d28;
+}
+
+.pl-c2 {
+  color: #fafbfc;
+  background-color: #d73a49;
+}
+
+.pl-c2:before {
+  content: '^M';
+}
+
+.pl-sr .pl-cce {
+  font-weight: 700;
+  color: #22863a;
+}
+
+.pl-ml {
+  color: #735c0f;
+}
+
+.pl-mh,
+.pl-mh .pl-en,
+.pl-ms {
+  font-weight: 700;
+  color: #005cc5;
+}
+
+.pl-mi {
+  font-style: italic;
+  color: #24292e;
+}
+
+.pl-mb {
+  font-weight: 700;
+  color: #24292e;
+}
+
+.pl-md {
+  color: #b31d28;
+  background-color: #ffeef0;
+}
+
+.pl-mi1 {
+  color: #22863a;
+  background-color: #f0fff4;
+}
+
+.pl-mc {
+  color: #e36209;
+  background-color: #ffebda;
+}
+
+.pl-mi2 {
+  color: #f6f8fa;
+  background-color: #005cc5;
+}
+
+.pl-mdr {
+  font-weight: 700;
+  color: #6f42c1;
+}
+
+.pl-ba {
+  color: #586069;
+}
+
+.pl-sg {
+  color: #959da5;
+}
+
+.pl-corl {
+  text-decoration: underline;
+  color: #032f62;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+
+.my-2 {
+  margin-bottom: 8px !important;
+}
+
+.my-2 {
+  margin-top: 8px !important;
+}
+
+.pl-0 {
+  padding-left: 0 !important;
+}
+
+.py-0 {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.pl-1 {
+  padding-left: 4px !important;
+}
+
+.pl-2 {
+  padding-left: 8px !important;
+}
+
+.py-2 {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+.pl-3 {
+  padding-left: 16px !important;
+}
+
+.pl-4 {
+  padding-left: 24px !important;
+}
+
+.pl-5 {
+  padding-left: 32px !important;
+}
+
+.pl-6 {
+  padding-left: 40px !important;
+}
+
+.pl-7 {
+  padding-left: 48px !important;
+}
+
+.pl-8 {
+  padding-left: 64px !important;
+}
+
+.pl-9 {
+  padding-left: 80px !important;
+}
+
+.pl-10 {
+  padding-left: 96px !important;
+}
+
+.pl-11 {
+  padding-left: 112px !important;
+}
+
+.pl-12 {
+  padding-left: 128px !important;
+}
+
+hr {
+  border-bottom-color: #eee;
+}
+
+kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #d1d5da;
+}
+
+body:after,
+body:before {
+  display: table;
+  content: '';
+}
+
+body:after {
+  clear: both;
+}
+
+body > :first-child {
+  margin-top: 0 !important;
+}
+
+body > :last-child {
+  margin-bottom: 0 !important;
+}
+
+a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+blockquote,
+details,
+dl,
+ol,
+p,
+pre,
+table,
+ul {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+hr {
+  height: 0.25em;
+  padding: 0;
+  margin: 24px 0;
+  background-color: #e1e4e8;
+  border: 0;
+}
+
+blockquote {
+  padding: 0 1em;
+  color: #6a737d;
+  border-left: 0.25em solid #dfe2e5;
+}
+
+blockquote > :first-child {
+  margin-top: 0;
+}
+
+blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+h1,
+h2 {
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid #eaecef;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
+  font-size: 1.25em;
+}
+
+h4 {
+  font-size: 1em;
+}
+
+h5 {
+  font-size: 0.875em;
+}
+
+h6 {
+  font-size: 0.85em;
+  color: #6a737d;
+}
+
+ol,
+ul {
+  padding-left: 2em;
+}
+
+ol ol,
+ol ul,
+ul ol,
+ul ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+li {
+  word-wrap: break-all;
+}
+
+li > p {
+  margin-top: 16px;
+}
+
+li + li {
+  margin-top: 0.25em;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: 600;
+}
+
+dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+}
+
+table th {
+  font-weight: 600;
+}
+
+table td,
+table th {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+table tr {
+  background-color: #fff;
+  border-top: 1px solid #c6cbd1;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+img {
+  max-width: 80%;
+  box-sizing: initial;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #fff;
+}
+
+code {
+  padding: 0.2em 0.4em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(27, 31, 35, 0.05);
+  border-radius: 3px;
+}
+
+pre {
+  word-wrap: normal;
+}
+
+pre > code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #333;
+  -webkit-print-color-adjust: exact;
+  background: #f8f8f8;
+}
+
+.hljs pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.hljs pre,
+pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f6f8fa;
+  -webkit-print-color-adjust: exact;
+
+  border-radius: 3px;
+}
+
+pre code {
+  display: inline;
+  max-width: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: initial;
+  border: 0;
+}
+
+.commit-tease-sha {
+  display: inline-block;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 90%;
+  color: #444d56;
+}
+
+.full-commit .btn-outline:not(:disabled):hover {
+  color: #005cc5;
+  border-color: #005cc5;
+}
+
+.blob-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.blob-wrapper-embedded {
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.blob-num {
+  width: 1%;
+  min-width: 50px;
+  padding-right: 10px;
+  padding-left: 10px;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 12px;
+  line-height: 20px;
+  color: rgba(27, 31, 35, 0.3);
+  text-align: right;
+  white-space: nowrap;
+  vertical-align: top;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.blob-num:hover {
+  color: rgba(27, 31, 35, 0.6);
+}
+
+.blob-num:before {
+  content: attr(data-line-number);
+}
+
+.blob-code {
+  position: relative;
+  padding-right: 10px;
+  padding-left: 10px;
+  line-height: 20px;
+  vertical-align: top;
+}
+
+.blob-code-inner {
+  overflow: visible;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 12px;
+  color: #24292e;
+  word-wrap: normal;
+  white-space: pre;
+}
+
+.pl-token.active,
+.pl-token:hover {
+  cursor: pointer;
+  background: #ffea7f;
+}
+
+.tab-size[data-tab-size='1'] {
+  -moz-tab-size: 1;
+  tab-size: 1;
+}
+
+.tab-size[data-tab-size='2'] {
+  -moz-tab-size: 2;
+  tab-size: 2;
+}
+
+.tab-size[data-tab-size='3'] {
+  -moz-tab-size: 3;
+  tab-size: 3;
+}
+
+.tab-size[data-tab-size='4'] {
+  -moz-tab-size: 4;
+  tab-size: 4;
+}
+
+.tab-size[data-tab-size='5'] {
+  -moz-tab-size: 5;
+  tab-size: 5;
+}
+
+.tab-size[data-tab-size='6'] {
+  -moz-tab-size: 6;
+  tab-size: 6;
+}
+
+.tab-size[data-tab-size='7'] {
+  -moz-tab-size: 7;
+  tab-size: 7;
+}
+
+.tab-size[data-tab-size='8'] {
+  -moz-tab-size: 8;
+  tab-size: 8;
+}
+
+.tab-size[data-tab-size='9'] {
+  -moz-tab-size: 9;
+  tab-size: 9;
+}
+
+.tab-size[data-tab-size='10'] {
+  -moz-tab-size: 10;
+  tab-size: 10;
+}
+
+.tab-size[data-tab-size='11'] {
+  -moz-tab-size: 11;
+  tab-size: 11;
+}
+
+.tab-size[data-tab-size='12'] {
+  -moz-tab-size: 12;
+  tab-size: 12;
+}
+
+.task-list-item {
+  list-style-type: none;
+}
+
+.task-list-item + .task-list-item {
+  margin-top: 3px;
+}
+
+.task-list-item input {
+  margin: 0 0.2em 0.25em -1.6em;
+  vertical-align: middle;
+}
+/*
+github.com style (c) Vasily Polovnyov <vast@whiteants.net>
+*/
+  
+  .hljs-comment,
+  .hljs-quote {
+    color: #998;
+    font-style: italic;
+  }
+  
+  .hljs-keyword,
+  .hljs-selector-tag,
+  .hljs-subst {
+    color: #333;
+    font-weight: bold;
+  }
+  
+  .hljs-number,
+  .hljs-literal,
+  .hljs-variable,
+  .hljs-template-variable,
+  .hljs-tag .hljs-attr {
+    color: #008080;
+  }
+  
+  .hljs-string,
+  .hljs-doctag {
+    color: #d14;
+  }
+  
+  .hljs-title,
+  .hljs-section,
+  .hljs-selector-id {
+    color: #900;
+    font-weight: bold;
+  }
+  
+  .hljs-subst {
+    font-weight: normal;
+  }
+  
+  .hljs-type,
+  .hljs-class .hljs-title {
+    color: #458;
+    font-weight: bold;
+  }
+  
+  .hljs-tag,
+  .hljs-name,
+  .hljs-attribute {
+    color: #000080;
+    font-weight: normal;
+  }
+  
+  .hljs-regexp,
+  .hljs-link {
+    color: #009926;
+  }
+  
+  .hljs-symbol,
+  .hljs-bullet {
+    color: #990073;
+  }
+  
+  .hljs-built_in,
+  .hljs-builtin-name {
+    color: #0086b3;
+  }
+  
+  .hljs-meta {
+    color: #999;
+    font-weight: bold;
+  }
+  
+  .hljs-deletion {
+    background: #fdd;
+  }
+  
+  .hljs-addition {
+    background: #dfd;
+  }
+  
+  .hljs-emphasis {
+    font-style: italic;
+  }
+  
+  .hljs-strong {
+    font-weight: bold;
+  }
+		</style>
+<script> MathJax = { tex: { inlineMath: [["$", "$"]] } }; </script>
+<script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+	</head>
+	<body>
+		<nav id="table-of-contents">
+			<ul><li><a href="#tipi-qualificatori-costanti-letterali"> Tipi, qualificatori, costanti letterali</a><ul><li><a href="#i-tipi-fondamentali-non-strutturati"> I tipi fondamentali (non strutturati)</a><ul><li><a href="#i-tipi-composti"> I tipi composti</a></li></ul></li><li><a href="#qualificatore-const"> Qualificatore const</a></li><li><a href="#costanti-letterali"> Costanti letterali</a><ul><li><a href="#note-varie"> Note varie</a></li><li><a href="#altre-costanti-letterali"> Altre costanti letterali</a></li></ul></li><li><a href="#user-defined-literal"> User Defined Literal</a></li><li><a href="#gli-alias-di-tipo"> Gli alias di tipo</a></li><li><a href="#la-keyword-auto"> La keyword auto</a></li><li><a href="#la-libreria-gmp"> La libreria GMP</a></li></ul></li></ul>
+		</nav>
+		<main>
+			<h1 id="tipi-qualificatori-costanti-letterali" tabindex="-1"><a class="anchor" href="#tipi-qualificatori-costanti-letterali" aria-hidden="true"><span class="octicon octicon-link"></span></a> Tipi, qualificatori, costanti letterali</h1>
+<pre><code class="language-toc"></code></pre>
+<hr>
+<h2 id="i-tipi-fondamentali-non-strutturati" tabindex="-1"><a class="anchor" href="#i-tipi-fondamentali-non-strutturati" aria-hidden="true"><span class="octicon octicon-link"></span></a> I tipi fondamentali (non strutturati)</h2>
+<ul>
+<li>Booleani: <code>bool</code></li>
+<li>Carattere:
+<ol>
+<li><em>narrow character type:</em>  <code>char</code>,  <code>signed char</code>,  <code>unsigned char</code></li>
+<li><em>wide character type:</em>  <code>wchar_t</code>,  <code>char16_t</code>,  <code>char32_t</code></li>
+</ol>
+</li>
+<li>Interi standard con segno: <code>signed char</code>, <code>short</code>, <code>int</code>, <code>long</code>, <code>long long</code></li>
+<li>Interi standard senza segno: <code>unsigned char</code>, <code>usigned short</code>, <code>unsigned int</code>, ...</li>
+</ul>
+<p>Tutti i tipi suddetti sono detti tipi integrali.
+Booleani, caratteri narrow e short sono detti tipi integrali "piccoli", in quanto <em>potrebbero</em> avere una dimensione (<code>sizeof</code>) inferiore a int e pertanto sono soggetti a promozioni di tipo.</p>
+<ul>
+<li>Floating point: float, double, long double</li>
+<li>Void: ha un insieme vuoto di valori; serve per indicare che una funzione non ritorna alcun valore o, usando un cast esplicito, che il valore di una espressione deve essere scartato.</li>
+</ul>
+<pre><code class="language-cpp">(<span class="hljs-keyword">void</span>) <span class="hljs-built_in">foo</span>(<span class="hljs-number">3</span>); <span class="hljs-comment">// chiama foo(3) e scarta il risultato prodotto</span>
+</code></pre>
+<ul>
+<li><code>std::nullptr_t</code>: è un tipo puntatore convertibile implicitamente in qualunque altro tipo puntatore; ha un solo valore possibile, la costante letterale <code>nullptr</code>, che indica il puntatore nullo (non dereferenziabile).</li>
+</ul>
+<p><em><a href="#tipi,%20qualificatori,%20costanti%20letterali">Torna all'indice</a></em></p>
+<hr>
+<h3 id="i-tipi-composti" tabindex="-1"><a class="anchor" href="#i-tipi-composti" aria-hidden="true"><span class="octicon octicon-link"></span></a> I tipi composti</h3>
+<ul>
+<li>Riferimenti a <code>lvalue</code>: <code>T&amp;</code></li>
+<li>Riferimenti a <code>rvalue</code>: <code>T&amp;&amp;</code></li>
+<li>Puntatori: <code>T*</code></li>
+<li>Tipi array: <code>T[n]</code></li>
+<li>Tipi funzione: <code>T(T1, ..., Tn)</code></li>
+<li>Enumerazioni e <code>class</code> / <code>struct</code></li>
+</ul>
+<p><em><a href="#tipi,%20qualificatori,%20costanti%20letterali">Torna all'indice</a></em></p>
+<hr>
+<h2 id="qualificatore-const" tabindex="-1"><a class="anchor" href="#qualificatore-const" aria-hidden="true"><span class="octicon octicon-link"></span></a> Qualificatore const</h2>
+<p>I tipi elencati sopra sono detti non qualificati.
+Nel linguaggio $C$++ esistono i qualificatori <code>const</code> e <code>volatile</code>. Nel discorso che segue consideriamo solo il qualificatore <code>const</code>, il cui uso è essenziale per una corretta progettazione e uso delle interfacce software e come strumento di ausilio alla manutenzione del software.</p>
+<p>Dato un tipo <code>T</code>, è possibile fornirne la versione qualificata <code>const T</code>.
+L'accesso ad un oggetto (o una parte di un oggetto) attraverso una variabile il cui tipo è dotato del qualificatore const è consentito in sola lettura (cioè, non sono consentite le modifiche).</p>
+<blockquote>
+<p>Si noti che nel caso di tipi composti è necessario distinguere tra la qualificazione del tipo composto rispetto alla qualificazione delle sue componenti.</p>
+</blockquote>
+<p>Per esempio:</p>
+<pre><code class="language-cpp"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">S</span> {</span>
+	<span class="hljs-keyword">int</span> v;
+	<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> c;
+	<span class="hljs-built_in">S</span>(<span class="hljs-keyword">int</span> cc) : <span class="hljs-built_in">c</span>(cc) { v = <span class="hljs-number">10</span>; } <span class="hljs-comment">// lista di inizializzaione delle classi basi e dei dati membro</span>
+};
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+	<span class="hljs-function"><span class="hljs-keyword">const</span> S <span class="hljs-title">sc</span><span class="hljs-params">(<span class="hljs-number">5</span>)</span>
+	sc.v </span>= <span class="hljs-number">20</span>; <span class="hljs-comment">// errore: 'sc' è const e anche le sue componenti</span>
+
+	<span class="hljs-function">S <span class="hljs-title">s</span><span class="hljs-params">(<span class="hljs-number">5</span>)</span></span>;
+	s.v = <span class="hljs-number">20</span>; <span class="hljs-comment">// legittimo: 's' non è const e 'S::v' non è const</span>
+	s.c = <span class="hljs-number">20</span>; <span class="hljs-comment">// errore: 's' non è const, ma 'S::c' è const</span>
+}
+</code></pre>
+<p>Si noti inoltre che lo stesso oggetto può essere modificabile o meno a seconda del percorso usato per accedervi:</p>
+<pre><code class="language-cpp"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">S</span> {</span> <span class="hljs-keyword">int</span> v; };
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">foo</span><span class="hljs-params">()</span> </span>{
+	S s;
+	s.v = <span class="hljs-number">10</span>; <span class="hljs-comment">// legittimo</span>
+	<span class="hljs-keyword">const</span> S&amp; sr = s; <span class="hljs-comment">// riferimento a 's', qualificato const</span>
+	sr.v = <span class="hljs-number">10</span>; <span class="hljs-comment">// errore: non posso modificare 's' passando da 'sr'.</span>
+}
+</code></pre>
+<p><em><a href="#tipi,%20qualificatori,%20costanti%20letterali">Torna all'indice</a></em></p>
+<hr>
+<h2 id="costanti-letterali" tabindex="-1"><a class="anchor" href="#costanti-letterali" aria-hidden="true"><span class="octicon octicon-link"></span></a> Costanti letterali</h2>
+<p>Il linguaggio mette a disposizione varie sintassi per definire valori costanti; a seconda della sintassi usata, al valore viene associato un tipo specifico, che in alcuni casi dipende dall'implementazione.</p>
+<ul>
+<li>bool: <code>false</code>, <code>true</code></li>
+<li>char:
+<ul>
+<li><code>'a', '3', 'Z', '\n'</code>   (ordinary character literal)</li>
+<li><code>u8'a', u8'3'</code> (UTF-8 character literal)</li>
+</ul>
+</li>
+<li>signed char, unsigned char: <code>&lt;nessuna&gt;</code></li>
+<li>char16_t: <code>u'a'</code>, <code>u'3' </code>  (prefisso case sensitive)</li>
+<li>char32_t: <code>U'a'</code>, <code>U'3'</code>   (prefisso case sensitive)</li>
+<li>wchar_t:  <code>L'a'</code>, <code>L'3'</code>   (prefisso case sensitive)</li>
+<li>short, unsigned short: <code>&lt;nessuna&gt;</code></li>
+<li>int: <code>12345</code></li>
+</ul>
+<p><em><a href="#tipi,%20qualificatori,%20costanti%20letterali">Torna all'indice</a></em></p>
+<hr>
+<h3 id="note-varie" tabindex="-1"><a class="anchor" href="#note-varie" aria-hidden="true"><span class="octicon octicon-link"></span></a> Note varie</h3>
+<ul>
+<li>
+<p>L'elenco NON è esaustivo; serve a dare un'idea delle potenziali complicazioni.
+Per esempio, nel caso degli interi consideriamo solo la sintassi decimale, ma esistono anche:</p>
+<ul>
+<li>la sintassi binaria (<code>0b1100</code>, che rappresenta il numero decimale 12)</li>
+<li>la sintassi ottale (<code>014</code>, che rappresenta il numero decimale 12)</li>
+<li>la sintassi esadecimale (<code>0xC</code>, che rappresenta il numero decimale 12)</li>
+</ul>
+</li>
+<li>
+<p>In assenza di suffissi <code>(U, L, LL)</code> ad una costante <em>decimale</em> intera viene attribuito il <em>primo</em> tipo tra <code>int</code>, <code>long</code> e <code>long long</code> che sia in grado di rappresentarne il valore. Il tipo dipende quindi dalla particolare implementazione utilizzata: ad un valore molto grande può essere assegnato il tipo <code>long</code> o<code> long long</code>.</p>
+</li>
+<li>
+<p>Le regole per le altre sintassi (booleana, ottale, esadecimale) prendono in considerazione anche i tipi <code>unsigned</code>.</p>
+</li>
+<li>
+<p>I suffissi delle costanti intere e floating point sono case insensitive; le convenzioni di solito privilegiano la versione maiuscola (raramente la minuscola) per maggiore leggibilità.</p>
+</li>
+</ul>
+<p><em><a href="#tipi,%20qualificatori,%20costanti%20letterali">Torna all'indice</a></em></p>
+<hr>
+<h3 id="altre-costanti-letterali" tabindex="-1"><a class="anchor" href="#altre-costanti-letterali" aria-hidden="true"><span class="octicon octicon-link"></span></a> Altre costanti letterali</h3>
+<p>In presenza del suffisso <code>U</code>, si sceglie la variante <code>unsigned</code>.
+In presenza del suffisso <code>L</code>, l'ampiezza è scelta tra <code>long</code> e <code>long long</code>.
+In presenza del suffisso <code>LL</code>, l'ampiezza è <code>long long</code>.
+Il suffisso U può comparire insieme a <code>L o </code>LL`.</p>
+<p>Per i <strong><em>floating point</em></strong> si può scegliere tra notazione decimale e "scientifica":</p>
+<ul>
+<li>float: <code>123.45F</code>, <code>1.2345e2F</code></li>
+<li>double: <code>123.45</code>, <code>1.2345e2</code></li>
+<li>long double: <code>123.45L</code>, <code>1.2345e2L</code></li>
+<li>void: <code>&lt;nessuna&gt;</code></li>
+<li>std::nullptr_t: <code>nullptr</code></li>
+<li>Letterali stringa: <code>"Hello"</code></li>
+</ul>
+<p>Il tipo associato al letterale è <code>const char[6]</code>, cioè un array di 6 caratteri costanti (5 + 1 per il terminatore 0).
+E' possibile specificare un prefisso di encoding <code>(u8, u, U, L)</code> come nel caso delle costanti carattere, che modifica in modo analogo il tipo degli elementi dell'array.</p>
+<p>Nel nuovo standard sono stati implementati anche i letterali di stringa grezza (raw string literal), che utilizzano il prefisso R, un delimitatore a scelta e le parentesi tonde, come segue:
+<code>R"DELIMITATORE(...)DELIMITATORE"</code></p>
+<p>Al posto dei ... è possibile inserire qualunque tipo di carattere escludendo le stringhe "DELIMITATORE(" e ")DELIMITATORE", ad esempio posso scrivere:
+<code>R"$(Esempio di scrittura all'interno della stringa)$"</code></p>
+<p><em><a href="#tipi,%20qualificatori,%20costanti%20letterali">Torna all'indice</a></em></p>
+<hr>
+<h2 id="user-defined-literal" tabindex="-1"><a class="anchor" href="#user-defined-literal" aria-hidden="true"><span class="octicon octicon-link"></span></a> User Defined Literal</h2>
+<p>Il $C$++ 2011 ha reso possibile anche la definizione dei cosiddetti letterali definiti dall'utente.
+Si tratta di una notazione che consente di aggiungere ad un letterale (intero, floating o stringa) un suffisso definito dall'utente: il letterale verrà usato come argomento per invocare una funzione di conversione implicita definita anch'essa dall'utente.</p>
+<p>Per esempio, a partire dal $C$++ 2014, il tipo di dato delle stringhe stile $C$++ (<code>std::string</code>) fornisce la possibilità di usare il suffisso <code>'s'</code> per indicare che un letterale stringa deve essere convertito in <code>std::string</code>.
+L'operatore di conversione è definito nel namespace <code>std::literals</code>, per cui</p>
+<pre><code class="language-cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+	<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std::literals;
+	std::cout &lt;&lt; <span class="hljs-string">"Hello"</span>;  <span class="hljs-comment">// stampa la stringa C   (tipo const char[6])</span>
+	std::cout &lt;&lt; <span class="hljs-string">"Hello"</span>s; <span class="hljs-comment">// stampa la stringa C++ (tipo std::string)</span>
+}
+</code></pre>
+<p><em><a href="#tipi,%20qualificatori,%20costanti%20letterali">Torna all'indice</a></em></p>
+<hr>
+<h2 id="gli-alias-di-tipo" tabindex="-1"><a class="anchor" href="#gli-alias-di-tipo" aria-hidden="true"><span class="octicon octicon-link"></span></a> Gli alias di tipo</h2>
+<p>Gli alias di tipo, implementati dopo il 2011, utilizzano la keyword <code>using</code> e sono utili per riuscire a creare un codice più ordinato, seguendo la filosofia <em>"write once"</em>.</p>
+<pre><code class="language-cpp"><span class="hljs-keyword">using</span> typeAlias = <span class="hljs-keyword">int</span>; 
+<span class="hljs-comment">// in questo caso `typeAlias` sarà un alias per i tipi interi</span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{
+	typeAlias x = <span class="hljs-number">1</span>; <span class="hljs-comment">// il tipo di `x` sarà quello attribuito a `typeAlias`</span>
+}
+</code></pre>
+<p>L'utilizzo degli alias può tornare utile in codici lunghi e complessi così da non riscontrare problemi nel caso in cui avvenagano dei cambiamenti di tipo.</p>
+<pre><code class="language-cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+
+<span class="hljs-keyword">using</span> typeAlias = <span class="hljs-keyword">int</span>;
+
+<span class="hljs-function">typeAlias <span class="hljs-title">fact</span><span class="hljs-params">(typeAlias n)</span></span>{
+	<span class="hljs-keyword">if</span>(n == <span class="hljs-number">0</span>)
+		<span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+	<span class="hljs-keyword">return</span> n * <span class="hljs-built_in">fact</span>(n - <span class="hljs-number">1</span>);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{
+	<span class="hljs-keyword">for</span>(typeAlias i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++){
+		std::coutv&lt;&lt; <span class="hljs-string">"fact("</span> &lt;&lt; i &lt;&lt; <span class="hljs-string">") = "</span> &lt;&lt;<span class="hljs-built_in">fact</span>(i) &lt;&lt;std::endl;
+	}
+	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>Gli alias seguono lo scope del blocco in cui si trovano.</p>
+<p><em><a href="#tipi,%20qualificatori,%20costanti%20letterali">Torna all'indice</a></em></p>
+<hr>
+<h2 id="la-keyword-auto" tabindex="-1"><a class="anchor" href="#la-keyword-auto" aria-hidden="true"><span class="octicon octicon-link"></span></a> La keyword auto</h2>
+<p>Nel 2011 è stata attribuita la keyword <code>auto</code>, che precedentemente aveva un altro utilizzo, per inizializzazione di una varibile senza esplicitarne il tipo.</p>
+<pre><code class="language-cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{
+	<span class="hljs-keyword">auto</span> a = <span class="hljs-number">1</span>; <span class="hljs-comment">// `a` è di tipo intero</span>
+}
+</code></pre>
+<p><em><a href="#tipi,%20qualificatori,%20costanti%20letterali">Torna all'indice</a></em></p>
+<hr>
+<h2 id="la-libreria-gmp" tabindex="-1"><a class="anchor" href="#la-libreria-gmp" aria-hidden="true"><span class="octicon octicon-link"></span></a> La libreria GMP</h2>
+<p>Molto spesso i tipi di dato implementati non sono sufficienti per rappresentare le informazioni richieste. Per riuscire a capire qual è il valore massimo che può essere rappresentato si può fare come segue:</p>
+<pre><code class="language-cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;limits&gt;</span></span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{
+	
+	std::cout &lt;&lt; <span class="hljs-string">"Il valore massimo rappresentabile da un intero e' "</span> &lt;&lt; std::numeric_limits&lt;<span class="hljs-keyword">int</span>&gt;::<span class="hljs-built_in">max</span>() &lt;&lt; std::endl;
+	
+	std::cout &lt;&lt; <span class="hljs-string">"Il valore massimo rappresentabile da un long e' "</span> &lt;&lt; std::numeric_limits&lt;<span class="hljs-keyword">long</span>&gt;::<span class="hljs-built_in">max</span>() &lt;&lt; std::endl;
+	
+	std::cout &lt;&lt; <span class="hljs-string">"Il valore massimo rappresentabile da un long long e' "</span> &lt;&lt; std::numeric_limits&lt;<span class="hljs-keyword">long</span>&gt;::<span class="hljs-built_in">max</span>() &lt;&lt; std::endl;
+	
+	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>Per "superare" i limiti imposti dai qualificatori di base si possono utilizzare delle librerie apposite. Una di queste è <em><a href="https://gmplib.org/">GNU (multiple precision library)</a></em>: una libreria open-source che permette di allocare spazio sulla ram per riuscire a rappresentare i numeri richiesti.
+Un esempio pratico:</p>
+<pre><code class="language-cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;limits&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;gmpxx.h&gt;</span> <span class="hljs-comment">// "interfaccia" per C++</span></span>
+
+<span class="hljs-keyword">using</span> typeAlias = mpz_class; <span class="hljs-comment">// sfrutto un alias</span>
+
+<span class="hljs-function">typeAlias <span class="hljs-title">fact</span><span class="hljs-params">(typeAlias n)</span></span>{
+	<span class="hljs-keyword">if</span>(n == <span class="hljs-number">0</span>)
+		<span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+	<span class="hljs-keyword">return</span> n * <span class="hljs-built_in">fact</span>(n - <span class="hljs-number">1</span>);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{
+	  
+	<span class="hljs-keyword">for</span>(typeAlias i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">50</span>; i++)
+		std::cout &lt;&lt; <span class="hljs-string">"fact("</span> &lt;&lt; i &lt;&lt; <span class="hljs-string">") = "</span> &lt;&lt; <span class="hljs-built_in">fact</span>(i) &lt;&lt; std::endl;
+	
+	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>In fase di compilazione devo esplicitare le librerie:</p>
+<ul>
+<li><code>gmpxx</code></li>
+<li><code>gmp</code> (libreria $C$)</li>
+</ul>
+<pre><code class="language-bash">g++ -Wall -Wextra -o fact fact.cpp -lgmpxx -lgmp
+</code></pre>
+<p><em><a href="#tipi,%20qualificatori,%20costanti%20letterali">Torna all'indice</a></em></p>
+
+		</main>
+	</body>
+</html>

@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+		<title>11-lvalue_rvalue</title>
+		<style>
+			/* PDF Specific */
+
+@media print {
+  body {
+    min-width: initial;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+}
+
+/* General */
+
+.octicon {
+  display: inline-block;
+  fill: currentColor;
+  vertical-align: text-bottom;
+}
+
+.anchor {
+  float: left;
+  line-height: 1;
+  margin-left: -20px;
+  padding-right: 4px;
+}
+
+.anchor:focus {
+  outline: none;
+}
+
+h1 .octicon-link,
+h2 .octicon-link,
+h3 .octicon-link,
+h4 .octicon-link,
+h5 .octicon-link,
+h6 .octicon-link {
+  color: #1b1f23;
+  vertical-align: middle;
+  visibility: hidden;
+}
+
+h1:hover .anchor,
+h2:hover .anchor,
+h3:hover .anchor,
+h4:hover .anchor,
+h5:hover .anchor,
+h6:hover .anchor {
+  text-decoration: none;
+}
+
+h1:hover .anchor .octicon-link,
+h2:hover .anchor .octicon-link,
+h3:hover .anchor .octicon-link,
+h4:hover .anchor .octicon-link,
+h5:hover .anchor .octicon-link,
+h6:hover .anchor .octicon-link {
+  visibility: visible;
+}
+
+h1:hover .anchor .octicon-link:before,
+h2:hover .anchor .octicon-link:before,
+h3:hover .anchor .octicon-link:before,
+h4:hover .anchor .octicon-link:before,
+h5:hover .anchor .octicon-link:before,
+h6:hover .anchor .octicon-link:before {
+  width: 16px;
+  height: 16px;
+  content: ' ';
+  display: inline-block;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' version='1.1' width='16' height='16' aria-hidden='true'%3E%3Cpath fill-rule='evenodd' d='M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z'%3E%3C/path%3E%3C/svg%3E");
+}
+
+body {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -webkit-print-color-adjust: exact;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
+    sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #24292e;
+  word-wrap: break-word;
+  box-sizing: border-box;
+  min-width: 200px;
+  max-width: 980px;
+  margin: 1rem auto;
+}
+
+details {
+  display: block;
+}
+
+summary {
+  display: list-item;
+}
+
+a {
+  background-color: initial;
+}
+
+a:active,
+a:hover {
+  outline-width: 0;
+}
+
+strong {
+  font-weight: inherit;
+  font-weight: bolder;
+}
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+img {
+  border-style: none;
+}
+
+code,
+kbd,
+pre {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+hr {
+  box-sizing: initial;
+  height: 0;
+  overflow: visible;
+}
+
+input {
+  font: inherit;
+  margin: 0;
+}
+
+input {
+  overflow: visible;
+}
+
+[type='checkbox'] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+input {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+a {
+  color: #0366d6;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+strong {
+  font-weight: 600;
+}
+
+hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #dfe2e5;
+}
+
+hr:after,
+hr:before {
+  display: table;
+  content: '';
+}
+
+hr:after {
+  clear: both;
+}
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+td,
+th {
+  padding: 0;
+}
+
+details summary {
+  cursor: pointer;
+}
+
+kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #d1d5da;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+h1 {
+  font-size: 32px;
+}
+
+h1,
+h2 {
+  font-weight: 600;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+h3 {
+  font-size: 20px;
+}
+
+h3,
+h4 {
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h5,
+h6 {
+  font-weight: 600;
+}
+
+h6 {
+  font-size: 12px;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+blockquote {
+  margin: 0;
+}
+
+ol,
+ul {
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+ol ol,
+ul ol {
+  list-style-type: lower-roman;
+}
+
+ol ol ol,
+ol ul ol,
+ul ol ol,
+ul ul ol {
+  list-style-type: lower-alpha;
+}
+
+dd {
+  margin-left: 0;
+}
+
+code,
+pre {
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 12px;
+}
+
+pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+:checked + .radio-label {
+  position: relative;
+  z-index: 1;
+  border-color: #0366d6;
+}
+
+.border {
+  border: 1px solid #e1e4e8 !important;
+}
+
+.border-0 {
+  border: 0 !important;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #e1e4e8 !important;
+}
+
+.rounded-1 {
+  border-radius: 3px !important;
+}
+
+.bg-white {
+  background-color: #fff !important;
+}
+
+.bg-gray-light {
+  background-color: #fafbfc !important;
+}
+
+.text-gray-light {
+  color: #6a737d !important;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+
+.my-2 {
+  margin-top: 8px !important;
+  margin-bottom: 8px !important;
+}
+
+.pl-0 {
+  padding-left: 0 !important;
+}
+
+.py-0 {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.pl-1 {
+  padding-left: 4px !important;
+}
+
+.pl-2 {
+  padding-left: 8px !important;
+}
+
+.py-2 {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+.pl-3,
+.px-3 {
+  padding-left: 16px !important;
+}
+
+.px-3 {
+  padding-right: 16px !important;
+}
+
+.pl-4 {
+  padding-left: 24px !important;
+}
+
+.pl-5 {
+  padding-left: 32px !important;
+}
+
+.pl-6 {
+  padding-left: 40px !important;
+}
+
+.f6 {
+  font-size: 12px !important;
+}
+
+.lh-condensed {
+  line-height: 1.25 !important;
+}
+
+.text-bold {
+  font-weight: 600 !important;
+}
+
+.pl-c {
+  color: #6a737d;
+}
+
+.pl-c1,
+.pl-s .pl-v {
+  color: #005cc5;
+}
+
+.pl-e,
+.pl-en {
+  color: #6f42c1;
+}
+
+.pl-s .pl-s1,
+.pl-smi {
+  color: #24292e;
+}
+
+.pl-ent {
+  color: #22863a;
+}
+
+.pl-k {
+  color: #d73a49;
+}
+
+.pl-pds,
+.pl-s,
+.pl-s .pl-pse .pl-s1,
+.pl-sr,
+.pl-sr .pl-cce,
+.pl-sr .pl-sra,
+.pl-sr .pl-sre {
+  color: #032f62;
+}
+
+.pl-smw,
+.pl-v {
+  color: #e36209;
+}
+
+.pl-bu {
+  color: #b31d28;
+}
+
+.pl-ii {
+  color: #fafbfc;
+  background-color: #b31d28;
+}
+
+.pl-c2 {
+  color: #fafbfc;
+  background-color: #d73a49;
+}
+
+.pl-c2:before {
+  content: '^M';
+}
+
+.pl-sr .pl-cce {
+  font-weight: 700;
+  color: #22863a;
+}
+
+.pl-ml {
+  color: #735c0f;
+}
+
+.pl-mh,
+.pl-mh .pl-en,
+.pl-ms {
+  font-weight: 700;
+  color: #005cc5;
+}
+
+.pl-mi {
+  font-style: italic;
+  color: #24292e;
+}
+
+.pl-mb {
+  font-weight: 700;
+  color: #24292e;
+}
+
+.pl-md {
+  color: #b31d28;
+  background-color: #ffeef0;
+}
+
+.pl-mi1 {
+  color: #22863a;
+  background-color: #f0fff4;
+}
+
+.pl-mc {
+  color: #e36209;
+  background-color: #ffebda;
+}
+
+.pl-mi2 {
+  color: #f6f8fa;
+  background-color: #005cc5;
+}
+
+.pl-mdr {
+  font-weight: 700;
+  color: #6f42c1;
+}
+
+.pl-ba {
+  color: #586069;
+}
+
+.pl-sg {
+  color: #959da5;
+}
+
+.pl-corl {
+  text-decoration: underline;
+  color: #032f62;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+
+.my-2 {
+  margin-bottom: 8px !important;
+}
+
+.my-2 {
+  margin-top: 8px !important;
+}
+
+.pl-0 {
+  padding-left: 0 !important;
+}
+
+.py-0 {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.pl-1 {
+  padding-left: 4px !important;
+}
+
+.pl-2 {
+  padding-left: 8px !important;
+}
+
+.py-2 {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+.pl-3 {
+  padding-left: 16px !important;
+}
+
+.pl-4 {
+  padding-left: 24px !important;
+}
+
+.pl-5 {
+  padding-left: 32px !important;
+}
+
+.pl-6 {
+  padding-left: 40px !important;
+}
+
+.pl-7 {
+  padding-left: 48px !important;
+}
+
+.pl-8 {
+  padding-left: 64px !important;
+}
+
+.pl-9 {
+  padding-left: 80px !important;
+}
+
+.pl-10 {
+  padding-left: 96px !important;
+}
+
+.pl-11 {
+  padding-left: 112px !important;
+}
+
+.pl-12 {
+  padding-left: 128px !important;
+}
+
+hr {
+  border-bottom-color: #eee;
+}
+
+kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #d1d5da;
+}
+
+body:after,
+body:before {
+  display: table;
+  content: '';
+}
+
+body:after {
+  clear: both;
+}
+
+body > :first-child {
+  margin-top: 0 !important;
+}
+
+body > :last-child {
+  margin-bottom: 0 !important;
+}
+
+a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+blockquote,
+details,
+dl,
+ol,
+p,
+pre,
+table,
+ul {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+hr {
+  height: 0.25em;
+  padding: 0;
+  margin: 24px 0;
+  background-color: #e1e4e8;
+  border: 0;
+}
+
+blockquote {
+  padding: 0 1em;
+  color: #6a737d;
+  border-left: 0.25em solid #dfe2e5;
+}
+
+blockquote > :first-child {
+  margin-top: 0;
+}
+
+blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+h1,
+h2 {
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid #eaecef;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
+  font-size: 1.25em;
+}
+
+h4 {
+  font-size: 1em;
+}
+
+h5 {
+  font-size: 0.875em;
+}
+
+h6 {
+  font-size: 0.85em;
+  color: #6a737d;
+}
+
+ol,
+ul {
+  padding-left: 2em;
+}
+
+ol ol,
+ol ul,
+ul ol,
+ul ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+li {
+  word-wrap: break-all;
+}
+
+li > p {
+  margin-top: 16px;
+}
+
+li + li {
+  margin-top: 0.25em;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: 600;
+}
+
+dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+}
+
+table th {
+  font-weight: 600;
+}
+
+table td,
+table th {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+table tr {
+  background-color: #fff;
+  border-top: 1px solid #c6cbd1;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+img {
+  max-width: 80%;
+  box-sizing: initial;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #fff;
+}
+
+code {
+  padding: 0.2em 0.4em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(27, 31, 35, 0.05);
+  border-radius: 3px;
+}
+
+pre {
+  word-wrap: normal;
+}
+
+pre > code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #333;
+  -webkit-print-color-adjust: exact;
+  background: #f8f8f8;
+}
+
+.hljs pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.hljs pre,
+pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f6f8fa;
+  -webkit-print-color-adjust: exact;
+
+  border-radius: 3px;
+}
+
+pre code {
+  display: inline;
+  max-width: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: initial;
+  border: 0;
+}
+
+.commit-tease-sha {
+  display: inline-block;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 90%;
+  color: #444d56;
+}
+
+.full-commit .btn-outline:not(:disabled):hover {
+  color: #005cc5;
+  border-color: #005cc5;
+}
+
+.blob-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.blob-wrapper-embedded {
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.blob-num {
+  width: 1%;
+  min-width: 50px;
+  padding-right: 10px;
+  padding-left: 10px;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 12px;
+  line-height: 20px;
+  color: rgba(27, 31, 35, 0.3);
+  text-align: right;
+  white-space: nowrap;
+  vertical-align: top;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.blob-num:hover {
+  color: rgba(27, 31, 35, 0.6);
+}
+
+.blob-num:before {
+  content: attr(data-line-number);
+}
+
+.blob-code {
+  position: relative;
+  padding-right: 10px;
+  padding-left: 10px;
+  line-height: 20px;
+  vertical-align: top;
+}
+
+.blob-code-inner {
+  overflow: visible;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 12px;
+  color: #24292e;
+  word-wrap: normal;
+  white-space: pre;
+}
+
+.pl-token.active,
+.pl-token:hover {
+  cursor: pointer;
+  background: #ffea7f;
+}
+
+.tab-size[data-tab-size='1'] {
+  -moz-tab-size: 1;
+  tab-size: 1;
+}
+
+.tab-size[data-tab-size='2'] {
+  -moz-tab-size: 2;
+  tab-size: 2;
+}
+
+.tab-size[data-tab-size='3'] {
+  -moz-tab-size: 3;
+  tab-size: 3;
+}
+
+.tab-size[data-tab-size='4'] {
+  -moz-tab-size: 4;
+  tab-size: 4;
+}
+
+.tab-size[data-tab-size='5'] {
+  -moz-tab-size: 5;
+  tab-size: 5;
+}
+
+.tab-size[data-tab-size='6'] {
+  -moz-tab-size: 6;
+  tab-size: 6;
+}
+
+.tab-size[data-tab-size='7'] {
+  -moz-tab-size: 7;
+  tab-size: 7;
+}
+
+.tab-size[data-tab-size='8'] {
+  -moz-tab-size: 8;
+  tab-size: 8;
+}
+
+.tab-size[data-tab-size='9'] {
+  -moz-tab-size: 9;
+  tab-size: 9;
+}
+
+.tab-size[data-tab-size='10'] {
+  -moz-tab-size: 10;
+  tab-size: 10;
+}
+
+.tab-size[data-tab-size='11'] {
+  -moz-tab-size: 11;
+  tab-size: 11;
+}
+
+.tab-size[data-tab-size='12'] {
+  -moz-tab-size: 12;
+  tab-size: 12;
+}
+
+.task-list-item {
+  list-style-type: none;
+}
+
+.task-list-item + .task-list-item {
+  margin-top: 3px;
+}
+
+.task-list-item input {
+  margin: 0 0.2em 0.25em -1.6em;
+  vertical-align: middle;
+}
+/*
+github.com style (c) Vasily Polovnyov <vast@whiteants.net>
+*/
+  
+  .hljs-comment,
+  .hljs-quote {
+    color: #998;
+    font-style: italic;
+  }
+  
+  .hljs-keyword,
+  .hljs-selector-tag,
+  .hljs-subst {
+    color: #333;
+    font-weight: bold;
+  }
+  
+  .hljs-number,
+  .hljs-literal,
+  .hljs-variable,
+  .hljs-template-variable,
+  .hljs-tag .hljs-attr {
+    color: #008080;
+  }
+  
+  .hljs-string,
+  .hljs-doctag {
+    color: #d14;
+  }
+  
+  .hljs-title,
+  .hljs-section,
+  .hljs-selector-id {
+    color: #900;
+    font-weight: bold;
+  }
+  
+  .hljs-subst {
+    font-weight: normal;
+  }
+  
+  .hljs-type,
+  .hljs-class .hljs-title {
+    color: #458;
+    font-weight: bold;
+  }
+  
+  .hljs-tag,
+  .hljs-name,
+  .hljs-attribute {
+    color: #000080;
+    font-weight: normal;
+  }
+  
+  .hljs-regexp,
+  .hljs-link {
+    color: #009926;
+  }
+  
+  .hljs-symbol,
+  .hljs-bullet {
+    color: #990073;
+  }
+  
+  .hljs-built_in,
+  .hljs-builtin-name {
+    color: #0086b3;
+  }
+  
+  .hljs-meta {
+    color: #999;
+    font-weight: bold;
+  }
+  
+  .hljs-deletion {
+    background: #fdd;
+  }
+  
+  .hljs-addition {
+    background: #dfd;
+  }
+  
+  .hljs-emphasis {
+    font-style: italic;
+  }
+  
+  .hljs-strong {
+    font-weight: bold;
+  }
+		</style>
+<script> MathJax = { tex: { inlineMath: [["$", "$"]] } }; </script>
+<script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+	</head>
+	<body>
+		<nav id="table-of-contents">
+			<ul><li><a href="#lvalue-e-rvalue"> lvalue e rvalue</a><ul><li><a href="#categorie-di-espressioni-lvalue-e-rvalue"> Categorie di espressioni: lvalue e rvalue</a><ul><li><a href="#xvalue"> xvalue</a></li><li><a href="#prvalue"> prvalue</a></li></ul></li><li><a href="#lvalue-vs-rvalue"> lvalue vs rvalue</a></li><li><a href="#la-funzione-stdmove"> La funzione std::move</a></li></ul></li></ul>
+		</nav>
+		<main>
+			<h1 id="lvalue-e-rvalue" tabindex="-1"><a class="anchor" href="#lvalue-e-rvalue" aria-hidden="true"><span class="octicon octicon-link"></span></a> lvalue e rvalue</h1>
+<pre><code class="language-toc"></code></pre>
+<hr>
+<h2 id="categorie-di-espressioni-lvalue-e-rvalue" tabindex="-1"><a class="anchor" href="#categorie-di-espressioni-lvalue-e-rvalue" aria-hidden="true"><span class="octicon octicon-link"></span></a> Categorie di espressioni: lvalue e rvalue</h2>
+<p>Le espressioni del $C$++ possono essere classificate in
+a) <strong>lvalue</strong>  (<em>left</em> value)
+b) <strong>xvalue</strong>  (<em>expiring</em> lvalue)
+c) <strong>prvalue</strong> (<em>primitive</em> rvalue)</p>
+<p>L'unione di lvalue e xvalue forma i <mark style="background: #FFF3A3A6;">glvalue</mark> (generalized lvalue).
+L'unione di xvalue e prvalue forma gli <mark style="background: #FFB8EBA6;">rvalue</mark> (right value).</p>
+<p>Intuitivamente, un glvalue è una espressione che permette di stabilire l'identità di un oggetto in memoria. Il nome "left value", in origine, indicava che tali espressioni potevano comparire a sinistra dell'operatore di assegnamento.</p>
+<p>Esempio:</p>
+<pre><code class="language-cpp"><span class="hljs-keyword">int</span> i;
+<span class="hljs-keyword">int</span> ai[<span class="hljs-number">10</span>];
+i = <span class="hljs-number">7</span>;     <span class="hljs-comment">// l'espressione i è un lvalue (e quindi un glvalue)</span>
+ai[<span class="hljs-number">5</span>] = <span class="hljs-number">7</span>; <span class="hljs-comment">// l'espressione ai[5] è un lvalue (e quindi un glvalue)</span>
+</code></pre>
+<p><img src="images/lvalue_rvalue.png" alt="lvalue_rvalue.png"></p>
+<blockquote>
+<p><em>m</em>: movable
+<em>i</em>: has identity</p>
+</blockquote>
+<p><a href="#lvalue%20e%20rvalue"><em>Torna all'indice</em></a></p>
+<hr>
+<h3 id="xvalue" tabindex="-1"><a class="anchor" href="#xvalue" aria-hidden="true"><span class="octicon octicon-link"></span></a> xvalue</h3>
+<p>Un <mark style="background: #ABF7F7A6;">xvalue</mark> è un glvalue che denota un oggetto le cui risorse possono essere riutilizzate, tipicamente perché sta terminando il suo lifetime (expiring lvalue).
+Un lvalue è un glvalue che non sia un xvalue.</p>
+<p>Esempio:</p>
+<pre><code class="language-cpp"><span class="hljs-function">Matrix <span class="hljs-title">foo1</span><span class="hljs-params">()</span> </span>{
+	Matrix m;
+	<span class="hljs-comment">// ... codice</span>
+	<span class="hljs-keyword">return</span> m; <span class="hljs-comment">// l'espressione m è un xvalue</span>
+}
+</code></pre>
+<p><code>m</code> verrà distrutto automaticamente in uscita dal blocco nel quale è stato creato; il valore ritornato dalla funzione non è <code>m</code>, ma una sua "copia".</p>
+<pre><code class="language-cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">foo2</span><span class="hljs-params">()</span> </span>{
+	Matrix m1;
+	m1 = <span class="hljs-built_in">foo1</span>();    <span class="hljs-comment">// l'espressione foo1(), cioè il risultato ottenuto           </span>
+					<span class="hljs-comment">// dalla chiamata di funzione, è un xvalue</span>
+}
+</code></pre>
+<p>La soluzione del $C$++11 prevede non di copiare gli xvalue, ma di spostarli in una nuova locazione, dato che questi non sono più richiesti dalla funzione chiamata.
+In particolare, non adottando questo approccio, le copie sarebbero due:</p>
+<ul>
+<li><code>m</code> viene copiato nella locazione di ritorno della funzione <code>foo1()</code></li>
+<li>l'oggetto <a href="04-lifetime#allocazione%20automatica%20di%20temporanei">temporaneo</a> restituito da <code>foo1()</code> viene copiato in <code>m1</code></li>
+</ul>
+<p><a href="#lvalue%20e%20rvalue"><em>Torna all'indice</em></a></p>
+<hr>
+<h3 id="prvalue" tabindex="-1"><a class="anchor" href="#prvalue" aria-hidden="true"><span class="octicon octicon-link"></span></a> prvalue</h3>
+<p>Un prvalue è una espressione che denota un valore "primitivo", ovvero un valore costante o il risultato di una computazione.
+Il nome <mark style="background: #FFB86CA6;">"right value"</mark>, in origine, indicava che tali espressioni potevano comparire <em>solo</em> a destra dell'operatore di assegnamento (ovvero, espressioni che darebbero errore se comparissero a sinistra).
+Intuitivamente, un prvalue <em>NON</em> identifica un oggetto in memoria e quindi non è lecito assegnarvi un valore e non ha nemmeno senso prenderne l'indirizzo.</p>
+<p>Esempio:</p>
+<pre><code class="language-cpp"><span class="hljs-keyword">int</span> i;
+i = <span class="hljs-number">5</span>;     <span class="hljs-comment">// l'espressione 5 è un prvalue (e quindi un rvalue)</span>
+i = <span class="hljs-number">4</span> + <span class="hljs-number">1</span>; <span class="hljs-comment">// l'espressione 4 + 1 è un prvalue (e quindi un rvalue)</span>
+i = i + <span class="hljs-number">1</span>; <span class="hljs-comment">// l'espressione i + 1 è un prvalue (e quindi un rvalue)</span>
+</code></pre>
+<blockquote>
+<p>In alcuni casi, un prvalue può essere "materializzato", creando un oggetto temporaneo (un lvalue) che viene inizializzato con il valore del prvalue. Questo è quello che succede, per esempio, quando ad una funzione che ha un argomento di tipo riferimento a costante viene passato un prvalue.</p>
+</blockquote>
+<p>Esempio:</p>
+<pre><code class="language-cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">foo</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">double</span>&amp; d)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">bar</span><span class="hljs-params">()</span> </span>{
+	<span class="hljs-built_in">foo</span>(<span class="hljs-number">0.5</span>);
+}
+</code></pre>
+<p>Qui sopra <code>0.5</code> è un rvalue; viene materializzato in un oggetto temporaneo (un lvalue) con cui viene inizializzato il riferimento a lvalue <code>d</code>.</p>
+<p>La classificazione delle espressioni in lvalue, xvalue e prvalue è rilevante per capire la differenza tra riferimenti a lvalue (<code>T&amp;</code>) e riferimenti a rvalue (<code>T&amp;&amp;</code>).
+Questi ultimi sono stati introdotti nel $C$++11 per risolvere problemi tecnici del linguaggio che impedivano di fornire implementazioni efficienti per alcuni costrutti.</p>
+<p><a href="#lvalue%20e%20rvalue"><em>Torna all'indice</em></a></p>
+<hr>
+<h2 id="lvalue-vs-rvalue" tabindex="-1"><a class="anchor" href="#lvalue-vs-rvalue" aria-hidden="true"><span class="octicon octicon-link"></span></a> lvalue vs rvalue</h2>
+<p>Nel $C$++ 2003, ogni classe era fornita (se non veniva fatto qualcosa per disabilitarle) di 4 funzioni speciali:</p>
+<ul>
+<li>costruttore di default</li>
+<li>costruttore di copia</li>
+<li>assegnamento per copia</li>
+<li>distruttore</li>
+</ul>
+<pre><code class="language-cpp"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Matrix</span> {</span>
+	<span class="hljs-built_in">Matrix</span>();  <span class="hljs-comment">// costruttore di default</span>
+	~<span class="hljs-built_in">Matrix</span>(); <span class="hljs-comment">// distruttore</span>
+
+	<span class="hljs-built_in">Matrix</span>(<span class="hljs-keyword">const</span> Matrix&amp;);            <span class="hljs-comment">// costr. di copia (copy ctor)</span>
+	Matrix&amp; <span class="hljs-keyword">operator</span>=(<span class="hljs-keyword">const</span> Matrix&amp;); <span class="hljs-comment">// assegn. per copia (copy assign.)</span>
+
+	<span class="hljs-comment">// ... altro</span>
+};
+</code></pre>
+<p>Una funzione che avesse voluto prendere in input un oggetto <code>Matrix</code> e produrre in output una sua variante modificata (senza modificare l'oggetto fornito in input), doveva tipicamente ricevere l'argomento per riferimento a costante e produrre il risultato per valore:</p>
+<pre><code class="language-cpp"><span class="hljs-function">Matrix <span class="hljs-title">bar</span><span class="hljs-params">(<span class="hljs-keyword">const</span> Matrix&amp; arg)</span> </span>{
+	Matrix res = arg; <span class="hljs-comment">// copia (1)</span>
+	<span class="hljs-comment">// modifica di res</span>
+	<span class="hljs-keyword">return</span> res; <span class="hljs-comment">// ritorna una copia (2)</span>
+}
+</code></pre>
+<p><mark style="background: #FFB8EBA6;">Questo era fonte di inefficienze</mark>, perché:</p>
+<ol>
+<li>Non c'era un modo semplice per il chiamante di comunicare il fatto che, in alcuni casi (non tutti), la risorsa passata in input non era più di suo interesse e quindi poteva essere modificata in loco, invece di effettuare la prima copia.</li>
+<li>Non c'era modo semplice per la funzione per ritornare l'oggetto <code>res</code> senza fare la seconda copia (si noti che non è possibile ritornare per riferimento, perché si creerebbe un dangling reference).</li>
+</ol>
+<p>Nel $C$++11, alle 4 funzioni speciali delle classi ne sono state aggiunti altre due:</p>
+<ul>
+<li>costruttore per spostamento (move constructor), e</li>
+<li>assegnamento per spostamento (move assignement)</li>
+</ul>
+<p>che lavorano su riferimenti a rvalue:</p>
+<pre><code class="language-cpp"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Matrix</span> {</span>
+	<span class="hljs-built_in">Matrix</span>();  <span class="hljs-comment">// costruttore di default</span>
+	~<span class="hljs-built_in">Matrix</span>(); <span class="hljs-comment">// distruttore</span>
+
+	<span class="hljs-built_in">Matrix</span>(<span class="hljs-keyword">const</span> Matrix&amp;);            <span class="hljs-comment">// costr. di copia (copy ctor)</span>
+	Matrix&amp; <span class="hljs-keyword">operator</span>=(<span class="hljs-keyword">const</span> Matrix&amp;); <span class="hljs-comment">// assegn. per copia (copy assign.)</span>
+
+	<span class="hljs-built_in">Matrix</span>(Matrix&amp;&amp;);            <span class="hljs-comment">// costr. per spostamento (move ctor)</span>
+	Matrix&amp; <span class="hljs-keyword">operator</span>=(Matrix&amp;&amp;); <span class="hljs-comment">// assegnam. per spostamento (move assign.)</span>
+
+	<span class="hljs-comment">// ... altro</span>
+};
+</code></pre>
+<p>Intuitivamente, una funzione che riceve come argomento un riferimento a rvalue (<code>Matrix&amp;&amp;</code>) sa che l'oggetto riferito può essere solo un prvalue o un xvalue.
+In entrambi i casi, le risorse contenute nell'oggetto non possono essere utilizzate da altri e quindi possono essere spostate dall'oggetto (si potrebbe dire "rubate" all'oggetto, che ne era il proprietario) invece che copiate, guadagnando in efficienza.</p>
+<p>Riconsideriamo l'esempio precedente, assumendo che sia disponibile il costruttore per spostamento per <code>Matrix</code>:</p>
+<pre><code class="language-cpp"><span class="hljs-function">Matrix <span class="hljs-title">bar</span><span class="hljs-params">(<span class="hljs-keyword">const</span> Matrix&amp; arg)</span> </span>{
+	Matrix res = arg; <span class="hljs-comment">// copia (1)</span>
+	<span class="hljs-comment">// modifica di res</span>
+	<span class="hljs-keyword">return</span> res; <span class="hljs-comment">// sposta (non copia)</span>
+}
+</code></pre>
+<p>Il compilatore si accorge che, nella <code>return res</code>, l'espressione <code>res</code> è un xvalue e quindi utilizza il costruttore di spostamento (invece della copia) per restituirlo al chiamante.</p>
+<p>Volendo, è possibile ottimizzare anche la prima copia, fornendo una versione alternativa (in overloading) della funzione <code>bar</code>:</p>
+<pre><code class="language-cpp"><span class="hljs-function">Matrix <span class="hljs-title">bar</span><span class="hljs-params">(Matrix&amp;&amp; arg)</span> </span>{
+	<span class="hljs-comment">// modifica in loco di arg</span>
+	<span class="hljs-keyword">return</span> arg; <span class="hljs-comment">// sposta (non copia)</span>
+}
+</code></pre>
+<p>Questa seconda versione verrà invocata quando alla funzione viene passato un rvalue (che potrà essere modificato direttamente), mentre la prima versione verrà usata per gli lvalue.</p>
+<p>E' anche possibile fondere le due versioni in una sola, usando il passaggio dell'argomento per valore:</p>
+<pre><code class="language-cpp"><span class="hljs-function">Matrix <span class="hljs-title">bar</span><span class="hljs-params">(Matrix arg)</span> </span>{
+	<span class="hljs-comment">// modifica in loco di arg</span>
+	<span class="hljs-keyword">return</span> arg; <span class="hljs-comment">// sposta (non copia)</span>
+}
+</code></pre>
+<p>In questo terzo caso, all'atto di effettuare il passaggio dell'argomento alla funzione bar, vi sono due possibilità:</p>
+<ol>
+<li>il chiamante fornisce un lvalue: verrà utilizzato il costruttore di copia sull'argomento, comportandosi come nel caso di <code>Matrix bar(const Matrix&amp; arg)</code>;</li>
+<li>il chiamante fornisce un rvalue: verrà utilizzato il costruttore per spostamento, senza copie, come nel caso di <code>Matrix bar(Matrix&amp;&amp; arg)</code>.</li>
+</ol>
+<p><a href="#lvalue%20e%20rvalue"><em>Torna all'indice</em></a></p>
+<hr>
+<h2 id="la-funzione-stdmove" tabindex="-1"><a class="anchor" href="#la-funzione-stdmove" aria-hidden="true"><span class="octicon octicon-link"></span></a> La funzione <code>std::move</code></h2>
+<p>Supponimo che il chiamante si trovi a dovere invocare la funzione <code>bar</code> discussa sopra con un lvalue <code>m</code> di tipo <code>Matrix</code>, ma non è interessato a preservare il valore di <code>m</code> e quindi lo vorrebbe "spostare" nella funzione <code>bar</code>, evitando la copia (costosa e inutile).</p>
+<p>Se si usa la chiamata:</p>
+<pre><code class="language-cpp"><span class="hljs-built_in">bar</span>(m);
+</code></pre>
+<p>siccome <code>m</code> è un lvalue verrebbe comunque invocato (almeno una volta) il costruttore per copia.
+Per evitarla, occorre un modo per convertire il tipo di <code>m</code> da riferimento a lvalue (<code>Matrix&amp;</code>) a riferimento a rvalue (<code>Matrix&amp;&amp;</code>): questo è esattamente l'effetto ottenuto usando la funzione di libreria <code>std::move</code>.</p>
+<pre><code class="language-cpp"><span class="hljs-built_in">bar</span>(std::<span class="hljs-built_in">move</span>(m));
+</code></pre>
+<blockquote>
+<p>Si noti che la <code>std::move(m)</code> NON "muove" nulla: piuttosto, trasformando un lvalue in rvalue, lo rende "movable" (spostabile); lo spostamento vero e proprio viene effettuato durante il passaggio del parametro.</p>
+</blockquote>
+<p><a href="#lvalue%20e%20rvalue"><em>Torna all'indice</em></a></p>
+
+		</main>
+	</body>
+</html>

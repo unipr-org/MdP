@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+		<title>23-classi_dinamiche</title>
+		<style>
+			/* PDF Specific */
+
+@media print {
+  body {
+    min-width: initial;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+}
+
+/* General */
+
+.octicon {
+  display: inline-block;
+  fill: currentColor;
+  vertical-align: text-bottom;
+}
+
+.anchor {
+  float: left;
+  line-height: 1;
+  margin-left: -20px;
+  padding-right: 4px;
+}
+
+.anchor:focus {
+  outline: none;
+}
+
+h1 .octicon-link,
+h2 .octicon-link,
+h3 .octicon-link,
+h4 .octicon-link,
+h5 .octicon-link,
+h6 .octicon-link {
+  color: #1b1f23;
+  vertical-align: middle;
+  visibility: hidden;
+}
+
+h1:hover .anchor,
+h2:hover .anchor,
+h3:hover .anchor,
+h4:hover .anchor,
+h5:hover .anchor,
+h6:hover .anchor {
+  text-decoration: none;
+}
+
+h1:hover .anchor .octicon-link,
+h2:hover .anchor .octicon-link,
+h3:hover .anchor .octicon-link,
+h4:hover .anchor .octicon-link,
+h5:hover .anchor .octicon-link,
+h6:hover .anchor .octicon-link {
+  visibility: visible;
+}
+
+h1:hover .anchor .octicon-link:before,
+h2:hover .anchor .octicon-link:before,
+h3:hover .anchor .octicon-link:before,
+h4:hover .anchor .octicon-link:before,
+h5:hover .anchor .octicon-link:before,
+h6:hover .anchor .octicon-link:before {
+  width: 16px;
+  height: 16px;
+  content: ' ';
+  display: inline-block;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' version='1.1' width='16' height='16' aria-hidden='true'%3E%3Cpath fill-rule='evenodd' d='M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z'%3E%3C/path%3E%3C/svg%3E");
+}
+
+body {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -webkit-print-color-adjust: exact;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
+    sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #24292e;
+  word-wrap: break-word;
+  box-sizing: border-box;
+  min-width: 200px;
+  max-width: 980px;
+  margin: 1rem auto;
+}
+
+details {
+  display: block;
+}
+
+summary {
+  display: list-item;
+}
+
+a {
+  background-color: initial;
+}
+
+a:active,
+a:hover {
+  outline-width: 0;
+}
+
+strong {
+  font-weight: inherit;
+  font-weight: bolder;
+}
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+img {
+  border-style: none;
+}
+
+code,
+kbd,
+pre {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+hr {
+  box-sizing: initial;
+  height: 0;
+  overflow: visible;
+}
+
+input {
+  font: inherit;
+  margin: 0;
+}
+
+input {
+  overflow: visible;
+}
+
+[type='checkbox'] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+input {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+a {
+  color: #0366d6;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+strong {
+  font-weight: 600;
+}
+
+hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #dfe2e5;
+}
+
+hr:after,
+hr:before {
+  display: table;
+  content: '';
+}
+
+hr:after {
+  clear: both;
+}
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+td,
+th {
+  padding: 0;
+}
+
+details summary {
+  cursor: pointer;
+}
+
+kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #d1d5da;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+h1 {
+  font-size: 32px;
+}
+
+h1,
+h2 {
+  font-weight: 600;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+h3 {
+  font-size: 20px;
+}
+
+h3,
+h4 {
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h5,
+h6 {
+  font-weight: 600;
+}
+
+h6 {
+  font-size: 12px;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+blockquote {
+  margin: 0;
+}
+
+ol,
+ul {
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+ol ol,
+ul ol {
+  list-style-type: lower-roman;
+}
+
+ol ol ol,
+ol ul ol,
+ul ol ol,
+ul ul ol {
+  list-style-type: lower-alpha;
+}
+
+dd {
+  margin-left: 0;
+}
+
+code,
+pre {
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 12px;
+}
+
+pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+:checked + .radio-label {
+  position: relative;
+  z-index: 1;
+  border-color: #0366d6;
+}
+
+.border {
+  border: 1px solid #e1e4e8 !important;
+}
+
+.border-0 {
+  border: 0 !important;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #e1e4e8 !important;
+}
+
+.rounded-1 {
+  border-radius: 3px !important;
+}
+
+.bg-white {
+  background-color: #fff !important;
+}
+
+.bg-gray-light {
+  background-color: #fafbfc !important;
+}
+
+.text-gray-light {
+  color: #6a737d !important;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+
+.my-2 {
+  margin-top: 8px !important;
+  margin-bottom: 8px !important;
+}
+
+.pl-0 {
+  padding-left: 0 !important;
+}
+
+.py-0 {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.pl-1 {
+  padding-left: 4px !important;
+}
+
+.pl-2 {
+  padding-left: 8px !important;
+}
+
+.py-2 {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+.pl-3,
+.px-3 {
+  padding-left: 16px !important;
+}
+
+.px-3 {
+  padding-right: 16px !important;
+}
+
+.pl-4 {
+  padding-left: 24px !important;
+}
+
+.pl-5 {
+  padding-left: 32px !important;
+}
+
+.pl-6 {
+  padding-left: 40px !important;
+}
+
+.f6 {
+  font-size: 12px !important;
+}
+
+.lh-condensed {
+  line-height: 1.25 !important;
+}
+
+.text-bold {
+  font-weight: 600 !important;
+}
+
+.pl-c {
+  color: #6a737d;
+}
+
+.pl-c1,
+.pl-s .pl-v {
+  color: #005cc5;
+}
+
+.pl-e,
+.pl-en {
+  color: #6f42c1;
+}
+
+.pl-s .pl-s1,
+.pl-smi {
+  color: #24292e;
+}
+
+.pl-ent {
+  color: #22863a;
+}
+
+.pl-k {
+  color: #d73a49;
+}
+
+.pl-pds,
+.pl-s,
+.pl-s .pl-pse .pl-s1,
+.pl-sr,
+.pl-sr .pl-cce,
+.pl-sr .pl-sra,
+.pl-sr .pl-sre {
+  color: #032f62;
+}
+
+.pl-smw,
+.pl-v {
+  color: #e36209;
+}
+
+.pl-bu {
+  color: #b31d28;
+}
+
+.pl-ii {
+  color: #fafbfc;
+  background-color: #b31d28;
+}
+
+.pl-c2 {
+  color: #fafbfc;
+  background-color: #d73a49;
+}
+
+.pl-c2:before {
+  content: '^M';
+}
+
+.pl-sr .pl-cce {
+  font-weight: 700;
+  color: #22863a;
+}
+
+.pl-ml {
+  color: #735c0f;
+}
+
+.pl-mh,
+.pl-mh .pl-en,
+.pl-ms {
+  font-weight: 700;
+  color: #005cc5;
+}
+
+.pl-mi {
+  font-style: italic;
+  color: #24292e;
+}
+
+.pl-mb {
+  font-weight: 700;
+  color: #24292e;
+}
+
+.pl-md {
+  color: #b31d28;
+  background-color: #ffeef0;
+}
+
+.pl-mi1 {
+  color: #22863a;
+  background-color: #f0fff4;
+}
+
+.pl-mc {
+  color: #e36209;
+  background-color: #ffebda;
+}
+
+.pl-mi2 {
+  color: #f6f8fa;
+  background-color: #005cc5;
+}
+
+.pl-mdr {
+  font-weight: 700;
+  color: #6f42c1;
+}
+
+.pl-ba {
+  color: #586069;
+}
+
+.pl-sg {
+  color: #959da5;
+}
+
+.pl-corl {
+  text-decoration: underline;
+  color: #032f62;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+
+.my-2 {
+  margin-bottom: 8px !important;
+}
+
+.my-2 {
+  margin-top: 8px !important;
+}
+
+.pl-0 {
+  padding-left: 0 !important;
+}
+
+.py-0 {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.pl-1 {
+  padding-left: 4px !important;
+}
+
+.pl-2 {
+  padding-left: 8px !important;
+}
+
+.py-2 {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+.pl-3 {
+  padding-left: 16px !important;
+}
+
+.pl-4 {
+  padding-left: 24px !important;
+}
+
+.pl-5 {
+  padding-left: 32px !important;
+}
+
+.pl-6 {
+  padding-left: 40px !important;
+}
+
+.pl-7 {
+  padding-left: 48px !important;
+}
+
+.pl-8 {
+  padding-left: 64px !important;
+}
+
+.pl-9 {
+  padding-left: 80px !important;
+}
+
+.pl-10 {
+  padding-left: 96px !important;
+}
+
+.pl-11 {
+  padding-left: 112px !important;
+}
+
+.pl-12 {
+  padding-left: 128px !important;
+}
+
+hr {
+  border-bottom-color: #eee;
+}
+
+kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #d1d5da;
+}
+
+body:after,
+body:before {
+  display: table;
+  content: '';
+}
+
+body:after {
+  clear: both;
+}
+
+body > :first-child {
+  margin-top: 0 !important;
+}
+
+body > :last-child {
+  margin-bottom: 0 !important;
+}
+
+a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+blockquote,
+details,
+dl,
+ol,
+p,
+pre,
+table,
+ul {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+hr {
+  height: 0.25em;
+  padding: 0;
+  margin: 24px 0;
+  background-color: #e1e4e8;
+  border: 0;
+}
+
+blockquote {
+  padding: 0 1em;
+  color: #6a737d;
+  border-left: 0.25em solid #dfe2e5;
+}
+
+blockquote > :first-child {
+  margin-top: 0;
+}
+
+blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+h1,
+h2 {
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid #eaecef;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
+  font-size: 1.25em;
+}
+
+h4 {
+  font-size: 1em;
+}
+
+h5 {
+  font-size: 0.875em;
+}
+
+h6 {
+  font-size: 0.85em;
+  color: #6a737d;
+}
+
+ol,
+ul {
+  padding-left: 2em;
+}
+
+ol ol,
+ol ul,
+ul ol,
+ul ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+li {
+  word-wrap: break-all;
+}
+
+li > p {
+  margin-top: 16px;
+}
+
+li + li {
+  margin-top: 0.25em;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: 600;
+}
+
+dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+}
+
+table th {
+  font-weight: 600;
+}
+
+table td,
+table th {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+table tr {
+  background-color: #fff;
+  border-top: 1px solid #c6cbd1;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+img {
+  max-width: 80%;
+  box-sizing: initial;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #fff;
+}
+
+code {
+  padding: 0.2em 0.4em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(27, 31, 35, 0.05);
+  border-radius: 3px;
+}
+
+pre {
+  word-wrap: normal;
+}
+
+pre > code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #333;
+  -webkit-print-color-adjust: exact;
+  background: #f8f8f8;
+}
+
+.hljs pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.hljs pre,
+pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f6f8fa;
+  -webkit-print-color-adjust: exact;
+
+  border-radius: 3px;
+}
+
+pre code {
+  display: inline;
+  max-width: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: initial;
+  border: 0;
+}
+
+.commit-tease-sha {
+  display: inline-block;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 90%;
+  color: #444d56;
+}
+
+.full-commit .btn-outline:not(:disabled):hover {
+  color: #005cc5;
+  border-color: #005cc5;
+}
+
+.blob-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.blob-wrapper-embedded {
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.blob-num {
+  width: 1%;
+  min-width: 50px;
+  padding-right: 10px;
+  padding-left: 10px;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 12px;
+  line-height: 20px;
+  color: rgba(27, 31, 35, 0.3);
+  text-align: right;
+  white-space: nowrap;
+  vertical-align: top;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.blob-num:hover {
+  color: rgba(27, 31, 35, 0.6);
+}
+
+.blob-num:before {
+  content: attr(data-line-number);
+}
+
+.blob-code {
+  position: relative;
+  padding-right: 10px;
+  padding-left: 10px;
+  line-height: 20px;
+  vertical-align: top;
+}
+
+.blob-code-inner {
+  overflow: visible;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 12px;
+  color: #24292e;
+  word-wrap: normal;
+  white-space: pre;
+}
+
+.pl-token.active,
+.pl-token:hover {
+  cursor: pointer;
+  background: #ffea7f;
+}
+
+.tab-size[data-tab-size='1'] {
+  -moz-tab-size: 1;
+  tab-size: 1;
+}
+
+.tab-size[data-tab-size='2'] {
+  -moz-tab-size: 2;
+  tab-size: 2;
+}
+
+.tab-size[data-tab-size='3'] {
+  -moz-tab-size: 3;
+  tab-size: 3;
+}
+
+.tab-size[data-tab-size='4'] {
+  -moz-tab-size: 4;
+  tab-size: 4;
+}
+
+.tab-size[data-tab-size='5'] {
+  -moz-tab-size: 5;
+  tab-size: 5;
+}
+
+.tab-size[data-tab-size='6'] {
+  -moz-tab-size: 6;
+  tab-size: 6;
+}
+
+.tab-size[data-tab-size='7'] {
+  -moz-tab-size: 7;
+  tab-size: 7;
+}
+
+.tab-size[data-tab-size='8'] {
+  -moz-tab-size: 8;
+  tab-size: 8;
+}
+
+.tab-size[data-tab-size='9'] {
+  -moz-tab-size: 9;
+  tab-size: 9;
+}
+
+.tab-size[data-tab-size='10'] {
+  -moz-tab-size: 10;
+  tab-size: 10;
+}
+
+.tab-size[data-tab-size='11'] {
+  -moz-tab-size: 11;
+  tab-size: 11;
+}
+
+.tab-size[data-tab-size='12'] {
+  -moz-tab-size: 12;
+  tab-size: 12;
+}
+
+.task-list-item {
+  list-style-type: none;
+}
+
+.task-list-item + .task-list-item {
+  margin-top: 3px;
+}
+
+.task-list-item input {
+  margin: 0 0.2em 0.25em -1.6em;
+  vertical-align: middle;
+}
+/*
+github.com style (c) Vasily Polovnyov <vast@whiteants.net>
+*/
+  
+  .hljs-comment,
+  .hljs-quote {
+    color: #998;
+    font-style: italic;
+  }
+  
+  .hljs-keyword,
+  .hljs-selector-tag,
+  .hljs-subst {
+    color: #333;
+    font-weight: bold;
+  }
+  
+  .hljs-number,
+  .hljs-literal,
+  .hljs-variable,
+  .hljs-template-variable,
+  .hljs-tag .hljs-attr {
+    color: #008080;
+  }
+  
+  .hljs-string,
+  .hljs-doctag {
+    color: #d14;
+  }
+  
+  .hljs-title,
+  .hljs-section,
+  .hljs-selector-id {
+    color: #900;
+    font-weight: bold;
+  }
+  
+  .hljs-subst {
+    font-weight: normal;
+  }
+  
+  .hljs-type,
+  .hljs-class .hljs-title {
+    color: #458;
+    font-weight: bold;
+  }
+  
+  .hljs-tag,
+  .hljs-name,
+  .hljs-attribute {
+    color: #000080;
+    font-weight: normal;
+  }
+  
+  .hljs-regexp,
+  .hljs-link {
+    color: #009926;
+  }
+  
+  .hljs-symbol,
+  .hljs-bullet {
+    color: #990073;
+  }
+  
+  .hljs-built_in,
+  .hljs-builtin-name {
+    color: #0086b3;
+  }
+  
+  .hljs-meta {
+    color: #999;
+    font-weight: bold;
+  }
+  
+  .hljs-deletion {
+    background: #fdd;
+  }
+  
+  .hljs-addition {
+    background: #dfd;
+  }
+  
+  .hljs-emphasis {
+    font-style: italic;
+  }
+  
+  .hljs-strong {
+    font-weight: bold;
+  }
+		</style>
+<script> MathJax = { tex: { inlineMath: [["$", "$"]] } }; </script>
+<script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+	</head>
+	<body>
+		<nav id="table-of-contents">
+			<ul><li><a href="#classi-dinamiche"> Classi dinamiche</a><ul><li><a href="#classi-derivate-e-relazione-is-a"> Classi derivate e relazione IS-A</a><ul><li><a href="#esempio-1"> Esempio 1</a></li></ul></li><li><a href="#metodi-virtuali-e-classi-dinamiche"> Metodi virtuali e classi dinamiche</a><ul><li><a href="#esempio-2"> Esempio 2</a></li></ul></li><li><a href="#metodi-virtuali-puri-e-classi-astratte"> Metodi virtuali puri e classi astratte</a><ul><li><a href="#esempio-3"> Esempio 3</a></li></ul></li><li><a href="#i-distruttori-delle-classi-astratte"> I distruttori delle classi astratte</a><ul><li><a href="#esempio-4"> Esempio 4</a></li></ul></li><li><a href="#risoluzione-overriding"> Risoluzione overriding</a></li></ul></li></ul>
+		</nav>
+		<main>
+			<h1 id="classi-dinamiche" tabindex="-1"><a class="anchor" href="#classi-dinamiche" aria-hidden="true"><span class="octicon octicon-link"></span></a> Classi dinamiche</h1>
+<pre><code class="language-toc"></code></pre>
+<hr>
+<h2 id="classi-derivate-e-relazione-is-a" tabindex="-1"><a class="anchor" href="#classi-derivate-e-relazione-is-a" aria-hidden="true"><span class="octicon octicon-link"></span></a> Classi derivate e relazione IS-A</h2>
+<p>Si consideri una classe Base e una classe Derived derivata pubblicamente dalla classe Base:</p>
+<pre><code class="language-cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Base</span> {</span>
+  <span class="hljs-comment">/* ... omissis ... */</span>
+};
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Derived</span> :</span> <span class="hljs-keyword">public</span> Base {
+  <span class="hljs-comment">/* ... omissis ... */</span>
+};
+</code></pre>
+<p>Come già sappiamo, la derivazione pubblica consente di effettuare, in maniera implicita, le conversioni di tipo dette up-cast, ovvero la conversione da un puntatore o riferimento per un oggetto Derived verso un puntatore o riferimento per un oggetto Base.</p>
+<pre><code class="language-cpp">Base* base_ptr = <span class="hljs-keyword">new</span> Derived;
+</code></pre>
+<blockquote>
+<p>Se la derivazione fosse non pubblica, cioè private o protected, tale conversione sarebbe legittima solo se effettuata nel contesto della classe derivata o all'interno di una funzione friend della classe.</p>
+</blockquote>
+<p>Intuitivamente, l'esistenza di questa conversione indica che è possibile utilizzare un oggetto Derived (tipo concreto) come se fosse un oggetto della classe Base (tipo astratto), ignorando eventuali caratteristiche specifiche della classe Derived per concentrarsi sulle caratteristiche che questa classe ha in comune con (eredita da) la classe Base.</p>
+<p>Si dice che la classe Derived è in relazione "IS-A" con la classe Base, cioè è una particolare concretizzazione della classe Base, e quindi deve potere essere utilizzato, dall'utente, come se fosse un oggetto di tipo Base.</p>
+<p>In altre parole, in questo contesto l'utente vuole lavorare con oggetti di tipo Base, ignorando eventuali differenze tra le varie concretizzazioni possibili.</p>
+<p><a href="#classi%20dinamiche"><em>Torna all'indice</em></a></p>
+<hr>
+<h3 id="esempio-1" tabindex="-1"><a class="anchor" href="#esempio-1" aria-hidden="true"><span class="octicon octicon-link"></span></a> Esempio 1</h3>
+<p>Dalla classe base Docente possiamo derivare tante classi in relazione IS-A, come Professore_Ordinario, Professore_Associato, Ricercatore, Professore_a_Contratto, ecc. Ognuna di queste classi potrebbe avere caratteristiche (dati o metodi) specifici che la differenziano dalle altre.
+Un utente che NON sia interessato a queste peculiarità può astrarre da esse, vedendo tutti gli oggetti concreti come istanze di Docente e usando solo l'interfaccia messa a disposizione dalla classe base Docente.</p>
+<blockquote>
+<p><mark style="background: #FF5582A6;">NOTA:</mark> in contesti diversi la derivazione potrebbe essere utilizzata con altri scopi. Per esempio, a volte si usa (secondo alcuni, a sproposito) l'ereditarietà per codificare la relazione "HAS-A": la classe Derived ha un sotto-oggetto di tipo Base, ovvero lo "possiede" e quindi lo può usare.</p>
+</blockquote>
+<p>Per esempio: un Automezzo ha un Motore e, siccome più automezzi di tipo diverso possono usare lo stesso tipo di motore, si potrebbe decidere di usare Motore come classe base comune ai vari automezzi concreti.</p>
+<p>La differenza sostanziale, rispetto al caso precedente, è data dal fatto che l'utente di queste classi, probabilmente, è interessato ad usare gli automezzi concreti (e non i motori in essi contenuti, che potrebbero essere visti come dei dettagli implementativi): quindi, l'utente NON è interessato alla possibilità di convertire un automezzo concreto in un Motore, per cui l'uso di ereditarietà pubblica è inappropriato.</p>
+<p>Le alternative sono:</p>
+<ol>
+<li>uso di ereditarietà privata:</li>
+</ol>
+<pre><code class="language-cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Utilitaria</span> :</span> <span class="hljs-keyword">private</span> Motore { <span class="hljs-comment">/* ... */</span> };
+</code></pre>
+<ol start="2">
+<li>uso del contenimento:</li>
+</ol>
+<pre><code class="language-cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Utilitaria</span> {</span> Motore motore; <span class="hljs-comment">/* ... */</span> };
+</code></pre>
+<p>Tra le due opzioni, dovrebbe essere preferita la seconda, in quanto più intuitiva da usare; la seconda opzione, inoltre, è facilmente estendibile al caso in cui l'automezzo debba contenere più di un solo sotto-oggetto di un determinato tipo (esempio: auto ibride con più motori).</p>
+<p>Nel seguito, ci concentreremo sul caso in cui l'utente sia intenzionato a stabilire relazioni di tipo "IS-A", usando quindi l'ereditarietà pubblica e sfruttando le conversioni implicite allo scopo di lavorare con la classe base, astraendo dai dettagli implementativi delle classi derivate.</p>
+<p><a href="#classi%20dinamiche"><em>Torna all'indice</em></a></p>
+<hr>
+<h2 id="metodi-virtuali-e-classi-dinamiche" tabindex="-1"><a class="anchor" href="#metodi-virtuali-e-classi-dinamiche" aria-hidden="true"><span class="octicon octicon-link"></span></a> Metodi virtuali e classi dinamiche</h2>
+<blockquote>
+<p><mark style="background: #FF5582A6;">Nota bene:</mark> nel seguito sono mostrati spezzoni di codice, incompleti; il loro unico scopo è quello di consentire al lettore di "immaginare" un contesto concreto, ma semplificato al massimo, nel quale applicare le nozioni di cui si sta trattando.</p>
+</blockquote>
+<p>Consideriamo il seguente esempio</p>
+<pre><code class="language-cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Printer</span> {</span>
+<span class="hljs-keyword">public</span>:
+	<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">(<span class="hljs-keyword">const</span> Doc&amp; doc)</span></span>;
+};
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FilePrinter</span> :</span> <span class="hljs-keyword">public</span> Printer {
+<span class="hljs-keyword">public</span>:
+	<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">(<span class="hljs-keyword">const</span> Doc&amp; doc)</span></span>;
+};
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NetworkPrinter</span> :</span> <span class="hljs-keyword">public</span> Printer {
+<span class="hljs-keyword">public</span>:
+	<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">(<span class="hljs-keyword">const</span> Doc&amp; doc)</span></span>;
+};
+</code></pre>
+<p>Supponiamo che il codice utente debba stampare alcuni documenti utilizzando
+una stampante e, non essendo interessato ai dettagli implementativi, utilizzi l'astrazione <code>Printer</code> nel modo seguente:</p>
+<pre><code class="language-cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">stampa_tutti</span><span class="hljs-params">(<span class="hljs-keyword">const</span> std::vector&lt;Doc&gt;&amp; docs, Printer* printer)</span> </span>{
+	<span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> <span class="hljs-keyword">auto</span>&amp; doc : docs)
+		printer-&gt;<span class="hljs-built_in">print</span>(doc);
+}
+</code></pre>
+<p>Il chiamante invocherà la funzione <code>stampa_tutti</code> passando un puntatore ad una stampante concreta (una specifica istanza di <code>FilePrinter</code> o <code>NetworkPrinter</code>), sfruttando l'up-cast consentito dalla relazione "IS-A".
+Quando esamina la chiamata al metodo <code>print</code>, il compilatore si troverà a fare la risoluzione dell'overloading conoscendo solo il tipo statico di <code>printer</code> (puntatore alla classe base <code>Printer</code>), senza avere conoscenza di quello che è il vero tipo dinamico (puntatore ad una delle specifiche classi derivate dalla classe base): di conseguenza, effettuerà la ricerca delle candidate nella classe <code>Printer</code> e troverà solo il metodo <code>Printer::print</code>, che verrà scelto come migliore funzione utilizzabile.</p>
+<p>In realtà, però, l'utente vorrebbe che fosse invocato il metodo specifico della stampante concreta passata alla funzione, che potrebbe dovere fare operazioni diverse a seconda della classe di appartenenza (per esempio, una <code>NetworkPrinter</code> potrebbe tenere traccia del numero di pagine stampate dai vari utenti). Intuitivamente, ogni classe concreta "ridefinisce" il metodo <code>print</code> per fargli fare la cosa corretta per il contesto specifico: questa ridefinizione del metodo dovrebbe prevalere (override) rispetto a quella della classe. Serve quindi un meccanismo tecnico che consenta di interrogare (a tempo di esecuzione) il puntatore, allo scopo di capire quel è il suo tipo dinamico e quindi "ridirezionare" la chiamata del metodo <code>print</code> alla classe concreta corretta: questo meccanismo tecnico effettua la cosiddetta "risoluzione dell'overriding" e, nel caso del $C$++, viene attivato solo quando i metodi della classe base sono stati dichiarati essere "metodi virtuali" (cioè, ridefinibili nelle classi derivate).</p>
+<pre><code class="language-cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Printer</span> {</span>
+<span class="hljs-keyword">public</span>:
+	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">(<span class="hljs-keyword">const</span> Doc&amp; doc)</span></span>;
+};
+</code></pre>
+<p>Una classe che contenga almeno un metodo virtuale viene detta <mark style="background: #BBFABBA6;">classe dinamica</mark>, in quanto per gli oggetti di questa classe vengono messe a disposizione le funzionalità che consentono di implementare la risoluzione dell'overriding e, più in generale, la <em>RTTI</em> (Run-Time Type Identification).</p>
+<p>A livello implementativo, ad ogni oggetto che è istanza di una classe dinamica viene associato un puntatore (non accessibile direttamente da parte dell'utente) usando il quale il RTS (Run-Time Support) del linguaggio può raggiungere le informazioni di tipo della classe.
+L'esistenza di questo puntatore si può notare se si confrontano, usando l'operatore <code>sizeof</code>, oggetti di classi dinamiche e statiche (cioè non dinamiche):</p>
+<pre><code class="language-cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Statica</span> {</span>
+	~<span class="hljs-built_in">Statica</span>() {}
+};
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Dinamica</span> {</span>
+	<span class="hljs-keyword">virtual</span> ~<span class="hljs-built_in">Dinamica</span>() {}
+};
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+	std::cout &lt;&lt; <span class="hljs-string">"sizeof(Statica) = "</span> &lt;&lt; <span class="hljs-built_in"><span class="hljs-keyword">sizeof</span></span>(Statica) &lt;&lt; std::endl;
+	std::cout &lt;&lt; <span class="hljs-string">"sizeof(Dinamica) = "</span> &lt;&lt; <span class="hljs-built_in"><span class="hljs-keyword">sizeof</span></span>(Dinamica) &lt;&lt; std::endl;
+}
+</code></pre>
+<p>Avendo dichiarato virtuale il metodo</p>
+<pre><code class="language-cpp">  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Printer::print</span><span class="hljs-params">(<span class="hljs-keyword">const</span> Doc&amp;)</span></span>;
+</code></pre>
+<p>una classe derivata da <code>Printer</code> che lo ridefinisca (usando lo stesso nome e lo stesso numero e tipo degli argomenti) ne fa l'overriding; si noti che, se il metodo non fosse stato dichiarato <code>virtual</code> nella classe base, NON si avrebbe overriding, ma si avrebbe invece hiding.
+Nella classe derivata non è necessario (ma è consentito) ripetere la parola chiave virtual. Se si uso lo standard $C$++11 o superiore è anche consigliato usare la parola chiave <code>override</code>, da usarsi alla fine della dichiarazione, in questo modo:</p>
+<pre><code class="language-cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NetworkPrinter</span> :</span> <span class="hljs-keyword">public</span> Printer {
+<span class="hljs-keyword">public</span>:
+	<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">(<span class="hljs-keyword">const</span> Doc&amp; doc)</span> <span class="hljs-keyword">override</span></span>;
+};
+</code></pre>
+<p>L'uso di "override" è utile perché causa un errore nel caso in cui nella classe base <code>Printer</code> non esista un metodo virtuale corrispondente. L'errore è meno frequente di quanto si possa immaginare, perché:</p>
+<ol>
+<li>potremmo esserci dimenticati di usare la parola chiave <code>virtual</code> nella classe base;</li>
+<li>potremmo avere modificato leggermente il tipo del metodo, cambiando il numero o il tipo dei parametri.</li>
+</ol>
+<p><a href="#classi%20dinamiche"><em>Torna all'indice</em></a></p>
+<hr>
+<h3 id="esempio-2" tabindex="-1"><a class="anchor" href="#esempio-2" aria-hidden="true"><span class="octicon octicon-link"></span></a> Esempio 2</h3>
+<pre><code class="language-cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Printer</span> {</span>
+<span class="hljs-keyword">public</span>:
+	<span class="hljs-function"><span class="hljs-keyword">virtual</span> std::string <span class="hljs-title">name</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span></span>;
+	<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">(<span class="hljs-keyword">const</span> Doc&amp; doc)</span></span>;
+};
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NetworkPrinter</span> :</span> <span class="hljs-keyword">public</span> Printer {
+<span class="hljs-keyword">public</span>:
+	<span class="hljs-comment">// Errore: in Printer::name il parametro implicito this è qualificato const.</span>
+	<span class="hljs-function">std::string <span class="hljs-title">name</span><span class="hljs-params">()</span> <span class="hljs-keyword">override</span></span>;
+	<span class="hljs-comment">// Errore: il metodo Printer::print non è dichiarato virtual.</span>
+	<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">(<span class="hljs-keyword">const</span> Doc&amp; doc)</span> <span class="hljs-keyword">override</span></span>;
+};
+</code></pre>
+<p><a href="#classi%20dinamiche"><em>Torna all'indice</em></a></p>
+<hr>
+<h2 id="metodi-virtuali-puri-e-classi-astratte" tabindex="-1"><a class="anchor" href="#metodi-virtuali-puri-e-classi-astratte" aria-hidden="true"><span class="octicon octicon-link"></span></a> Metodi virtuali puri e classi astratte</h2>
+<p>Quando si definisce una classe base come <code>Printer</code>, spesso non si ha la possibilità di fornire una implementazione sensata per i metodi virtuali.
+Intuitivamente, la classe <code>Printer</code> fornisce "solo" l'interfaccia del concetto astratto di stampante e di conseguenza non può stampare davvero un documento: l'unico suo scopo è quello di ridirezionare la chiamata ad una delle classi concrete. Invece di fornire una implementazione fittizia (per esempio, una che lanci una eccezione) è preferibile indicare che il metodo virtuale è "puro", usando la sintassi "<code>= 0</code>" al termine della sua dichiarazione.</p>
+<pre><code class="language-cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Printer</span> {</span>
+<span class="hljs-keyword">public</span>:
+  <span class="hljs-function"><span class="hljs-keyword">virtual</span> std::string <span class="hljs-title">name</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>= <span class="hljs-number">0</span>;
+  <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">(<span class="hljs-keyword">const</span> Doc&amp; doc)</span> </span>= <span class="hljs-number">0</span>;
+};
+</code></pre>
+<p>Una classe che contenga metodo virtuali puri è detta <mark style="background: #ABF7F7A6;">classe astratta</mark> (in senso tecnico; spesso si usa dire che una classe è astratta anche in senso "metodologico", non tecnico, creando un po' di confusione). Il fatto che un metodo virtuale sia puro significa che ogni classe concreta che eredita dalla classe astratta <code>Printer</code> è tenuta a fare l'overriding del metodo; se NON fa l'overriding, il metodo rimane puro e quindi la classe derivata è anche essa una classe astratta (in senso tecnico). Si noti che NON è possibile definire un oggetto che abbia come tipo una classe astratta: questi possono solo essere usate come classi base per derivate altre classi (astratte o concrete).</p>
+<h3 id="esempio-3" tabindex="-1"><a class="anchor" href="#esempio-3" aria-hidden="true"><span class="octicon octicon-link"></span></a> Esempio 3</h3>
+<pre><code class="language-cpp">  Printer p; <span class="hljs-comment">// errore: Printer è astratta</span>
+  NetworkPrinter np; <span class="hljs-comment">// ok, se NetworkPrinter ha effettuato l'overriding</span>
+                     <span class="hljs-comment">// di tutti i metodi virtuali puri di Printer</span>
+</code></pre>
+<p><a href="#classi%20dinamiche"><em>Torna all'indice</em></a></p>
+<hr>
+<h2 id="i-distruttori-delle-classi-astratte" tabindex="-1"><a class="anchor" href="#i-distruttori-delle-classi-astratte" aria-hidden="true"><span class="octicon octicon-link"></span></a> I distruttori delle classi astratte</h2>
+<p>I distruttori delle classi astratte dovrebbero essere sempre dichiarati virtual e non dovrebbero mai essere metodi puri (ovvero, occorre fornirne l'implementazione). Ovvero, l'interfaccia di una classe dinamica astratta dovrebbe tipicamente avere la struttura seguente:</p>
+<pre><code class="language-cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Astratta</span> {</span>
+<span class="hljs-keyword">public</span>:
+	<span class="hljs-comment">// metodi virtuali puri</span>
+	<span class="hljs-function"><span class="hljs-keyword">virtual</span> tipo_ritorno1 <span class="hljs-title">metodo1</span><span class="hljs-params">(parametri1)</span> </span>= <span class="hljs-number">0</span>;
+	<span class="hljs-function"><span class="hljs-keyword">virtual</span> tipo_ritorno2 <span class="hljs-title">metodo2</span><span class="hljs-params">(parametri2)</span> </span>= <span class="hljs-number">0</span>;
+	<span class="hljs-function"><span class="hljs-keyword">virtual</span> tipo_ritorno3 <span class="hljs-title">metodo3</span><span class="hljs-params">(parametri3)</span> </span>= <span class="hljs-number">0</span>;
+	<span class="hljs-comment">// ...</span>
+	
+	<span class="hljs-comment">// distruttore virtuale NON puro (definito, non fa nulla)</span>
+	<span class="hljs-keyword">virtual</span> ~<span class="hljs-built_in">Astratta</span>() {}
+};
+</code></pre>
+<p>La ragione per questo modo di definire il distruttore è legata alla necessità di consentire una corretta distruzione degli oggetti delle classi concrete derivate dalla classe astratta. Infatti:</p>
+<ol>
+<li>il distruttore della classe concreta invoca (implicitamente) il distruttore delle sue classi base, che quindi deve essere definito (cioè non può essere un metodo puro);</li>
+<li>se il distruttore della classe astratta NON fosse virtuale, si avrebbero dei memory leaks.</li>
+</ol>
+<p><a href="#classi%20dinamiche"><em>Torna all'indice</em></a></p>
+<hr>
+<h3 id="esempio-4" tabindex="-1"><a class="anchor" href="#esempio-4" aria-hidden="true"><span class="octicon octicon-link"></span></a> Esempio 4</h3>
+<pre><code class="language-cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Astratta</span> {</span>
+<span class="hljs-keyword">public</span>:
+	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>= <span class="hljs-number">0</span>;
+	~<span class="hljs-built_in">Astratta</span>() {} <span class="hljs-comment">// distruttore errato: non è virtuale.</span>
+};
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Concreta</span> :</span> <span class="hljs-keyword">public</span> Astratta {
+	std::vector&lt;std::string&gt; vs;
+<span class="hljs-keyword">public</span>:
+	<span class="hljs-built_in">Concreta</span>() : <span class="hljs-built_in">vs</span>(<span class="hljs-number">20</span>, <span class="hljs-string">"stringa"</span>) {}
+	<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">override</span> </span>{
+		<span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> <span class="hljs-keyword">auto</span>&amp; s : vs)
+		  std::cout &lt;&lt; s &lt;&lt; std::endl;
+	}
+	
+	<span class="hljs-comment">// Nota: il distruttore di default sarebbe OK; lo ridefiniamo solo</span>
+	<span class="hljs-comment">// per fargli stampare qualcosa, così che sia evidente il fatto che</span>
+	<span class="hljs-comment">// non è stato invocato.</span>
+	~<span class="hljs-built_in">Concreta</span>() { std::cout &lt;&lt; <span class="hljs-string">"Distruttore Concreta"</span> &lt;&lt; std::endl; }
+};
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+	Astratta* a = <span class="hljs-keyword">new</span> Concreta;
+	a-&gt;<span class="hljs-built_in">print</span>();
+	<span class="hljs-comment">// memory leak: non viene distrutto il vector nella classe concreta.</span>
+	<span class="hljs-keyword">delete</span> a; <span class="hljs-comment">// invoca il distruttore di Astratta (che non è virtual)</span>
+}
+</code></pre>
+<hr>
+<h2 id="risoluzione-overriding" tabindex="-1"><a class="anchor" href="#risoluzione-overriding" aria-hidden="true"><span class="octicon octicon-link"></span></a> Risoluzione overriding</h2>
+<p>Viene effettuata a tempo di esecuzione dal RTS (supporto a tempo di esecuzione). Si noti che, in ogni caso, a tempo di compilazione viene fatta la risoluzione dell'overloading nel solito modo.</p>
+<p>Affinché si attivi l'overriding occorre che:</p>
+<ol>
+<li>il metodo invocato sia un metodo virtuale (esplicitamente o implicitamente, se ereditato da una classe base);</li>
+<li>il metodo viene invocato tramite puntatore o riferimento (altrimenti non vi può essere distinzione tra il tipo statico e il tipo dinamico dell'oggetto e quindi si invoca il metodo della classe base);</li>
+<li>almeno una delle classi lungo la catena di derivazione che porta dal tipo statico al tipo dinamico ha effettuato l'overriding (in assenza di overriding, si invoca il metodo della classe base);</li>
+<li>il metodo NON deve essere invocato mediante qualificazione esplicita (la qualificazione esplicita causa l'invocazione del metodo come definito nella classe usata per la qualificazione).</li>
+</ol>
+<p><a href="#classi%20dinamiche"><em>Torna all'indice</em></a></p>
+
+		</main>
+	</body>
+</html>

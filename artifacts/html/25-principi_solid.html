@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+		<title>25-principi_solid</title>
+		<style>
+			/* PDF Specific */
+
+@media print {
+  body {
+    min-width: initial;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+}
+
+/* General */
+
+.octicon {
+  display: inline-block;
+  fill: currentColor;
+  vertical-align: text-bottom;
+}
+
+.anchor {
+  float: left;
+  line-height: 1;
+  margin-left: -20px;
+  padding-right: 4px;
+}
+
+.anchor:focus {
+  outline: none;
+}
+
+h1 .octicon-link,
+h2 .octicon-link,
+h3 .octicon-link,
+h4 .octicon-link,
+h5 .octicon-link,
+h6 .octicon-link {
+  color: #1b1f23;
+  vertical-align: middle;
+  visibility: hidden;
+}
+
+h1:hover .anchor,
+h2:hover .anchor,
+h3:hover .anchor,
+h4:hover .anchor,
+h5:hover .anchor,
+h6:hover .anchor {
+  text-decoration: none;
+}
+
+h1:hover .anchor .octicon-link,
+h2:hover .anchor .octicon-link,
+h3:hover .anchor .octicon-link,
+h4:hover .anchor .octicon-link,
+h5:hover .anchor .octicon-link,
+h6:hover .anchor .octicon-link {
+  visibility: visible;
+}
+
+h1:hover .anchor .octicon-link:before,
+h2:hover .anchor .octicon-link:before,
+h3:hover .anchor .octicon-link:before,
+h4:hover .anchor .octicon-link:before,
+h5:hover .anchor .octicon-link:before,
+h6:hover .anchor .octicon-link:before {
+  width: 16px;
+  height: 16px;
+  content: ' ';
+  display: inline-block;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' version='1.1' width='16' height='16' aria-hidden='true'%3E%3Cpath fill-rule='evenodd' d='M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z'%3E%3C/path%3E%3C/svg%3E");
+}
+
+body {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -webkit-print-color-adjust: exact;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
+    sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #24292e;
+  word-wrap: break-word;
+  box-sizing: border-box;
+  min-width: 200px;
+  max-width: 980px;
+  margin: 1rem auto;
+}
+
+details {
+  display: block;
+}
+
+summary {
+  display: list-item;
+}
+
+a {
+  background-color: initial;
+}
+
+a:active,
+a:hover {
+  outline-width: 0;
+}
+
+strong {
+  font-weight: inherit;
+  font-weight: bolder;
+}
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+img {
+  border-style: none;
+}
+
+code,
+kbd,
+pre {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+hr {
+  box-sizing: initial;
+  height: 0;
+  overflow: visible;
+}
+
+input {
+  font: inherit;
+  margin: 0;
+}
+
+input {
+  overflow: visible;
+}
+
+[type='checkbox'] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+input {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+a {
+  color: #0366d6;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+strong {
+  font-weight: 600;
+}
+
+hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #dfe2e5;
+}
+
+hr:after,
+hr:before {
+  display: table;
+  content: '';
+}
+
+hr:after {
+  clear: both;
+}
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+td,
+th {
+  padding: 0;
+}
+
+details summary {
+  cursor: pointer;
+}
+
+kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #d1d5da;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+h1 {
+  font-size: 32px;
+}
+
+h1,
+h2 {
+  font-weight: 600;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+h3 {
+  font-size: 20px;
+}
+
+h3,
+h4 {
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h5,
+h6 {
+  font-weight: 600;
+}
+
+h6 {
+  font-size: 12px;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+blockquote {
+  margin: 0;
+}
+
+ol,
+ul {
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+ol ol,
+ul ol {
+  list-style-type: lower-roman;
+}
+
+ol ol ol,
+ol ul ol,
+ul ol ol,
+ul ul ol {
+  list-style-type: lower-alpha;
+}
+
+dd {
+  margin-left: 0;
+}
+
+code,
+pre {
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 12px;
+}
+
+pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+:checked + .radio-label {
+  position: relative;
+  z-index: 1;
+  border-color: #0366d6;
+}
+
+.border {
+  border: 1px solid #e1e4e8 !important;
+}
+
+.border-0 {
+  border: 0 !important;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #e1e4e8 !important;
+}
+
+.rounded-1 {
+  border-radius: 3px !important;
+}
+
+.bg-white {
+  background-color: #fff !important;
+}
+
+.bg-gray-light {
+  background-color: #fafbfc !important;
+}
+
+.text-gray-light {
+  color: #6a737d !important;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+
+.my-2 {
+  margin-top: 8px !important;
+  margin-bottom: 8px !important;
+}
+
+.pl-0 {
+  padding-left: 0 !important;
+}
+
+.py-0 {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.pl-1 {
+  padding-left: 4px !important;
+}
+
+.pl-2 {
+  padding-left: 8px !important;
+}
+
+.py-2 {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+.pl-3,
+.px-3 {
+  padding-left: 16px !important;
+}
+
+.px-3 {
+  padding-right: 16px !important;
+}
+
+.pl-4 {
+  padding-left: 24px !important;
+}
+
+.pl-5 {
+  padding-left: 32px !important;
+}
+
+.pl-6 {
+  padding-left: 40px !important;
+}
+
+.f6 {
+  font-size: 12px !important;
+}
+
+.lh-condensed {
+  line-height: 1.25 !important;
+}
+
+.text-bold {
+  font-weight: 600 !important;
+}
+
+.pl-c {
+  color: #6a737d;
+}
+
+.pl-c1,
+.pl-s .pl-v {
+  color: #005cc5;
+}
+
+.pl-e,
+.pl-en {
+  color: #6f42c1;
+}
+
+.pl-s .pl-s1,
+.pl-smi {
+  color: #24292e;
+}
+
+.pl-ent {
+  color: #22863a;
+}
+
+.pl-k {
+  color: #d73a49;
+}
+
+.pl-pds,
+.pl-s,
+.pl-s .pl-pse .pl-s1,
+.pl-sr,
+.pl-sr .pl-cce,
+.pl-sr .pl-sra,
+.pl-sr .pl-sre {
+  color: #032f62;
+}
+
+.pl-smw,
+.pl-v {
+  color: #e36209;
+}
+
+.pl-bu {
+  color: #b31d28;
+}
+
+.pl-ii {
+  color: #fafbfc;
+  background-color: #b31d28;
+}
+
+.pl-c2 {
+  color: #fafbfc;
+  background-color: #d73a49;
+}
+
+.pl-c2:before {
+  content: '^M';
+}
+
+.pl-sr .pl-cce {
+  font-weight: 700;
+  color: #22863a;
+}
+
+.pl-ml {
+  color: #735c0f;
+}
+
+.pl-mh,
+.pl-mh .pl-en,
+.pl-ms {
+  font-weight: 700;
+  color: #005cc5;
+}
+
+.pl-mi {
+  font-style: italic;
+  color: #24292e;
+}
+
+.pl-mb {
+  font-weight: 700;
+  color: #24292e;
+}
+
+.pl-md {
+  color: #b31d28;
+  background-color: #ffeef0;
+}
+
+.pl-mi1 {
+  color: #22863a;
+  background-color: #f0fff4;
+}
+
+.pl-mc {
+  color: #e36209;
+  background-color: #ffebda;
+}
+
+.pl-mi2 {
+  color: #f6f8fa;
+  background-color: #005cc5;
+}
+
+.pl-mdr {
+  font-weight: 700;
+  color: #6f42c1;
+}
+
+.pl-ba {
+  color: #586069;
+}
+
+.pl-sg {
+  color: #959da5;
+}
+
+.pl-corl {
+  text-decoration: underline;
+  color: #032f62;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+
+.my-2 {
+  margin-bottom: 8px !important;
+}
+
+.my-2 {
+  margin-top: 8px !important;
+}
+
+.pl-0 {
+  padding-left: 0 !important;
+}
+
+.py-0 {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.pl-1 {
+  padding-left: 4px !important;
+}
+
+.pl-2 {
+  padding-left: 8px !important;
+}
+
+.py-2 {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+.pl-3 {
+  padding-left: 16px !important;
+}
+
+.pl-4 {
+  padding-left: 24px !important;
+}
+
+.pl-5 {
+  padding-left: 32px !important;
+}
+
+.pl-6 {
+  padding-left: 40px !important;
+}
+
+.pl-7 {
+  padding-left: 48px !important;
+}
+
+.pl-8 {
+  padding-left: 64px !important;
+}
+
+.pl-9 {
+  padding-left: 80px !important;
+}
+
+.pl-10 {
+  padding-left: 96px !important;
+}
+
+.pl-11 {
+  padding-left: 112px !important;
+}
+
+.pl-12 {
+  padding-left: 128px !important;
+}
+
+hr {
+  border-bottom-color: #eee;
+}
+
+kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #d1d5da;
+}
+
+body:after,
+body:before {
+  display: table;
+  content: '';
+}
+
+body:after {
+  clear: both;
+}
+
+body > :first-child {
+  margin-top: 0 !important;
+}
+
+body > :last-child {
+  margin-bottom: 0 !important;
+}
+
+a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+blockquote,
+details,
+dl,
+ol,
+p,
+pre,
+table,
+ul {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+hr {
+  height: 0.25em;
+  padding: 0;
+  margin: 24px 0;
+  background-color: #e1e4e8;
+  border: 0;
+}
+
+blockquote {
+  padding: 0 1em;
+  color: #6a737d;
+  border-left: 0.25em solid #dfe2e5;
+}
+
+blockquote > :first-child {
+  margin-top: 0;
+}
+
+blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+h1,
+h2 {
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid #eaecef;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
+  font-size: 1.25em;
+}
+
+h4 {
+  font-size: 1em;
+}
+
+h5 {
+  font-size: 0.875em;
+}
+
+h6 {
+  font-size: 0.85em;
+  color: #6a737d;
+}
+
+ol,
+ul {
+  padding-left: 2em;
+}
+
+ol ol,
+ol ul,
+ul ol,
+ul ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+li {
+  word-wrap: break-all;
+}
+
+li > p {
+  margin-top: 16px;
+}
+
+li + li {
+  margin-top: 0.25em;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: 600;
+}
+
+dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+}
+
+table th {
+  font-weight: 600;
+}
+
+table td,
+table th {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+table tr {
+  background-color: #fff;
+  border-top: 1px solid #c6cbd1;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+img {
+  max-width: 80%;
+  box-sizing: initial;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #fff;
+}
+
+code {
+  padding: 0.2em 0.4em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(27, 31, 35, 0.05);
+  border-radius: 3px;
+}
+
+pre {
+  word-wrap: normal;
+}
+
+pre > code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #333;
+  -webkit-print-color-adjust: exact;
+  background: #f8f8f8;
+}
+
+.hljs pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.hljs pre,
+pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f6f8fa;
+  -webkit-print-color-adjust: exact;
+
+  border-radius: 3px;
+}
+
+pre code {
+  display: inline;
+  max-width: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: initial;
+  border: 0;
+}
+
+.commit-tease-sha {
+  display: inline-block;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 90%;
+  color: #444d56;
+}
+
+.full-commit .btn-outline:not(:disabled):hover {
+  color: #005cc5;
+  border-color: #005cc5;
+}
+
+.blob-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.blob-wrapper-embedded {
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.blob-num {
+  width: 1%;
+  min-width: 50px;
+  padding-right: 10px;
+  padding-left: 10px;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 12px;
+  line-height: 20px;
+  color: rgba(27, 31, 35, 0.3);
+  text-align: right;
+  white-space: nowrap;
+  vertical-align: top;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.blob-num:hover {
+  color: rgba(27, 31, 35, 0.6);
+}
+
+.blob-num:before {
+  content: attr(data-line-number);
+}
+
+.blob-code {
+  position: relative;
+  padding-right: 10px;
+  padding-left: 10px;
+  line-height: 20px;
+  vertical-align: top;
+}
+
+.blob-code-inner {
+  overflow: visible;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 12px;
+  color: #24292e;
+  word-wrap: normal;
+  white-space: pre;
+}
+
+.pl-token.active,
+.pl-token:hover {
+  cursor: pointer;
+  background: #ffea7f;
+}
+
+.tab-size[data-tab-size='1'] {
+  -moz-tab-size: 1;
+  tab-size: 1;
+}
+
+.tab-size[data-tab-size='2'] {
+  -moz-tab-size: 2;
+  tab-size: 2;
+}
+
+.tab-size[data-tab-size='3'] {
+  -moz-tab-size: 3;
+  tab-size: 3;
+}
+
+.tab-size[data-tab-size='4'] {
+  -moz-tab-size: 4;
+  tab-size: 4;
+}
+
+.tab-size[data-tab-size='5'] {
+  -moz-tab-size: 5;
+  tab-size: 5;
+}
+
+.tab-size[data-tab-size='6'] {
+  -moz-tab-size: 6;
+  tab-size: 6;
+}
+
+.tab-size[data-tab-size='7'] {
+  -moz-tab-size: 7;
+  tab-size: 7;
+}
+
+.tab-size[data-tab-size='8'] {
+  -moz-tab-size: 8;
+  tab-size: 8;
+}
+
+.tab-size[data-tab-size='9'] {
+  -moz-tab-size: 9;
+  tab-size: 9;
+}
+
+.tab-size[data-tab-size='10'] {
+  -moz-tab-size: 10;
+  tab-size: 10;
+}
+
+.tab-size[data-tab-size='11'] {
+  -moz-tab-size: 11;
+  tab-size: 11;
+}
+
+.tab-size[data-tab-size='12'] {
+  -moz-tab-size: 12;
+  tab-size: 12;
+}
+
+.task-list-item {
+  list-style-type: none;
+}
+
+.task-list-item + .task-list-item {
+  margin-top: 3px;
+}
+
+.task-list-item input {
+  margin: 0 0.2em 0.25em -1.6em;
+  vertical-align: middle;
+}
+/*
+github.com style (c) Vasily Polovnyov <vast@whiteants.net>
+*/
+  
+  .hljs-comment,
+  .hljs-quote {
+    color: #998;
+    font-style: italic;
+  }
+  
+  .hljs-keyword,
+  .hljs-selector-tag,
+  .hljs-subst {
+    color: #333;
+    font-weight: bold;
+  }
+  
+  .hljs-number,
+  .hljs-literal,
+  .hljs-variable,
+  .hljs-template-variable,
+  .hljs-tag .hljs-attr {
+    color: #008080;
+  }
+  
+  .hljs-string,
+  .hljs-doctag {
+    color: #d14;
+  }
+  
+  .hljs-title,
+  .hljs-section,
+  .hljs-selector-id {
+    color: #900;
+    font-weight: bold;
+  }
+  
+  .hljs-subst {
+    font-weight: normal;
+  }
+  
+  .hljs-type,
+  .hljs-class .hljs-title {
+    color: #458;
+    font-weight: bold;
+  }
+  
+  .hljs-tag,
+  .hljs-name,
+  .hljs-attribute {
+    color: #000080;
+    font-weight: normal;
+  }
+  
+  .hljs-regexp,
+  .hljs-link {
+    color: #009926;
+  }
+  
+  .hljs-symbol,
+  .hljs-bullet {
+    color: #990073;
+  }
+  
+  .hljs-built_in,
+  .hljs-builtin-name {
+    color: #0086b3;
+  }
+  
+  .hljs-meta {
+    color: #999;
+    font-weight: bold;
+  }
+  
+  .hljs-deletion {
+    background: #fdd;
+  }
+  
+  .hljs-addition {
+    background: #dfd;
+  }
+  
+  .hljs-emphasis {
+    font-style: italic;
+  }
+  
+  .hljs-strong {
+    font-weight: bold;
+  }
+		</style>
+<script> MathJax = { tex: { inlineMath: [["$", "$"]] } }; </script>
+<script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+	</head>
+	<body>
+		<nav id="table-of-contents">
+			<ul><li><a href="#principi-progettazione-object-oriented"> Principi progettazione object oriented</a><ul><li><a href="#lacrostico-solid"> L'acrostico SOLID</a><ul><li><a href="#note-importanti"> Note importanti</a></li></ul></li><li><a href="#srp-single-responsibility-principle"> SRP (Single Responsibility Principle)</a></li><li><a href="#ocp-open-closed-principle"> OCP (Open-Closed Principle)</a><ul><li><a href="#variante-old-style"> Variante old-style</a></li><li><a href="#variante-oo-style"> Variante oo-style</a></li></ul></li><li><a href="#dip-dependency-inversion-principle"> DIP (Dependency Inversion Principle)</a></li><li><a href="#lsp-liskov-substitution-principle"> LSP (Liskov Substitution Principle)</a><ul><li><a href="#cosa-%C3%A8-successo"> Cosa è successo?</a></li></ul></li><li><a href="#isp-interface-segregation-principle"> ISP (Interface Segregation Principle)</a></li></ul></li></ul>
+		</nav>
+		<main>
+			<h1 id="principi-progettazione-object-oriented" tabindex="-1"><a class="anchor" href="#principi-progettazione-object-oriented" aria-hidden="true"><span class="octicon octicon-link"></span></a> Principi progettazione object oriented</h1>
+<pre><code class="language-toc"></code></pre>
+<hr>
+<h2 id="lacrostico-solid" tabindex="-1"><a class="anchor" href="#lacrostico-solid" aria-hidden="true"><span class="octicon octicon-link"></span></a> L'acrostico SOLID</h2>
+<p>Con l'acrostico SOLID si identificano i cosiddetti "primi 5 principi" della progettazione object oriented. Lo scopo dei principi è fornire una guida verso lo sviluppo di progetti che siano più "flessibili", cioè progetti per i quali sia relativamente semplificato effettuare modifiche in termini di:</p>
+<ul>
+<li>manutenzione delle funzionalità esistenti;</li>
+<li>estensione delle funzionalità supportate.</li>
+</ul>
+<p>S $\to$ SRP (Single Responsibility Principle)
+O $\to$ OCP (Open-Closed Principle)
+L $\to$ LSP (Liskov Substitution Principle)
+I $\to$ ISP (Interface Segregation Principle)
+D $\to$ DIP (Dependency Inversion Principle)</p>
+<p><a href="#Principi%20progettazione%20object%20oriented"><em>Torna all'indice</em></a></p>
+<hr>
+<h3 id="note-importanti" tabindex="-1"><a class="anchor" href="#note-importanti" aria-hidden="true"><span class="octicon octicon-link"></span></a> Note importanti</h3>
+<p>I principi SOLID non sono stati "inventati" o "proposti" contemporaneamente: l'acrostico ha solamente fornito un nome facilmente memorizzabile per concetti o metodologie che sono stati sviluppati in tempi diversi da persone diverse e, abbastanza spesso, con nomi diversi. L'uso sistematico dei TLA (Three Letter Acronyms) per riferirsi ai singoli principi può essere etichettato come una "moda" dei tempi.</p>
+<p>L'ordine in cui sono elencati i principi NON corrisponde ad una qualche relazione di priorità tra questi, ma è solo funzionale a creare l'acrostico. Di conseguenza, verranno presentati in un ordine diverso.</p>
+<p>Si parla di "principi" e non di "tecniche" o "metodi", perché non sono immediatamente applicabili (e a maggior ragione non è opportuno immaginare che vengano applicati in maniera sistematica e/o automatica).</p>
+<p>La loro applicazione richiede uno sforzo per valutare se sia o meno opportuno applicarli nei vari contesti concreti che si presentano, in quanto ogni beneficio (conseguente all'adozione di una modifica di progetto che favorisca uno dei principi) spesso comporta anche un corrispondente costo (in termini di comprensibilità del codice da parte del programmatore e/o in termini di modifiche da applicare a codice esistente).</p>
+<p>In linea di massima, il progettista dovrebbe individuare quelle parti del software che:</p>
+<ul>
+<li>sono in contrasto con alcuni di questi principi;</li>
+<li>in futuro potrebbero beneficiare dall'applicazione di una ristrutturazione del codice in linea con i principi;</li>
+</ul>
+<p>e quindi applicare le azioni correttive del caso.</p>
+<p>La pretesa di applicare i principi sistematicamente, a tutte le porzioni di codice, indipendentemente da ogni valutazione di opportunità, tipicamente porta a progetti oltremodo complicati, che violano altri principi di progettazione.  A titolo di esempio, si ricorda il principio KISS (Keep It Simple, Stupid) che suggerisce di evitare ogni tipo di complicazione non strettamente necessaria.</p>
+<p><a href="#Principi%20progettazione%20object%20oriented"><em>Torna all'indice</em></a></p>
+<hr>
+<h2 id="srp-single-responsibility-principle" tabindex="-1"><a class="anchor" href="#srp-single-responsibility-principle" aria-hidden="true"><span class="octicon octicon-link"></span></a> SRP (Single Responsibility Principle)</h2>
+<p>Si tratta di un principo di validità generale (cioè, non è limitato al caso della progettazione object oriented) che dice, intuitivamente, che <mark style="background: #FF5582A6;">ogni porzione di software che progettiamo e implementiamo</mark> (una classe, una funzione, ecc.) <mark style="background: #FF5582A6;">dovrebbe avere in carico una sola responsabilità</mark>.</p>
+<p>A volte si dice che ogni classe dovrebbe avere un solo "motivo per essere modificata": se esistono più motivi distinti, questo è indice che la classe si assume più responsabilità e quindi dovrebbe essere suddivisa in più componenti, ognuno dei quali caratterizzato da una singola responsabilità.</p>
+<p>Il rispetto del principio porta a codice più manutenibile e, in linea di massima, più facile da riutilizzare.</p>
+<p>Esempio:
+Una classe che deve manipolare una pluralità di risorse (in maniera exception safe) non dovrebbe prendersi carico direttamente della corretta gestione dell'acquisizione e rilascio delle singole risorse.
+Piuttosto, dovrebbe <em>delegare</em> questo compito ad opportune classi gestore (intuitivamente, una classe gestore per ogni tipologia distinta di risorsa) e focalizzarsi sull'uso appropriato delle risorse.</p>
+<p><a href="#Principi%20progettazione%20object%20oriented"><em>Torna all'indice</em></a></p>
+<hr>
+<h2 id="ocp-open-closed-principle" tabindex="-1"><a class="anchor" href="#ocp-open-closed-principle" aria-hidden="true"><span class="octicon octicon-link"></span></a> OCP (Open-Closed Principle)</h2>
+<p>Il principio "aperto-chiuso" è forse il più conosciuto dei principi SOLID. Ne sono state proposte due varianti: la prima si fa risalire al lavoro di Bertand Meyer (1988); la seconda (che è quella adottata nei principi SOLID) fu proposta da Robert C. Martin nel 1996, ma è di fatto una riformulazione di principi di progettazione proposti molti anni prima sotto altri nomi.</p>
+<blockquote>
+<p>Usando le parole di Martin:
+<em>"SOFTWARE ENTITIES (CLASSES, MODULES, FUNCTIONS, ETC.) SHOULD BE OPEN FOR EXTENSION, BUT CLOSED FOR MODIFICATION."</em></p>
+</blockquote>
+<p>Il principio dice che:</p>
+<ol>
+<li>il <mark style="background: #ABF7F7A6;">software</mark> dovrebbe essere "<mark style="background: #ABF7F7A6;">aperto</mark> alle <mark style="background: #ABF7F7A6;">estensioni</mark>"</li>
+<li>il <mark style="background: #D2B3FFA6;">software</mark> dovrebbe essere "<mark style="background: #D2B3FFA6;">chiuso</mark> alle <mark style="background: #D2B3FFA6;">modifiche</mark>"</li>
+</ol>
+<p>In altre parole, un software progettato bene dovrebbe rendere semplice l'aggiunta di nuove funzionalità (scrivendo nuovo codice), senza che per fare ciò sia necessario modificare il codice esistente (chiusura alle modifiche).</p>
+<p>Si noti che, nella sua enunciazione, il principio OCP non fornisce una metodologia esplicita per ottenere gli obiettivi che si propone, ragione per cui potrebbe sembrare inutile. In ogni caso, il principio può servire come linea guida per valutare quale, tra diverse alternative di progetto, soddisfa meglio i requisiti di apertura (alle estensioni) e chiusura (alle modifiche). In realtà, nei lavori che trattano del principio OCP, si dice esplicitamente che l'operazione chiave per ottenere un progetto aderente al principio suddetto è l'individuazione di quelle parti del software che, con probabilità alta, saranno oggetto di modifica in futuro e l'applicazione a queste parti di opportuni costrutti di astrazione (a volte detti costrutti per ottenere "information hiding").</p>
+<p>Esempio:
+usiamo il principio OCP per confrontare le due varianti di progetto (old-style vs oo-style) del nostro esercizio Fattoria.</p>
+<p>Iniziamo con il valutare quali parti del codice saranno (probabilmente) oggetto di cambiamento: come si era detto informalmente quando si era introdotto il problema, si prevede l'introduzione di nuovi animali, con caratteristiche più o meno diverse da quelli esistenti, che dovranno comunque essere utilizzabili nel "codice utente" (il codice che produce le strofe della canzoncina). Dobbiamo quindi valutare se il codice è aperto alle estensioni (aggiunta di nuovi animali) pur restando chiuso alle modifiche (il codice che genera la strofa della canzone e il codice degli animali preesistenti non dovrebbero essere modificati in seguito all'introduzione di nuovi animali).</p>
+<p><a href="#Principi%20progettazione%20object%20oriented"><em>Torna all'indice</em></a></p>
+<h3 id="variante-old-style" tabindex="-1"><a class="anchor" href="#variante-old-style" aria-hidden="true"><span class="octicon octicon-link"></span></a> Variante old-style</h3>
+<p>Nella variante old-style, esiste una unica classe Animale che implementa tutti gli animali concreti: l'aggiunta di un nuovo animale comporta la modifica di questa classe e, di conseguenza, la possibilità di modificare (magari inavvertitamente) il comportamento di uno degli animali preesistenti.
+In altre parole, il codice è aperto alle estensioni, ma è solo parzialmente chiuso alle modifiche: pur essendo vero che non dobbiamo modificare il codice che genera la strofa, ogni estensione che aggiunge un animale rischia di rompere il codice preesistente (inoltre, il codice che genera la strofa va comunque ricompilato, perché dipende direttamente dai dettagli implementativi della classe Animale).</p>
+<p><a href="#Principi%20progettazione%20object%20oriented"><em>Torna all'indice</em></a></p>
+<h3 id="variante-oo-style" tabindex="-1"><a class="anchor" href="#variante-oo-style" aria-hidden="true"><span class="octicon octicon-link"></span></a> Variante oo-style</h3>
+<p>Nella variante oo-style, invece, abbiamo una classe astratta Animale; questa fornisce l'interfaccia, ma non mostra alcun dettaglio implementativo.
+Il codice è aperto alle estensioni: per aggiungere un animale è sufficiente creare una nuova classe che implementa (mediante derivazione pubblica "IS-A") l'interfaccia astratta. Il codice è anche chiuso alle modifiche, perché queste aggiunte non hanno nessun impatto sul codice che genera la strofa e nemmeno sulle classi che implementano tutti gli altri animali.
+Quando si aggiunge un animale, non c'è nemmeno bisogno di ricompilare il codice che genera la strofa: deve essere solo ricollegato.
+In linea di principio, team di sviluppatori diversi potrebbero generare varianti diverse degli animali, senza dovere condividere il codice sorgente (solo l'interfaccia astratta).</p>
+<p>Quindi, fissato il tipo di modifica "aggiunta di nuovi animali concreti", possiamo affermare che il progetto oo-style soddisfa il principio OCP in misura maggiore rispetto al progetto old-style.</p>
+<blockquote>
+<p>In entrambi i casi, l'aggiunta di nuovi animali concreti prevede piccole modifiche al modulo Maker.cc, per consentire ai nuovi animali di essere utilizzati dal programma. In altre parole, la "chiusura alle modifiche" non può mai essere totale: se vogliamo l'estendibilità devono sempre esistere dei punti in cui questa viene resa possibile; chiaramente, un buon progetto dovrebbe "confinare" il codice soggetto a modifiche in una zona ben delimitata e, per quanto possibile, piccola.</p>
+</blockquote>
+<p><a href="#Principi%20progettazione%20object%20oriented"><em>Torna all'indice</em></a></p>
+<hr>
+<h2 id="dip-dependency-inversion-principle" tabindex="-1"><a class="anchor" href="#dip-dependency-inversion-principle" aria-hidden="true"><span class="octicon octicon-link"></span></a> DIP (Dependency Inversion Principle)</h2>
+<p>Nella formulazione di Martin, il principio di inversione delle dipendenze viene enunciato in questo modo:</p>
+<blockquote>
+<p>"<em>I moduli di alto livello non devono dipendere da quelli di basso livello: entrambi devono dipendere da astrazioni. Le astrazioni non devono dipendere dai dettagli. Sono i dettagli che dipendono dalle astrazioni.</em>"</p>
+</blockquote>
+<p>Il principio opera una classificazione sulle dipendenze tra moduli software (classi, funzioni, ecc.), stabilendo che alcune di queste dipendenze sono ammesse (in quanto inevitabili e tutto sommato innocue), mentre altre dipendenze sono da evitare (in quanto dannose).</p>
+<p><u>Intuitivamente, le dipendenze "buone" sono quelle verso i concetti astratti; le dipendenze "cattive" sono quelle verso i dettagli implementativi.</u></p>
+<p>Rimane da capire come mai il nome del principio parla di "inversione" delle dipendenze: è un punto importante, in quanto mette in evidenza l'aspetto metodologico nello sviluppo del software.</p>
+<p>L'osservazione chiave è che, molto spesso, il software viene progettato e sviluppato seguendo un approccio top-down: partendo dal problema generale da risolvere, lo si suddivide in sottoproblemi più piccoli; la soluzione del problema generale si ottiene effettuando una opportuna composizione delle soluzioni dei sottoproblemi. Il processo viene ripetuto sui sottoproblemi, arrivando ad una stratificazione del codice, nella quale i moduli a livello più alto usano (e quindi <em>dipendono</em> da) i moduli a livello più basso. Si creano quindi naturalmente delle dipendenze (dall'astratto verso il concreto) che il principio DIP classifica come "cattive". Il principio DIP suggerisce quindi di "invertire" queste dipendenze, sostituendole con altre che invece non creano problemi (perché vanno dal concreto verso l'astratto).</p>
+<p>A tale scopo, si individano alcune interfacce astratte, che non dipendono dai dettagli implementativi: <mark style="background: #BBFABBA6;">i moduli di alto livello vengono modificati per usare</mark> (dipendere da) <mark style="background: #BBFABBA6;">le interfacce astratte</mark>; analogamente,<mark style="background: #FFF3A3A6;"> i moduli a basso livello</mark> vengono modificati per <mark style="background: #FFF3A3A6;">implementare</mark> (dipendere da) <mark style="background: #FFF3A3A6;">le interfacce astratte</mark> (realizzando quindi l'inversione).
+Complessivamente, si è eliminata la dipendenza dei moduli a alto livello dai moduli a basso livello. In particolare, si è migliorata anche l'aderenza del progetto al principio OCP, in quanto è ora possibile estendere il software, per esempio, consentendo la scelta di implementazioni alternative dell'interfaccia astratta senza influenzare i moduli ad alto livello.</p>
+<p>Siccome il DIP si concentra sulle dipendenze tra moduli e queste dipendenze sono spesso rispecchiate dalla suddivisione in file del software (in particolare, dalle inclusioni di header file), a volte si dice che il principio DIP può essere visto come una reinterpretazione del principio OCP che si concentra sugli aspetti "sintattici".</p>
+<p><a href="#Principi%20progettazione%20object%20oriented"><em>Torna all'indice</em></a></p>
+<hr>
+<h2 id="lsp-liskov-substitution-principle" tabindex="-1"><a class="anchor" href="#lsp-liskov-substitution-principle" aria-hidden="true"><span class="octicon octicon-link"></span></a> LSP (Liskov Substitution Principle)</h2>
+<p>Questo principio prende il nome da Barbara Liskov, che nel 1987 aveva enunciato la nozione di "sostituibilità" per tipi di dato (nozione poi formalizzata in un articolo scritto insieme a Jeannette Wing).</p>
+<p>Intuitivamente, si dice che <mark style="background: #FFB86CA6;">S è un sottotipo di T se ad ogni modulo che usa un oggetto t di T è possibile passare (invece) un oggetto s di S ottenendo comunque un risultato equivalente</mark>, cioè un risultato che soddisfa le legittime aspettative dell'utente.</p>
+<p>Martin ha riformulato il principio (in modo abbastanza grossolano) in questi termini:</p>
+<blockquote>
+<p>"<em>Ogni funzione che usa puntatori o riferimenti a classi base deve essere in grado di usare oggetti delle classi derivate senza saperlo.</em>"</p>
+</blockquote>
+<p>Più propriamente, quello che si sta definendo è il cosiddetto "behavioral subtyping": le classi derivate (il sottotipo S) devono soddisfare le legittime aspettative degli utenti che accedono ad esse usando puntatori o riferimenti alle classi astratte (il tipo T).
+In altre parole, siccome S dichiara di essere in relazione "IS-A" rispetto a T, gli oggetti di tipo S non solo devono fornire (sintatticamente) i metodi forniti dalla classe base T, ma si devono anche comportare (behavior, aspetto semantico) come se fossero degli oggetti di tipo T.</p>
+<p>Quindi il principio LSP può essere visto come una reinterpretazione del principio OCP che si focalizza sugli aspetti semantici (in precedenza avevamo notato che il DIP si focalizza solo sugli aspetti sintattici).</p>
+<p>La corrispondenza del behavior non deve però essere intesa in senso assoluto (cioè, S non deve necessariamente essere identico a T): essa è limitata a quelle che sono le "aspettative legittime" che può avere un utente della classe T.
+Quali sarebbero queste legittime aspettative?
+Sono quelle stabilite dal <em>contratto</em> (precondizioni, invarianti e postcondizioni) che la classe T ha sottoscritto con i suoi utenti.
+Il principio LSP (e il behavioral subtyping) sono quindi in connessione stretta con la programmazione per contratto. Quando la classe derivata S dichiara di essere in relazione "IS-A" con la classe base T, di fatto si impegna a rispettare il contratto che T ha stabilito con i suoi utenti.</p>
+<p>Esempio: consideriamo l'esempio della Fattoria.
+Un animale concreto soddisfa il principio LSP se, quando implementa i tre metodi virtuali dell'interfaccia astratta, rispetta il contratto stabilito da questa con i suoi utenti. Il contratto, purtroppo, non è stato stabilito esplicitamente, ma esiste e va rispettato, altrimenti l'utente si troverebbe di fronte a comportamenti erronei.
+Per esempio, è stato detto che il nome dell'animale deve essere il suo "nome comune" e che il genere (che serve a stabilire l'articolo indeterminativo da usare nella strofa) deve corrispondere al genere del nome comune (es., maschile per il cane, femminile per la volpe).
+Una classe concreta che, invece, fornisse il genere dell'animale (es., femminile per un cane femmina e maschile per una volpe maschio) violerebbe il principio LSP (e il contratto della classe base Animale).</p>
+<p>Pur non essendo frequenti, le violazioni del principio LSP sono pericolose, perché non esistono modi semplici per rilevarle.</p>
+<p>Un esempio classico di violazione del principio LSP è il seguente.
+Supponiamo che esista una classe Rettangolo, con la seguente interfaccia:</p>
+<pre><code class="language-cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Rettangolo</span> {</span>
+	<span class="hljs-keyword">long</span> lung;
+	<span class="hljs-keyword">long</span> largh;
+	
+<span class="hljs-keyword">public</span>:
+	<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">check_inv</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>{
+		<span class="hljs-keyword">return</span> lung &gt; <span class="hljs-number">0</span> &amp;&amp; larg &gt; <span class="hljs-number">0</span>;
+	}
+	
+	<span class="hljs-built_in">Rettangolo</span>(<span class="hljs-keyword">long</span> lunghezza, <span class="hljs-keyword">long</span> larghezza) : 
+		<span class="hljs-built_in">lung</span>(lunghezza), <span class="hljs-built_in">larg</span>(larghezza) {
+	    <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">check_inv</span>())
+		    <span class="hljs-keyword">throw</span> std::<span class="hljs-built_in">invalid_argument</span>(<span class="hljs-string">"Dimensioni invalide"</span>);
+	}
+	
+	<span class="hljs-function"><span class="hljs-keyword">long</span> <span class="hljs-title">get_lunghezza</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>{ <span class="hljs-keyword">return</span> lung; }
+	<span class="hljs-function"><span class="hljs-keyword">long</span> <span class="hljs-title">get_larghezza</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>{ <span class="hljs-keyword">return</span> larg; }
+	
+	<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">set_lunghezza</span><span class="hljs-params">(<span class="hljs-keyword">long</span> value)</span> </span>{
+		<span class="hljs-keyword">if</span> (value &lt;= <span class="hljs-number">0</span>)
+		    <span class="hljs-keyword">throw</span> std::<span class="hljs-built_in">invalid_argument</span>(<span class="hljs-string">"Dimensione invalida"</span>);
+	    lung = value;
+	}
+	<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">set_larghezza</span><span class="hljs-params">(<span class="hljs-keyword">long</span> value)</span> </span>{
+		<span class="hljs-keyword">if</span> (value &lt;= <span class="hljs-number">0</span>)
+		    <span class="hljs-keyword">throw</span> std::<span class="hljs-built_in">invalid_argument</span>(<span class="hljs-string">"Dimensione invalida"</span>);
+		larg = value;
+	}
+	
+	<span class="hljs-function"><span class="hljs-keyword">long</span> <span class="hljs-title">get_area</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>{ <span class="hljs-keyword">return</span> lungh * larg; }
+};
+</code></pre>
+<p>Ad un certo punto viene richiesto di creare la classe Quadrato, dotata di una interfaccia simile. Siccome un quadrato è un tipo particolare di rettangolo, un programmatore (pigro) potrebbe pensare di implementare la classe quadrato usando l'ereditarietà pubblica e il polimorfismo dinamico.
+Le uniche accortezze tecniche sono quelle di dichiarare i metodi di Rettangolo come virtual (non puri, in quanto è una classe base concreta), di aggiungere il distruttore virtual e, infine, di fare l'override dei metodi <code>set_larghezza</code> e <code>set_lunghezza</code>, per assicurarsi che quando si modifica una dimensione sia modificata anche l'altra, così da mantenere l'invariante della classe Quadrato.</p>
+<pre><code class="language-cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Quadrato</span> :</span> <span class="hljs-keyword">public</span> Rettangolo {
+<span class="hljs-keyword">public</span>:
+	<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">check_inv</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>{
+		<span class="hljs-keyword">return</span> lung &gt; <span class="hljs-number">0</span> &amp;&amp; lung == larg;
+	}
+	
+	<span class="hljs-built_in">Quadrato</span>(<span class="hljs-keyword">long</span> lato) : <span class="hljs-built_in">Rettangolo</span>(lato, lato) { }
+	
+	<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">set_lunghezza</span><span class="hljs-params">(<span class="hljs-keyword">long</span> value)</span> <span class="hljs-keyword">override</span> </span>{
+		Rettangolo::<span class="hljs-built_in">set_lunghezza</span>(value);
+	    Rettangolo::<span class="hljs-built_in">set_larghezza</span>(value);
+	}
+	<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">set_larghezza</span><span class="hljs-params">(<span class="hljs-keyword">long</span> value)</span> <span class="hljs-keyword">override</span> </span>{
+	    <span class="hljs-built_in">set_lunghezza</span>(value);
+	}
+};
+</code></pre>
+<p><mark style="background: #FF5582A6;">Questo progetto viola il principio LSP</mark>. In particolare, NON è vero che a qualunque funzione che usa puntatori/riferimenti alla classe base (Rettangolo) noi possiamo passare invece puntatori/riferimenti alla classe derivata (Quadrato) e soddisfare le legittime aspettative dell'utente. In altre parole, NON è vero che un Quadrato "IS-A" Rettangolo, in quanto pur avendo la stessa interfaccia, non è equivalente dal punto di vista semantico.</p>
+<p>Esempio: l'utente che usa la classe Rettangolo si aspetta che questo codice (in assenza di overflow) sia corretto, ovvero che l'asserzione sia sempre soddisfatta:</p>
+<pre><code class="language-cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">raddoppia_area</span><span class="hljs-params">(Rettangolo&amp; r)</span> </span>{
+	<span class="hljs-keyword">long</span> a_prima = r.<span class="hljs-built_in">get_area</span>();
+	<span class="hljs-keyword">long</span> i = r.<span class="hljs-built_in">get_lunghezza</span>();
+	r.<span class="hljs-built_in">set_lunghezza</span>(<span class="hljs-number">2</span> * i); <span class="hljs-comment">// raddoppia la lunghezza</span>
+	<span class="hljs-keyword">long</span> a_dopo = r.<span class="hljs-built_in">get_area</span>();
+	<span class="hljs-built_in">assert</span>(area_dopo == <span class="hljs-number">2</span> * a_prima);
+	<span class="hljs-comment">// .. altro codice</span>
+}
+</code></pre>
+<p>Se però alla funzione viene passato un riferimento a un Quadrato, il metodo <code>set_lunghezza()</code> raddoppierà sia la lunghezza che la larghezza e, di conseguenza, avremo una violazione dell'asserzione (perché <code>a_dopo == 4 * a_prima</code>).</p>
+<p><a href="#Principi%20progettazione%20object%20oriented"><em>Torna all'indice</em></a></p>
+<h3 id="cosa-%C3%A8-successo" tabindex="-1"><a class="anchor" href="#cosa-%C3%A8-successo" aria-hidden="true"><span class="octicon octicon-link"></span></a> Cosa è successo?</h3>
+<p>Semplicemente, <mark style="background: #FF5582A6;">la classe Quadrato ha violato il contratto (stabilito dalla classe Rettangolo) del metodo set_lunghezza</mark>.<br>
+Il contratto stabilisce (nelle sue post-condizioni) che il metodo modifica <em>solo</em> la lunghezza del rettangolo, mentre l'overriding definito nella classe Quadrato modifica sia la lunghezza che la larghezza.</p>
+<p>Si potrebbe obiettare: ma un quadrato deve avere i lati uguali. L'obiezione è sensata, ma sta ad indicare che la classe Quadrato NON può essere in relazione IS-A con la classe Rettangolo, ovvero che un Quadrato NON è un Rettangolo. Quando facciamo questa affermazione, chiaramente, non stiamo ragionando in puri termini geometrici, ma stiamo piuttosto considerando l'aspetto "behavioral" dei corrispondenti tipi di dato: un Quadrato non è un Rettangolo perché esistono dei contesti (vedi la funzione di sopra) in cui un Quadrato NON si comporta come si comporterebbe un Rettangolo.</p>
+<p>La classe base stabilisce un contratto per ognuno dei suoi metodi, in termini di pre-condizioni e post-condizioni. Cosa deve fare la classe derivata per soddisfare tale contratto?
+Non è necessario che il contratto stabilito dalla classe derivata sia identico, ma la classe derivata deve fornire come minimo tutte le garanzie fornite dalla classe base. Quindi, la classe derivata può <em>indebolire</em> le precondizioni (cioè fornire una implementazione per più casi rispetto a quelli previsti dalla classe base) e può <em>rafforzare</em> le postcondizioni (cioè fornire all'utente garanzie ulteriori oltre a quelle garantite dalla classe base).
+Nel caso analizzato nell'esempio, le post-condizioni dei metodi <code>set_lunghezza</code> e <code>set_larghezza</code> sono state modificate (rendendole incompatibili, non rafforzandole), da cui la violazione del contratto e, di conseguenza, del principio di sostituibilità di Liskov.</p>
+<p><a href="#Principi%20progettazione%20object%20oriented"><em>Torna all'indice</em></a></p>
+<hr>
+<h2 id="isp-interface-segregation-principle" tabindex="-1"><a class="anchor" href="#isp-interface-segregation-principle" aria-hidden="true"><span class="octicon octicon-link"></span></a> ISP (Interface Segregation Principle)</h2>
+<p>Il principio di separazione delle interfacce dice che <mark style="background: #FFB8EBA6;">l'utente non dovrebbe essere forzato a dipendere da parti di una interfaccia che non usa</mark>. Di conseguenza, il progettista di una interfaccia dovrebbe fare il possibile per <em>separare</em> quelle porzioni che potrebbero essere usate separatamente le une dalle altre, ovvero a preferire tante interfacce "piccole" (thin interfaces) rispetto a poche interfacce "grandi" (fat interfaces).</p>
+<p>Aderendo a questo principio, si ottengono i seguenti benefici:</p>
+<ol>
+<li>l'implementatore può implementare separatamente le interfacce piccole, evitando che un errore su una di queste si propaghi sulle altre;</li>
+<li>l'implementatore può decidere di implementare solo alcune delle interfacce piccole ottenute dalla separazione dell'interfaccia grande;</li>
+<li>se una delle interfacce piccole dovesse cambiare, l'utente che non la usa (perché usa le altre) non ne è minimamente influenzato; al contrario, adottando una sola interfaccia grande, una modifica su una sua parte influenza anche gli utenti che NON fanno alcun uso di quella parte.</li>
+</ol>
+<p>Dal punto di vista tecnico, l'applicazione del principio ISP presuppone la possibilità di utilizzare l'ereditarietà multipla (di interfaccia) e, in effetti, può essere considerato l'esempio più frequente di uso appropriato dell'ereditarietà multipla. E' quindi importante studiare i corrispondenti aspetti tecnici dal punto di vista del linguaggio.</p>
+<p>Si noti infine che il principio ISP può essere interpretato come una forma particolare del principio SRP, che si concentra al caso specifico della progettazione delle interfacce.</p>
+<p><a href="#Principi%20progettazione%20object%20oriented"><em>Torna all'indice</em></a></p>
+
+		</main>
+	</body>
+</html>

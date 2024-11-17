@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+		<title>20-iteratori</title>
+		<style>
+			/* PDF Specific */
+
+@media print {
+  body {
+    min-width: initial;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+}
+
+/* General */
+
+.octicon {
+  display: inline-block;
+  fill: currentColor;
+  vertical-align: text-bottom;
+}
+
+.anchor {
+  float: left;
+  line-height: 1;
+  margin-left: -20px;
+  padding-right: 4px;
+}
+
+.anchor:focus {
+  outline: none;
+}
+
+h1 .octicon-link,
+h2 .octicon-link,
+h3 .octicon-link,
+h4 .octicon-link,
+h5 .octicon-link,
+h6 .octicon-link {
+  color: #1b1f23;
+  vertical-align: middle;
+  visibility: hidden;
+}
+
+h1:hover .anchor,
+h2:hover .anchor,
+h3:hover .anchor,
+h4:hover .anchor,
+h5:hover .anchor,
+h6:hover .anchor {
+  text-decoration: none;
+}
+
+h1:hover .anchor .octicon-link,
+h2:hover .anchor .octicon-link,
+h3:hover .anchor .octicon-link,
+h4:hover .anchor .octicon-link,
+h5:hover .anchor .octicon-link,
+h6:hover .anchor .octicon-link {
+  visibility: visible;
+}
+
+h1:hover .anchor .octicon-link:before,
+h2:hover .anchor .octicon-link:before,
+h3:hover .anchor .octicon-link:before,
+h4:hover .anchor .octicon-link:before,
+h5:hover .anchor .octicon-link:before,
+h6:hover .anchor .octicon-link:before {
+  width: 16px;
+  height: 16px;
+  content: ' ';
+  display: inline-block;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' version='1.1' width='16' height='16' aria-hidden='true'%3E%3Cpath fill-rule='evenodd' d='M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z'%3E%3C/path%3E%3C/svg%3E");
+}
+
+body {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -webkit-print-color-adjust: exact;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
+    sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #24292e;
+  word-wrap: break-word;
+  box-sizing: border-box;
+  min-width: 200px;
+  max-width: 980px;
+  margin: 1rem auto;
+}
+
+details {
+  display: block;
+}
+
+summary {
+  display: list-item;
+}
+
+a {
+  background-color: initial;
+}
+
+a:active,
+a:hover {
+  outline-width: 0;
+}
+
+strong {
+  font-weight: inherit;
+  font-weight: bolder;
+}
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+img {
+  border-style: none;
+}
+
+code,
+kbd,
+pre {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+hr {
+  box-sizing: initial;
+  height: 0;
+  overflow: visible;
+}
+
+input {
+  font: inherit;
+  margin: 0;
+}
+
+input {
+  overflow: visible;
+}
+
+[type='checkbox'] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+input {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+a {
+  color: #0366d6;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+strong {
+  font-weight: 600;
+}
+
+hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #dfe2e5;
+}
+
+hr:after,
+hr:before {
+  display: table;
+  content: '';
+}
+
+hr:after {
+  clear: both;
+}
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+td,
+th {
+  padding: 0;
+}
+
+details summary {
+  cursor: pointer;
+}
+
+kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #d1d5da;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+h1 {
+  font-size: 32px;
+}
+
+h1,
+h2 {
+  font-weight: 600;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+h3 {
+  font-size: 20px;
+}
+
+h3,
+h4 {
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h5,
+h6 {
+  font-weight: 600;
+}
+
+h6 {
+  font-size: 12px;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+blockquote {
+  margin: 0;
+}
+
+ol,
+ul {
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+ol ol,
+ul ol {
+  list-style-type: lower-roman;
+}
+
+ol ol ol,
+ol ul ol,
+ul ol ol,
+ul ul ol {
+  list-style-type: lower-alpha;
+}
+
+dd {
+  margin-left: 0;
+}
+
+code,
+pre {
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 12px;
+}
+
+pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+:checked + .radio-label {
+  position: relative;
+  z-index: 1;
+  border-color: #0366d6;
+}
+
+.border {
+  border: 1px solid #e1e4e8 !important;
+}
+
+.border-0 {
+  border: 0 !important;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #e1e4e8 !important;
+}
+
+.rounded-1 {
+  border-radius: 3px !important;
+}
+
+.bg-white {
+  background-color: #fff !important;
+}
+
+.bg-gray-light {
+  background-color: #fafbfc !important;
+}
+
+.text-gray-light {
+  color: #6a737d !important;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+
+.my-2 {
+  margin-top: 8px !important;
+  margin-bottom: 8px !important;
+}
+
+.pl-0 {
+  padding-left: 0 !important;
+}
+
+.py-0 {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.pl-1 {
+  padding-left: 4px !important;
+}
+
+.pl-2 {
+  padding-left: 8px !important;
+}
+
+.py-2 {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+.pl-3,
+.px-3 {
+  padding-left: 16px !important;
+}
+
+.px-3 {
+  padding-right: 16px !important;
+}
+
+.pl-4 {
+  padding-left: 24px !important;
+}
+
+.pl-5 {
+  padding-left: 32px !important;
+}
+
+.pl-6 {
+  padding-left: 40px !important;
+}
+
+.f6 {
+  font-size: 12px !important;
+}
+
+.lh-condensed {
+  line-height: 1.25 !important;
+}
+
+.text-bold {
+  font-weight: 600 !important;
+}
+
+.pl-c {
+  color: #6a737d;
+}
+
+.pl-c1,
+.pl-s .pl-v {
+  color: #005cc5;
+}
+
+.pl-e,
+.pl-en {
+  color: #6f42c1;
+}
+
+.pl-s .pl-s1,
+.pl-smi {
+  color: #24292e;
+}
+
+.pl-ent {
+  color: #22863a;
+}
+
+.pl-k {
+  color: #d73a49;
+}
+
+.pl-pds,
+.pl-s,
+.pl-s .pl-pse .pl-s1,
+.pl-sr,
+.pl-sr .pl-cce,
+.pl-sr .pl-sra,
+.pl-sr .pl-sre {
+  color: #032f62;
+}
+
+.pl-smw,
+.pl-v {
+  color: #e36209;
+}
+
+.pl-bu {
+  color: #b31d28;
+}
+
+.pl-ii {
+  color: #fafbfc;
+  background-color: #b31d28;
+}
+
+.pl-c2 {
+  color: #fafbfc;
+  background-color: #d73a49;
+}
+
+.pl-c2:before {
+  content: '^M';
+}
+
+.pl-sr .pl-cce {
+  font-weight: 700;
+  color: #22863a;
+}
+
+.pl-ml {
+  color: #735c0f;
+}
+
+.pl-mh,
+.pl-mh .pl-en,
+.pl-ms {
+  font-weight: 700;
+  color: #005cc5;
+}
+
+.pl-mi {
+  font-style: italic;
+  color: #24292e;
+}
+
+.pl-mb {
+  font-weight: 700;
+  color: #24292e;
+}
+
+.pl-md {
+  color: #b31d28;
+  background-color: #ffeef0;
+}
+
+.pl-mi1 {
+  color: #22863a;
+  background-color: #f0fff4;
+}
+
+.pl-mc {
+  color: #e36209;
+  background-color: #ffebda;
+}
+
+.pl-mi2 {
+  color: #f6f8fa;
+  background-color: #005cc5;
+}
+
+.pl-mdr {
+  font-weight: 700;
+  color: #6f42c1;
+}
+
+.pl-ba {
+  color: #586069;
+}
+
+.pl-sg {
+  color: #959da5;
+}
+
+.pl-corl {
+  text-decoration: underline;
+  color: #032f62;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+
+.my-2 {
+  margin-bottom: 8px !important;
+}
+
+.my-2 {
+  margin-top: 8px !important;
+}
+
+.pl-0 {
+  padding-left: 0 !important;
+}
+
+.py-0 {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.pl-1 {
+  padding-left: 4px !important;
+}
+
+.pl-2 {
+  padding-left: 8px !important;
+}
+
+.py-2 {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+.pl-3 {
+  padding-left: 16px !important;
+}
+
+.pl-4 {
+  padding-left: 24px !important;
+}
+
+.pl-5 {
+  padding-left: 32px !important;
+}
+
+.pl-6 {
+  padding-left: 40px !important;
+}
+
+.pl-7 {
+  padding-left: 48px !important;
+}
+
+.pl-8 {
+  padding-left: 64px !important;
+}
+
+.pl-9 {
+  padding-left: 80px !important;
+}
+
+.pl-10 {
+  padding-left: 96px !important;
+}
+
+.pl-11 {
+  padding-left: 112px !important;
+}
+
+.pl-12 {
+  padding-left: 128px !important;
+}
+
+hr {
+  border-bottom-color: #eee;
+}
+
+kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #d1d5da;
+}
+
+body:after,
+body:before {
+  display: table;
+  content: '';
+}
+
+body:after {
+  clear: both;
+}
+
+body > :first-child {
+  margin-top: 0 !important;
+}
+
+body > :last-child {
+  margin-bottom: 0 !important;
+}
+
+a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+blockquote,
+details,
+dl,
+ol,
+p,
+pre,
+table,
+ul {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+hr {
+  height: 0.25em;
+  padding: 0;
+  margin: 24px 0;
+  background-color: #e1e4e8;
+  border: 0;
+}
+
+blockquote {
+  padding: 0 1em;
+  color: #6a737d;
+  border-left: 0.25em solid #dfe2e5;
+}
+
+blockquote > :first-child {
+  margin-top: 0;
+}
+
+blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+h1,
+h2 {
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid #eaecef;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
+  font-size: 1.25em;
+}
+
+h4 {
+  font-size: 1em;
+}
+
+h5 {
+  font-size: 0.875em;
+}
+
+h6 {
+  font-size: 0.85em;
+  color: #6a737d;
+}
+
+ol,
+ul {
+  padding-left: 2em;
+}
+
+ol ol,
+ol ul,
+ul ol,
+ul ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+li {
+  word-wrap: break-all;
+}
+
+li > p {
+  margin-top: 16px;
+}
+
+li + li {
+  margin-top: 0.25em;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: 600;
+}
+
+dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+}
+
+table th {
+  font-weight: 600;
+}
+
+table td,
+table th {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+table tr {
+  background-color: #fff;
+  border-top: 1px solid #c6cbd1;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+img {
+  max-width: 80%;
+  box-sizing: initial;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #fff;
+}
+
+code {
+  padding: 0.2em 0.4em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(27, 31, 35, 0.05);
+  border-radius: 3px;
+}
+
+pre {
+  word-wrap: normal;
+}
+
+pre > code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #333;
+  -webkit-print-color-adjust: exact;
+  background: #f8f8f8;
+}
+
+.hljs pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.hljs pre,
+pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f6f8fa;
+  -webkit-print-color-adjust: exact;
+
+  border-radius: 3px;
+}
+
+pre code {
+  display: inline;
+  max-width: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: initial;
+  border: 0;
+}
+
+.commit-tease-sha {
+  display: inline-block;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 90%;
+  color: #444d56;
+}
+
+.full-commit .btn-outline:not(:disabled):hover {
+  color: #005cc5;
+  border-color: #005cc5;
+}
+
+.blob-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.blob-wrapper-embedded {
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.blob-num {
+  width: 1%;
+  min-width: 50px;
+  padding-right: 10px;
+  padding-left: 10px;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 12px;
+  line-height: 20px;
+  color: rgba(27, 31, 35, 0.3);
+  text-align: right;
+  white-space: nowrap;
+  vertical-align: top;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.blob-num:hover {
+  color: rgba(27, 31, 35, 0.6);
+}
+
+.blob-num:before {
+  content: attr(data-line-number);
+}
+
+.blob-code {
+  position: relative;
+  padding-right: 10px;
+  padding-left: 10px;
+  line-height: 20px;
+  vertical-align: top;
+}
+
+.blob-code-inner {
+  overflow: visible;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 12px;
+  color: #24292e;
+  word-wrap: normal;
+  white-space: pre;
+}
+
+.pl-token.active,
+.pl-token:hover {
+  cursor: pointer;
+  background: #ffea7f;
+}
+
+.tab-size[data-tab-size='1'] {
+  -moz-tab-size: 1;
+  tab-size: 1;
+}
+
+.tab-size[data-tab-size='2'] {
+  -moz-tab-size: 2;
+  tab-size: 2;
+}
+
+.tab-size[data-tab-size='3'] {
+  -moz-tab-size: 3;
+  tab-size: 3;
+}
+
+.tab-size[data-tab-size='4'] {
+  -moz-tab-size: 4;
+  tab-size: 4;
+}
+
+.tab-size[data-tab-size='5'] {
+  -moz-tab-size: 5;
+  tab-size: 5;
+}
+
+.tab-size[data-tab-size='6'] {
+  -moz-tab-size: 6;
+  tab-size: 6;
+}
+
+.tab-size[data-tab-size='7'] {
+  -moz-tab-size: 7;
+  tab-size: 7;
+}
+
+.tab-size[data-tab-size='8'] {
+  -moz-tab-size: 8;
+  tab-size: 8;
+}
+
+.tab-size[data-tab-size='9'] {
+  -moz-tab-size: 9;
+  tab-size: 9;
+}
+
+.tab-size[data-tab-size='10'] {
+  -moz-tab-size: 10;
+  tab-size: 10;
+}
+
+.tab-size[data-tab-size='11'] {
+  -moz-tab-size: 11;
+  tab-size: 11;
+}
+
+.tab-size[data-tab-size='12'] {
+  -moz-tab-size: 12;
+  tab-size: 12;
+}
+
+.task-list-item {
+  list-style-type: none;
+}
+
+.task-list-item + .task-list-item {
+  margin-top: 3px;
+}
+
+.task-list-item input {
+  margin: 0 0.2em 0.25em -1.6em;
+  vertical-align: middle;
+}
+/*
+github.com style (c) Vasily Polovnyov <vast@whiteants.net>
+*/
+  
+  .hljs-comment,
+  .hljs-quote {
+    color: #998;
+    font-style: italic;
+  }
+  
+  .hljs-keyword,
+  .hljs-selector-tag,
+  .hljs-subst {
+    color: #333;
+    font-weight: bold;
+  }
+  
+  .hljs-number,
+  .hljs-literal,
+  .hljs-variable,
+  .hljs-template-variable,
+  .hljs-tag .hljs-attr {
+    color: #008080;
+  }
+  
+  .hljs-string,
+  .hljs-doctag {
+    color: #d14;
+  }
+  
+  .hljs-title,
+  .hljs-section,
+  .hljs-selector-id {
+    color: #900;
+    font-weight: bold;
+  }
+  
+  .hljs-subst {
+    font-weight: normal;
+  }
+  
+  .hljs-type,
+  .hljs-class .hljs-title {
+    color: #458;
+    font-weight: bold;
+  }
+  
+  .hljs-tag,
+  .hljs-name,
+  .hljs-attribute {
+    color: #000080;
+    font-weight: normal;
+  }
+  
+  .hljs-regexp,
+  .hljs-link {
+    color: #009926;
+  }
+  
+  .hljs-symbol,
+  .hljs-bullet {
+    color: #990073;
+  }
+  
+  .hljs-built_in,
+  .hljs-builtin-name {
+    color: #0086b3;
+  }
+  
+  .hljs-meta {
+    color: #999;
+    font-weight: bold;
+  }
+  
+  .hljs-deletion {
+    background: #fdd;
+  }
+  
+  .hljs-addition {
+    background: #dfd;
+  }
+  
+  .hljs-emphasis {
+    font-style: italic;
+  }
+  
+  .hljs-strong {
+    font-weight: bold;
+  }
+		</style>
+<script> MathJax = { tex: { inlineMath: [["$", "$"]] } }; </script>
+<script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+	</head>
+	<body>
+		<nav id="table-of-contents">
+			<ul><li><a href="#iteratori"> Iteratori</a><ul><li><a href="#il-concetto-di-iteratore"> Il concetto di iteratore</a><ul><li><a href="#iteratori-di-input"> Iteratori di input</a></li><li><a href="#iteratori-forward"> Iteratori forward</a></li><li><a href="#iteratori-bidirezionali"> Iteratori bidirezionali</a></li><li><a href="#iteratori-random-access"> Iteratori random access</a></li><li><a href="#iteratori-di-output"> Iteratori di output</a></li></ul></li><li><a href="#il-template-di-classe-iteratortraits"> Il template di classe iterator_traits</a><ul><li><a href="#osservazioni"> Osservazioni</a></li></ul></li></ul></li></ul>
+		</nav>
+		<main>
+			<h1 id="iteratori" tabindex="-1"><a class="anchor" href="#iteratori" aria-hidden="true"><span class="octicon octicon-link"></span></a> Iteratori</h1>
+<pre><code class="language-toc"></code></pre>
+<hr>
+<h2 id="il-concetto-di-iteratore" tabindex="-1"><a class="anchor" href="#il-concetto-di-iteratore" aria-hidden="true"><span class="octicon octicon-link"></span></a> Il concetto di iteratore</h2>
+<p>È un concetto astratto.
+Molti algoritmi generici della libreria <code>standard</code> lavorano sul concetto di sequenza. Il concetto di iteratore, che prende spunto dal puntatore, fornisce un modo efficace per rappresentare varie tipologie di sequenze, indipendentemente dal tipo concreto usato per la loro implementazione.</p>
+<p>Gli iteratori si possono classificare in 5 categorie distinte (che corrispondono, tecnicamente, a 5 concetti correlati ma distinti), che si differenziano per le operazioni supportate e per le corrispondenti garanzie fornite all'utente. Le categorie sono:</p>
+<ul>
+<li>iteratori di input</li>
+<li>iteratori forward</li>
+<li>iteratori bidirezionali</li>
+<li>iteratori random access</li>
+<li>iteratori di output</li>
+</ul>
+<p><a href="#iteratori"><em>Torna all'indice</em></a></p>
+<hr>
+<h3 id="iteratori-di-input" tabindex="-1"><a class="anchor" href="#iteratori-di-input" aria-hidden="true"><span class="octicon octicon-link"></span></a> Iteratori di input</h3>
+<p>Consentono di effettuare le seguenti operazioni:</p>
+<ul>
+<li><code>++iter</code>: avanzamento di una posizione nella sequenza.</li>
+<li><code>iter++</code>: avanzamento postfisso (NON usarlo: preferire la forma prefissa).</li>
+<li><code>*iter</code>: accesso (in sola lettura) all'elemento corrente.</li>
+<li><code>iter-&gt;m</code>: equivalente a <code>(*iter).m</code> dove si assume che l'elemento abbia tipo classe e che m sia un membro della classe.</li>
+<li><code>iter1 == iter2</code>:  confronto (per uguaglianza) tra iteratori: tipicamente usato per verificare se siamo giunti al termine di una sequenza.</li>
+<li><code>iter1 != iter2</code>:  confronto per disuguaglianza.</li>
+</ul>
+<p>Un esempio di iteratore di input è dato dagli iteratori definiti sugli stream di input <code>std::istream</code>, attraverso i quali è possibile leggere i valori presenti sullo stream:</p>
+<pre><code class="language-cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iterator&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+	
+	<span class="hljs-comment">// uso di iteratori per leggere numeri double da std::cin</span>
+
+	<span class="hljs-comment">// inizio della (pseudo) sequenza</span>
+	<span class="hljs-function">std::istream_iterator&lt;<span class="hljs-keyword">double</span>&gt; <span class="hljs-title">i</span><span class="hljs-params">(std::cin)</span></span>;
+	<span class="hljs-comment">// fine della (pseudo) sequenza</span>
+	std::istream_iterator&lt;<span class="hljs-keyword">double</span>&gt; iend; 
+
+	<span class="hljs-comment">// scorro la sequenza, stampando i double letti su std::cout</span>
+	<span class="hljs-keyword">for</span> ( ; i != iend; ++i)
+		std::cout &lt;&lt; *i &lt;&lt; std::endl;
+}
+</code></pre>
+<blockquote>
+<p>Nel caso degli istream, l'iteratore che indica l'inizio della sequenza si costruisce passando l'input stream (<code>std::cin</code>), mentre quello che indica la fine della sequenza si ottiene col costruttore di default.</p>
+</blockquote>
+<p>Quando si opera con un iteratore di input occorre tenere presente che l'operazione di incremento potrebbe invalidare eventuali altri iteratori definiti sulla sequenza.
+Per esempio:</p>
+<pre><code class="language-cpp"><span class="hljs-function">std::istream_iterator&lt;<span class="hljs-keyword">double</span>&gt; <span class="hljs-title">i</span><span class="hljs-params">(std::cin)</span></span>; <span class="hljs-comment">// inizio della (pseudo) sequenza</span>
+<span class="hljs-keyword">auto</span> j = i;
+
+<span class="hljs-comment">// ora j e i puntano entrambi all'elemento corrente</span>
+std::cout &lt;&lt; *i; <span class="hljs-comment">// stampo l'elemento corrente</span>
+std::cout &lt;&lt; *j; <span class="hljs-comment">// stampo ancora l'elemento corrente</span>
+
+++i;             <span class="hljs-comment">// avanzo con i: questa operazione rende j *invalido*</span>
+std::cout &lt;&lt; *j; <span class="hljs-comment">// errore: comportamento NON definito</span>
+</code></pre>
+<p>In linguaggio informale, si dice che gli iteratori di input potrebbero essere <em>"one shot"</em>; analogamente si dice che potrebbero <em>"non essere riavvolgibili"</em> (cioè non consentono di scorrere più volte la stessa sequenza).
+Intuitivamente, l'operazione di avanzamento <em>consuma</em> l'input letto precedentemente (quindi, se lo si volesse rileggere, occorre averlo adeguatamente salvato da qualche altra parte).</p>
+<p><a href="#iteratori"><em>Torna all'indice</em></a></p>
+<hr>
+<h3 id="iteratori-forward" tabindex="-1"><a class="anchor" href="#iteratori-forward" aria-hidden="true"><span class="octicon octicon-link"></span></a> Iteratori forward</h3>
+<p>Consentono di effettuare tutte le operazioni supportate dagli iteratori di input.
+Inoltre, l'operazione di avanzamento effettuata su un iteratore forward <em>NON</em> invalida eventuali altri iteratori che puntano ad elementi precedenti nella sequenza (cioè, gli iteratori forward sono riavvolgibili e consentono di scorrere più volte la stessa sequenza).</p>
+<p>Infine, se il tipo dell'elemento indirizzato è modificabile, un iteratore forward può essere usato anche per scrivere (non solo per leggere).</p>
+<p>Esempi di iteratori forward sono quelli resi disponibili dal contenitore <code>std::forward_list</code>:</p>
+<pre><code class="language-cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;forward_list&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+	std::forward_list&lt;<span class="hljs-keyword">int</span>&gt; lista = { <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span> };
+
+	<span class="hljs-comment">// Modifica gli elementi della lista</span>
+	<span class="hljs-comment">// Nota: l'uso di "auto" mi risparmia dal dover scrivere il tipo</span>
+	<span class="hljs-comment">// dell'iteratore usato, che sarebbe std::forward_list&lt;int&gt;::iterator</span>
+	<span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> i = lista.<span class="hljs-built_in">begin</span>(); i != lista.<span class="hljs-built_in">end</span>(); ++i)
+	    *i += <span class="hljs-number">10</span>;
+
+	<span class="hljs-comment">// Stampa i valori 11, 12, 13, 14, 15</span>
+	<span class="hljs-comment">// Nota: l'uso di "auto" mi risparmia dal dover scrivere il tipo</span>
+	<span class="hljs-comment">// dell'iteratore usato, che sarebbe std::forward_list&lt;int&gt;::const_iterator</span>
+	<span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> i = lista.<span class="hljs-built_in">cbegin</span>(); i != lista.<span class="hljs-built_in">cend</span>(); ++i)
+	    std::cout &lt;&lt; *i &lt;&lt; std::endl;
+}
+</code></pre>
+<p><a href="#iteratori"><em>Torna all'indice</em></a></p>
+<hr>
+<h3 id="iteratori-bidirezionali" tabindex="-1"><a class="anchor" href="#iteratori-bidirezionali" aria-hidden="true"><span class="octicon octicon-link"></span></a> Iteratori bidirezionali</h3>
+<p>Consentono di effettuare tutte le operazioni supportate dagli iteratori forward (e quindi anche tutte quelle degli iteratori di input).
+Inoltre, consentono di spostarsi all'indietro sulla sequenza, usando gli operatori di decremento:</p>
+<pre><code class="language-cpp">--iter
+iter--
+</code></pre>
+<p>Esempi di iteratori bidirezionali sono quelli resi disponibili dal contenitore <code>std::list</code>.
+Altri esempi sono gli iteratori resi disponibili dai contenitori associativi (<code>std::set</code>, <code>std::map</code>, ecc..).</p>
+<pre><code class="language-cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;list&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+	std::list&lt;<span class="hljs-keyword">int</span>&gt; lista = { <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span> };
+
+	<span class="hljs-comment">// Modifica gli elementi della lista</span>
+	<span class="hljs-comment">// Nota: l'uso di "auto" mi risparmia dal dover scrivere il tipo</span>
+	<span class="hljs-comment">// dell'iteratore usato, che sarebbe std::list&lt;int&gt;::iterator</span>
+	<span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> i = lista.<span class="hljs-built_in">begin</span>(); i != lista.<span class="hljs-built_in">end</span>(); ++i)
+	    *i += <span class="hljs-number">10</span>;
+
+	<span class="hljs-comment">// Stampa i valori all'indietro</span>
+	<span class="hljs-comment">// Nota: l'uso di "auto" mi risparmia dal dover scrivere il tipo</span>
+	<span class="hljs-comment">// dell'iteratore usato, che sarebbe std::list&lt;int&gt;::const_iterator</span>
+	<span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> i = lista.<span class="hljs-built_in">cend</span>(); i != lista.<span class="hljs-built_in">cbegin</span>(); ) {
+	    --i; <span class="hljs-comment">// Nota: è necessario decrementare prima di leggere</span>
+	    std::cout &lt;&lt; *i &lt;&lt; std::endl;
+	}
+
+	<span class="hljs-comment">// Potevo ottenere (più facilmente) lo stesso effetto usando</span>
+	<span class="hljs-comment">// gli iteratori all'indietro</span>
+	<span class="hljs-comment">// Nota: l'uso di "auto" mi risparmia dal dover scrivere il tipo</span>
+	<span class="hljs-comment">// dell'iteratore usato, che sarebbe std::list&lt;int&gt;::const_reverse_iterator</span>
+	<span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> i = lista.<span class="hljs-built_in">crbegin</span>(); i != lista.<span class="hljs-built_in">crend</span>(); ++i)
+	    std::cout &lt;&lt; *i &lt;&lt; std::endl;
+}
+</code></pre>
+<p><a href="#iteratori"><em>Torna all'indice</em></a></p>
+<hr>
+<h3 id="iteratori-random-access" tabindex="-1"><a class="anchor" href="#iteratori-random-access" aria-hidden="true"><span class="octicon octicon-link"></span></a> Iteratori random access</h3>
+<p>Consentono di effettuare tutte le operazioni supportate dagli iteratori bidirezionali (e quindi anche quelle dei forward e degli input iterator).</p>
+<p>Sono inoltre supportate le seguenti operazioni (<code>n</code> è un valore intero):</p>
+<ul>
+<li><code>iter += n</code>: sposta iter di n posizioni (in avanti se n è positivo, all'indietro se n è negativo).</li>
+<li><code>iter -= n</code>: analogo, ma sposta nella direzione opposta.</li>
+<li><code>iter + n</code>: calcola un iteratore spostato di n posizioni (senza modificare iter).</li>
+<li><code>n + iter</code>: equivalente a <code>iter + n</code>.</li>
+<li><code>iter - n</code>: analogo, ma nella direzione opposta.</li>
+<li><code>iter[n]</code>: equivalente a <code>*(iter + n)</code>.</li>
+<li><code>iter1 - iter2</code>: calcola la "distanza" tra i due iteratori, ovvero il numero di elementi che dividono le due posizioni (i due iteratori devono essere definiti sulla stessa sequenza).</li>
+<li><code>iter1 &lt; iter2</code>: restituisce <code>true</code> se <code>iter1</code> occorre prima di <code>iter2</code> nella sequenza (che deve essere la stessa).</li>
+<li><code>iter1 &gt; iter2</code>: analoghi</li>
+<li><code>iter1 &lt;= iter2</code></li>
+<li><code>iter1 &gt;= iter2</code></li>
+</ul>
+<p>Esempi di iteratori random access sono i puntatori (per esempio sugli <em>array built-in</em>) e gli iteratori forniti da <code>std::vector</code>, <code>std::deque</code>, <code>std::array</code>, <code>std::string</code>, <code>std::bitset</code>, ...</p>
+<pre><code class="language-cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+	std::vector&lt;<span class="hljs-keyword">int</span>&gt; vect = { <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span> };
+
+	<span class="hljs-comment">// Modifica solo gli elementi di indice pari</span>
+	<span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> i = vect.<span class="hljs-built_in">begin</span>(); i != vect.<span class="hljs-built_in">end</span>(); i += <span class="hljs-number">2</span>)
+	    *i += <span class="hljs-number">10</span>;
+
+	<span class="hljs-comment">// Stampa i valori 11, 2, 13, 4, 15, 6</span>
+	<span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> i = vect.<span class="hljs-built_in">cbegin</span>(); i != vect.<span class="hljs-built_in">cend</span>(); ++i)
+	    std::cout &lt;&lt; *i &lt;&lt; std::endl;
+}
+</code></pre>
+<p><a href="#iteratori"><em>Torna all'indice</em></a></p>
+<hr>
+<h3 id="iteratori-di-output" tabindex="-1"><a class="anchor" href="#iteratori-di-output" aria-hidden="true"><span class="octicon octicon-link"></span></a> Iteratori di output</h3>
+<p>Gli iteratori di output sono iteratori che permettono solamente di scrivere gli elementi di una sequenza: l'operazione di scrittura deve essere fatta una volta sola, dopodiché è necessario incrementare l'iteratore (intuitivamente, per riposizionare correttamente l'iteratore, preparandosi per la scrittura successiva).</p>
+<p>Le uniche operazioni consentite sono quindi le seguenti:</p>
+<ul>
+<li><code>++iter</code>: avanzamento di una posizione nella sequenza</li>
+<li><code>iter++</code>: avanzamento postfisso (NON usarlo: preferire la forma prefissa)</li>
+<li><code>*iter</code>: accesso (in sola scrittura) all'elemento corrente</li>
+</ul>
+<blockquote>
+<p>Si noti che NON viene data la possibilità di confrontare iteratori di output tra di loro, in quanto NON è necessario farlo: un iteratore di output assume che vi sia sempre spazio nella sequenza per potere fare le sue scritture; è compito di chi lo usa fornire questa garanzia e, se la proprietà è violata, si otterrà un undefined behavior.</p>
+</blockquote>
+<p>Un esempio di iteratore di output è dato dagli iteratori definiti sugli stream di output <code>std::ostream</code>, attraverso i quali è possibile scrivere valori di un determinato tipo sullo stream.</p>
+<pre><code class="language-cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iterator&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+	<span class="hljs-function">std::ostream_iterator&lt;<span class="hljs-keyword">double</span>&gt; <span class="hljs-title">out</span><span class="hljs-params">(std::cout, <span class="hljs-string">"\n"</span>)</span></span>; <span class="hljs-comment">// posizione iniziale</span>
+	<span class="hljs-comment">// Nota: non esiste una "posizione finale"</span>
+	<span class="hljs-comment">// Nota: il secondo argomento del costruttore serve da separatore;</span>
+	<span class="hljs-comment">// se non viene fornito si assume la stringa vuota ""</span>
+
+	<span class="hljs-keyword">double</span> pi = <span class="hljs-number">3.1415</span>;
+	<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i != <span class="hljs-number">10</span>; ++i) {
+	    *out = (pi * i);  <span class="hljs-comment">// scrittura di un double usando out</span>
+	    ++out;            <span class="hljs-comment">// NB: spostarsi in avanti dopo *ogni* scrittura</span>
+	}
+}
+</code></pre>
+<blockquote>
+<p>Si noti che, quando il tipo degli oggetti "puntati" è accessibile in scrittura, gli iteratori forward, bidirezionali e random access soddisfano i requisiti degli iteratori di output e quindi possono essere usati ovunque sia necessario fornire un iteratore di output.</p>
+</blockquote>
+<p><a href="#iteratori"><em>Torna all'indice</em></a></p>
+<hr>
+<h2 id="il-template-di-classe-iteratortraits" tabindex="-1"><a class="anchor" href="#il-template-di-classe-iteratortraits" aria-hidden="true"><span class="octicon octicon-link"></span></a> Il template di classe iterator_traits</h2>
+<pre><code class="language-cpp">std::iterator_traits
+</code></pre>
+<p>Come si è sottolineato, alcune categorie di iteratori implementano un sovrainsieme delle operazioni e garanzie fornite da altre categorie: ciò significa che ogni volta che, nella documentazione di una funzione generica, si afferma che il parametro di tipo <code>Iter</code> è richiesto essere (per esempio) un <em>iteratore forward</em>, l'utente può istanziare correttamente quel parametro di template usando un qualunque iteratore concreto delle categorie forward, bidirezionale e random access.</p>
+<p>L'utente commetterebbe però un errore se istanziasse il parametro <code>Iter</code> con uno <code>std::istream_iterator</code>, perché questi sono (solo) iteratori di input.</p>
+<p>Quando abbiamo visto le interfacce dei contenitori standard, abbiamo notato come essi forniscano un certo numero di alias di tipo che consentono di dare nomi <em>"canonici"</em> ad alcuni tipi utili nella definizione e uso dell'interfaccia stessa (<code>size_type</code>, <code>value_type</code>, <code>iterator</code>, ecc.).</p>
+<p>La necessità di usare nomi canonici è avvertita anche quando si scrivono algoritmi generici che sfruttano il concetto di iteratore, ragione per cui un iteratore implementato come classe dovrebbe fornire i seguenti type alias:</p>
+<ul>
+<li><code>value_type</code>: tipo ottenuto dereferenziando l'iteratore.</li>
+<li><code>reference</code>: tipo riferimento (al <code>value_type</code>).</li>
+<li><code>pointer</code>: tipo puntatore (al <code>value_type</code>).</li>
+<li><code>difference_type</code>: tipo intero con segno (per le "distanze" tra iteratori).</li>
+<li><code>iterator_category</code>: un tipo "tag" (marcatore), che indica la categoria dell'iteratore.</li>
+</ul>
+<p><a href="#iteratori"><em>Torna all'indice</em></a></p>
+<hr>
+<h3 id="osservazioni" tabindex="-1"><a class="anchor" href="#osservazioni" aria-hidden="true"><span class="octicon octicon-link"></span></a> Osservazioni</h3>
+<p>Non sono forniti i <code>const_reference</code> e <code>const_pointer</code>, perché è l'iteratore che decide se il <code>value_type</code> è o meno in sola lettura; per esempio, se da un vettore vi di tipo <code>const std::vector&lt;int&gt;&amp;</code> estraggo un iteratore usando il metodo <code>begin()</code>, otterrò un <code>std::vector&lt;int&gt;::const_iterator</code> il cui alias reference è <code>const int&amp;</code> e il cui alias pointer è <code>const int*</code>.</p>
+<p>La <code>iterator_category</code> è un <em>"tag type"</em> (ovvero un tipo che può assumere un solo valore, il cui unico significato è dato dall'identità del tipo stesso).
+I tipi tag per le categorie di iteratori sono definiti nella libreria standard in questo modo:</p>
+<pre><code class="language-cpp"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">output_iterator_tag</span> {</span> };
+
+<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">input_iterator_tag</span> {</span> };
+
+<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">forward_iterator_tag</span> 
+	:</span> <span class="hljs-keyword">public</span> input_iterator_tag { };
+
+<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">bidirectional_iterator_tag</span> 
+	:</span> <span class="hljs-keyword">public</span> forward_iterator_tag { };
+
+<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">random_access_iterator_tag</span> 
+	:</span> <span class="hljs-keyword">public</span> bidirectional_iterator_tag { };
+</code></pre>
+<p>Le relazioni di ereditarietà dicono, per esempio, che un <code>bidirectional_iterator_tag</code> può essere convertito implicitamente (tramite up-cast) ad un <code>forward_iterator_tag</code> o ad un <code>input_iterator_tag</code>, ma <em>NON</em> può essere convertito ad un <code>random_access_iterator_tag</code>.</p>
+<p>Queste conversioni codificano le relazioni esistenti tra le categorie di iteratori, dicendo per esempio che un bidirectional è accettabile quando viene richiesto un forward, ma non vale il viceversa.
+Questi tag types possono quindi essere usati per codificare versioni alternative di un algoritmo generico scelte in base alla categoria dell'iteratore (come esempi concreti, vedere le funzioni generiche <code>std::advance</code> e <code>std::distance</code>).</p>
+<p>Abbiamo detto che in linea di principio ogni iteratore concreto dovrebbe fornire gli alias di tipo descritti sopra.
+Ma come farlo? Non possiamo adottare banalmente la tecnica usata per i contenitori standard, perché tra i nostri iteratori ci sono anche tipi che NON sono classi (i puntatori) e che quindi NON consentono di essere interrogati mediante la sintassi che usa l'operatore di scope:</p>
+<pre><code class="language-cpp">Iter::value_type  <span class="hljs-comment">// con un typename prefisso, se necessario</span>
+</code></pre>
+<p>Il problema si risolve usando il template di classe <code>std::iterator_traits</code>: invece di interrogare direttamente il tipo iteratore, si interroga la classe traits ottenuta istanziando  il template con quel tipo iteratore.
+Per esempio, se vogliamo conoscere il value type di <code>Iter</code>, scriviamo</p>
+<pre><code class="language-cpp">std::iterator_traits&lt;Iter&gt;::value_type
+</code></pre>
+<p>L'uso di <code>iterator_traits</code> è solo uno degli esempi di uso di classi <em>"traits"</em>, ovvero tipi di dato che hanno lo scopo di fornire qualche informazione (traits, ovvero le caratteristiche) di altri tipi di dato.</p>
+<p>In particolare, le classi <em>traits</em> consentono di effettuare queste analisi di "introspezione" anche sui tipi built-in (che non forniscono direttamente meccanismi per l'introspezione).</p>
+<p>Altri esempi, già intravisti, di classi traits sono:</p>
+<ul>
+<li>Template di classe <code>std::numeric_limits&lt;T&gt;</code>: consente di interrogare tipi numerici per ottenere informazioni quali i valori minimi e massimi rappresentabili, la signedness, il fatto di supportare o meno calcoli esatti, ecc.</li>
+<li>Template di classe <code>std::char_traits&lt;T&gt;</code>: consente di interrogare i tipi carattere per ottenere accesso, per esempio, alle funzioni di confronto da usare per l'ordinamento lessicografico.</li>
+</ul>
+<p>Dal punto di vista dell'utilizzo, il template <code>std::iterator_traits</code> è banale.
+E' però interessante vederne l'implementazione, perché fornisce un esempio semplice di specializzazione <em>parziale</em> di template di classe.</p>
+<p>Intuitivamente, gli <code>iterator_traits</code> devono distinguere i tipi puntatore dagli altri iteratori (di tipo definito dall'utente). Nel secondo caso, che corrisponde al template non specializzato, si <em>"delega"</em> al tipo Iter definito dall'utente il compito di fare il lavoro di introspezione:</p>
+<pre><code class="language-cpp"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> Iter&gt;
+<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">iterator_traits</span> {</span>
+	<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">typename</span> Iter::iterator_category iterator_category;
+    <span class="hljs-keyword">typedef</span> <span class="hljs-keyword">typename</span> Iter::value_type        value_type;
+    <span class="hljs-keyword">typedef</span> <span class="hljs-keyword">typename</span> Iter::difference_type   difference_type;
+    <span class="hljs-keyword">typedef</span> <span class="hljs-keyword">typename</span> Iter::pointer           pointer;
+    <span class="hljs-keyword">typedef</span> <span class="hljs-keyword">typename</span> Iter::reference         reference;
+};
+</code></pre>
+<p>Quando invece il tipo <code>Iter</code> è un puntatore, il template di classe si attiva per restituire all'utente le informazioni che il tipo built-in non sarebbe in grado di fornire. Vengono quindi fornite due specializzazioni parziali (<em>non-const</em> e <em>const</em>) del template di classe:</p>
+<pre><code class="language-cpp"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;
+<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">iterator_traits</span>&lt;</span>T*&gt; {
+	<span class="hljs-keyword">typedef</span> random_access_iterator_tag iterator_category;
+    <span class="hljs-keyword">typedef</span> T                          value_type;
+    <span class="hljs-keyword">typedef</span> <span class="hljs-keyword">ptrdiff_t</span>                  difference_type;
+    <span class="hljs-keyword">typedef</span> T*                         pointer;
+    <span class="hljs-keyword">typedef</span> T&amp;                         reference;
+};
+
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;
+<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">iterator_traits</span>&lt;</span><span class="hljs-keyword">const</span> T*&gt; {
+    <span class="hljs-keyword">typedef</span> random_access_iterator_tag iterator_category;
+    <span class="hljs-keyword">typedef</span> T                          value_type;
+    <span class="hljs-keyword">typedef</span> <span class="hljs-keyword">ptrdiff_t</span>                  difference_type;
+    <span class="hljs-keyword">typedef</span> <span class="hljs-keyword">const</span> T*                   pointer;
+    <span class="hljs-keyword">typedef</span> <span class="hljs-keyword">const</span> T&amp;                   reference;
+};
+</code></pre>
+<p><a href="#iteratori"><em>Torna all'indice</em></a></p>
+
+		</main>
+	</body>
+</html>

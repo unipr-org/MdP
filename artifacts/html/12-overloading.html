@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+		<title>12-overloading</title>
+		<style>
+			/* PDF Specific */
+
+@media print {
+  body {
+    min-width: initial;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+}
+
+/* General */
+
+.octicon {
+  display: inline-block;
+  fill: currentColor;
+  vertical-align: text-bottom;
+}
+
+.anchor {
+  float: left;
+  line-height: 1;
+  margin-left: -20px;
+  padding-right: 4px;
+}
+
+.anchor:focus {
+  outline: none;
+}
+
+h1 .octicon-link,
+h2 .octicon-link,
+h3 .octicon-link,
+h4 .octicon-link,
+h5 .octicon-link,
+h6 .octicon-link {
+  color: #1b1f23;
+  vertical-align: middle;
+  visibility: hidden;
+}
+
+h1:hover .anchor,
+h2:hover .anchor,
+h3:hover .anchor,
+h4:hover .anchor,
+h5:hover .anchor,
+h6:hover .anchor {
+  text-decoration: none;
+}
+
+h1:hover .anchor .octicon-link,
+h2:hover .anchor .octicon-link,
+h3:hover .anchor .octicon-link,
+h4:hover .anchor .octicon-link,
+h5:hover .anchor .octicon-link,
+h6:hover .anchor .octicon-link {
+  visibility: visible;
+}
+
+h1:hover .anchor .octicon-link:before,
+h2:hover .anchor .octicon-link:before,
+h3:hover .anchor .octicon-link:before,
+h4:hover .anchor .octicon-link:before,
+h5:hover .anchor .octicon-link:before,
+h6:hover .anchor .octicon-link:before {
+  width: 16px;
+  height: 16px;
+  content: ' ';
+  display: inline-block;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' version='1.1' width='16' height='16' aria-hidden='true'%3E%3Cpath fill-rule='evenodd' d='M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z'%3E%3C/path%3E%3C/svg%3E");
+}
+
+body {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -webkit-print-color-adjust: exact;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
+    sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #24292e;
+  word-wrap: break-word;
+  box-sizing: border-box;
+  min-width: 200px;
+  max-width: 980px;
+  margin: 1rem auto;
+}
+
+details {
+  display: block;
+}
+
+summary {
+  display: list-item;
+}
+
+a {
+  background-color: initial;
+}
+
+a:active,
+a:hover {
+  outline-width: 0;
+}
+
+strong {
+  font-weight: inherit;
+  font-weight: bolder;
+}
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+img {
+  border-style: none;
+}
+
+code,
+kbd,
+pre {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+hr {
+  box-sizing: initial;
+  height: 0;
+  overflow: visible;
+}
+
+input {
+  font: inherit;
+  margin: 0;
+}
+
+input {
+  overflow: visible;
+}
+
+[type='checkbox'] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+input {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+a {
+  color: #0366d6;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+strong {
+  font-weight: 600;
+}
+
+hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #dfe2e5;
+}
+
+hr:after,
+hr:before {
+  display: table;
+  content: '';
+}
+
+hr:after {
+  clear: both;
+}
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+td,
+th {
+  padding: 0;
+}
+
+details summary {
+  cursor: pointer;
+}
+
+kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #d1d5da;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+h1 {
+  font-size: 32px;
+}
+
+h1,
+h2 {
+  font-weight: 600;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+h3 {
+  font-size: 20px;
+}
+
+h3,
+h4 {
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h5,
+h6 {
+  font-weight: 600;
+}
+
+h6 {
+  font-size: 12px;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+blockquote {
+  margin: 0;
+}
+
+ol,
+ul {
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+ol ol,
+ul ol {
+  list-style-type: lower-roman;
+}
+
+ol ol ol,
+ol ul ol,
+ul ol ol,
+ul ul ol {
+  list-style-type: lower-alpha;
+}
+
+dd {
+  margin-left: 0;
+}
+
+code,
+pre {
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 12px;
+}
+
+pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+:checked + .radio-label {
+  position: relative;
+  z-index: 1;
+  border-color: #0366d6;
+}
+
+.border {
+  border: 1px solid #e1e4e8 !important;
+}
+
+.border-0 {
+  border: 0 !important;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #e1e4e8 !important;
+}
+
+.rounded-1 {
+  border-radius: 3px !important;
+}
+
+.bg-white {
+  background-color: #fff !important;
+}
+
+.bg-gray-light {
+  background-color: #fafbfc !important;
+}
+
+.text-gray-light {
+  color: #6a737d !important;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+
+.my-2 {
+  margin-top: 8px !important;
+  margin-bottom: 8px !important;
+}
+
+.pl-0 {
+  padding-left: 0 !important;
+}
+
+.py-0 {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.pl-1 {
+  padding-left: 4px !important;
+}
+
+.pl-2 {
+  padding-left: 8px !important;
+}
+
+.py-2 {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+.pl-3,
+.px-3 {
+  padding-left: 16px !important;
+}
+
+.px-3 {
+  padding-right: 16px !important;
+}
+
+.pl-4 {
+  padding-left: 24px !important;
+}
+
+.pl-5 {
+  padding-left: 32px !important;
+}
+
+.pl-6 {
+  padding-left: 40px !important;
+}
+
+.f6 {
+  font-size: 12px !important;
+}
+
+.lh-condensed {
+  line-height: 1.25 !important;
+}
+
+.text-bold {
+  font-weight: 600 !important;
+}
+
+.pl-c {
+  color: #6a737d;
+}
+
+.pl-c1,
+.pl-s .pl-v {
+  color: #005cc5;
+}
+
+.pl-e,
+.pl-en {
+  color: #6f42c1;
+}
+
+.pl-s .pl-s1,
+.pl-smi {
+  color: #24292e;
+}
+
+.pl-ent {
+  color: #22863a;
+}
+
+.pl-k {
+  color: #d73a49;
+}
+
+.pl-pds,
+.pl-s,
+.pl-s .pl-pse .pl-s1,
+.pl-sr,
+.pl-sr .pl-cce,
+.pl-sr .pl-sra,
+.pl-sr .pl-sre {
+  color: #032f62;
+}
+
+.pl-smw,
+.pl-v {
+  color: #e36209;
+}
+
+.pl-bu {
+  color: #b31d28;
+}
+
+.pl-ii {
+  color: #fafbfc;
+  background-color: #b31d28;
+}
+
+.pl-c2 {
+  color: #fafbfc;
+  background-color: #d73a49;
+}
+
+.pl-c2:before {
+  content: '^M';
+}
+
+.pl-sr .pl-cce {
+  font-weight: 700;
+  color: #22863a;
+}
+
+.pl-ml {
+  color: #735c0f;
+}
+
+.pl-mh,
+.pl-mh .pl-en,
+.pl-ms {
+  font-weight: 700;
+  color: #005cc5;
+}
+
+.pl-mi {
+  font-style: italic;
+  color: #24292e;
+}
+
+.pl-mb {
+  font-weight: 700;
+  color: #24292e;
+}
+
+.pl-md {
+  color: #b31d28;
+  background-color: #ffeef0;
+}
+
+.pl-mi1 {
+  color: #22863a;
+  background-color: #f0fff4;
+}
+
+.pl-mc {
+  color: #e36209;
+  background-color: #ffebda;
+}
+
+.pl-mi2 {
+  color: #f6f8fa;
+  background-color: #005cc5;
+}
+
+.pl-mdr {
+  font-weight: 700;
+  color: #6f42c1;
+}
+
+.pl-ba {
+  color: #586069;
+}
+
+.pl-sg {
+  color: #959da5;
+}
+
+.pl-corl {
+  text-decoration: underline;
+  color: #032f62;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+
+.my-2 {
+  margin-bottom: 8px !important;
+}
+
+.my-2 {
+  margin-top: 8px !important;
+}
+
+.pl-0 {
+  padding-left: 0 !important;
+}
+
+.py-0 {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.pl-1 {
+  padding-left: 4px !important;
+}
+
+.pl-2 {
+  padding-left: 8px !important;
+}
+
+.py-2 {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+.pl-3 {
+  padding-left: 16px !important;
+}
+
+.pl-4 {
+  padding-left: 24px !important;
+}
+
+.pl-5 {
+  padding-left: 32px !important;
+}
+
+.pl-6 {
+  padding-left: 40px !important;
+}
+
+.pl-7 {
+  padding-left: 48px !important;
+}
+
+.pl-8 {
+  padding-left: 64px !important;
+}
+
+.pl-9 {
+  padding-left: 80px !important;
+}
+
+.pl-10 {
+  padding-left: 96px !important;
+}
+
+.pl-11 {
+  padding-left: 112px !important;
+}
+
+.pl-12 {
+  padding-left: 128px !important;
+}
+
+hr {
+  border-bottom-color: #eee;
+}
+
+kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #d1d5da;
+}
+
+body:after,
+body:before {
+  display: table;
+  content: '';
+}
+
+body:after {
+  clear: both;
+}
+
+body > :first-child {
+  margin-top: 0 !important;
+}
+
+body > :last-child {
+  margin-bottom: 0 !important;
+}
+
+a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+blockquote,
+details,
+dl,
+ol,
+p,
+pre,
+table,
+ul {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+hr {
+  height: 0.25em;
+  padding: 0;
+  margin: 24px 0;
+  background-color: #e1e4e8;
+  border: 0;
+}
+
+blockquote {
+  padding: 0 1em;
+  color: #6a737d;
+  border-left: 0.25em solid #dfe2e5;
+}
+
+blockquote > :first-child {
+  margin-top: 0;
+}
+
+blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+h1,
+h2 {
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid #eaecef;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
+  font-size: 1.25em;
+}
+
+h4 {
+  font-size: 1em;
+}
+
+h5 {
+  font-size: 0.875em;
+}
+
+h6 {
+  font-size: 0.85em;
+  color: #6a737d;
+}
+
+ol,
+ul {
+  padding-left: 2em;
+}
+
+ol ol,
+ol ul,
+ul ol,
+ul ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+li {
+  word-wrap: break-all;
+}
+
+li > p {
+  margin-top: 16px;
+}
+
+li + li {
+  margin-top: 0.25em;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: 600;
+}
+
+dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+}
+
+table th {
+  font-weight: 600;
+}
+
+table td,
+table th {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+table tr {
+  background-color: #fff;
+  border-top: 1px solid #c6cbd1;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+img {
+  max-width: 80%;
+  box-sizing: initial;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #fff;
+}
+
+code {
+  padding: 0.2em 0.4em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(27, 31, 35, 0.05);
+  border-radius: 3px;
+}
+
+pre {
+  word-wrap: normal;
+}
+
+pre > code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #333;
+  -webkit-print-color-adjust: exact;
+  background: #f8f8f8;
+}
+
+.hljs pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.hljs pre,
+pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f6f8fa;
+  -webkit-print-color-adjust: exact;
+
+  border-radius: 3px;
+}
+
+pre code {
+  display: inline;
+  max-width: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: initial;
+  border: 0;
+}
+
+.commit-tease-sha {
+  display: inline-block;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 90%;
+  color: #444d56;
+}
+
+.full-commit .btn-outline:not(:disabled):hover {
+  color: #005cc5;
+  border-color: #005cc5;
+}
+
+.blob-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.blob-wrapper-embedded {
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.blob-num {
+  width: 1%;
+  min-width: 50px;
+  padding-right: 10px;
+  padding-left: 10px;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 12px;
+  line-height: 20px;
+  color: rgba(27, 31, 35, 0.3);
+  text-align: right;
+  white-space: nowrap;
+  vertical-align: top;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.blob-num:hover {
+  color: rgba(27, 31, 35, 0.6);
+}
+
+.blob-num:before {
+  content: attr(data-line-number);
+}
+
+.blob-code {
+  position: relative;
+  padding-right: 10px;
+  padding-left: 10px;
+  line-height: 20px;
+  vertical-align: top;
+}
+
+.blob-code-inner {
+  overflow: visible;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 12px;
+  color: #24292e;
+  word-wrap: normal;
+  white-space: pre;
+}
+
+.pl-token.active,
+.pl-token:hover {
+  cursor: pointer;
+  background: #ffea7f;
+}
+
+.tab-size[data-tab-size='1'] {
+  -moz-tab-size: 1;
+  tab-size: 1;
+}
+
+.tab-size[data-tab-size='2'] {
+  -moz-tab-size: 2;
+  tab-size: 2;
+}
+
+.tab-size[data-tab-size='3'] {
+  -moz-tab-size: 3;
+  tab-size: 3;
+}
+
+.tab-size[data-tab-size='4'] {
+  -moz-tab-size: 4;
+  tab-size: 4;
+}
+
+.tab-size[data-tab-size='5'] {
+  -moz-tab-size: 5;
+  tab-size: 5;
+}
+
+.tab-size[data-tab-size='6'] {
+  -moz-tab-size: 6;
+  tab-size: 6;
+}
+
+.tab-size[data-tab-size='7'] {
+  -moz-tab-size: 7;
+  tab-size: 7;
+}
+
+.tab-size[data-tab-size='8'] {
+  -moz-tab-size: 8;
+  tab-size: 8;
+}
+
+.tab-size[data-tab-size='9'] {
+  -moz-tab-size: 9;
+  tab-size: 9;
+}
+
+.tab-size[data-tab-size='10'] {
+  -moz-tab-size: 10;
+  tab-size: 10;
+}
+
+.tab-size[data-tab-size='11'] {
+  -moz-tab-size: 11;
+  tab-size: 11;
+}
+
+.tab-size[data-tab-size='12'] {
+  -moz-tab-size: 12;
+  tab-size: 12;
+}
+
+.task-list-item {
+  list-style-type: none;
+}
+
+.task-list-item + .task-list-item {
+  margin-top: 3px;
+}
+
+.task-list-item input {
+  margin: 0 0.2em 0.25em -1.6em;
+  vertical-align: middle;
+}
+/*
+github.com style (c) Vasily Polovnyov <vast@whiteants.net>
+*/
+  
+  .hljs-comment,
+  .hljs-quote {
+    color: #998;
+    font-style: italic;
+  }
+  
+  .hljs-keyword,
+  .hljs-selector-tag,
+  .hljs-subst {
+    color: #333;
+    font-weight: bold;
+  }
+  
+  .hljs-number,
+  .hljs-literal,
+  .hljs-variable,
+  .hljs-template-variable,
+  .hljs-tag .hljs-attr {
+    color: #008080;
+  }
+  
+  .hljs-string,
+  .hljs-doctag {
+    color: #d14;
+  }
+  
+  .hljs-title,
+  .hljs-section,
+  .hljs-selector-id {
+    color: #900;
+    font-weight: bold;
+  }
+  
+  .hljs-subst {
+    font-weight: normal;
+  }
+  
+  .hljs-type,
+  .hljs-class .hljs-title {
+    color: #458;
+    font-weight: bold;
+  }
+  
+  .hljs-tag,
+  .hljs-name,
+  .hljs-attribute {
+    color: #000080;
+    font-weight: normal;
+  }
+  
+  .hljs-regexp,
+  .hljs-link {
+    color: #009926;
+  }
+  
+  .hljs-symbol,
+  .hljs-bullet {
+    color: #990073;
+  }
+  
+  .hljs-built_in,
+  .hljs-builtin-name {
+    color: #0086b3;
+  }
+  
+  .hljs-meta {
+    color: #999;
+    font-weight: bold;
+  }
+  
+  .hljs-deletion {
+    background: #fdd;
+  }
+  
+  .hljs-addition {
+    background: #dfd;
+  }
+  
+  .hljs-emphasis {
+    font-style: italic;
+  }
+  
+  .hljs-strong {
+    font-weight: bold;
+  }
+		</style>
+<script> MathJax = { tex: { inlineMath: [["$", "$"]] } }; </script>
+<script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+	</head>
+	<body>
+		<nav id="table-of-contents">
+			<ul><li><a href="#overloading"> Overloading</a><ul><li><a href="#definizione-e-meccanismo-di-risoluzione"> Definizione e meccanismo di risoluzione</a></li><li><a href="#le-tre-fasi-della-risoluzione-delloverloading-di-funzione"> Le tre fasi della risoluzione dell'overloading di funzione</a><ul><li><a href="#fase-1-le-funzioni-candidate"> Fase 1: le funzioni candidate</a><ul><li><a href="#adl---argument-dependent-lookup"> ADL - Argument Dependent Lookup</a></li></ul></li><li><a href="#fase-2-selezione-delle-funzioni-utilizzabili"> Fase 2: selezione delle funzioni utilizzabili</a><ul><li><a href="#sequenza-di-conversioni"> Sequenza di conversioni</a></li></ul></li><li><a href="#fase-3-selezione-della-migliore-utilizzabile"> Fase 3: selezione della migliore utilizzabile</a></li><li><a href="#esempio"> Esempio</a></li></ul></li><li><a href="#ulteriori-osservazioni"> Ulteriori osservazioni</a></li></ul></li></ul>
+		</nav>
+		<main>
+			<h1 id="overloading" tabindex="-1"><a class="anchor" href="#overloading" aria-hidden="true"><span class="octicon octicon-link"></span></a> Overloading</h1>
+<pre><code class="language-toc"></code></pre>
+<hr>
+<h2 id="definizione-e-meccanismo-di-risoluzione" tabindex="-1"><a class="anchor" href="#definizione-e-meccanismo-di-risoluzione" aria-hidden="true"><span class="octicon octicon-link"></span></a> Definizione e meccanismo di risoluzione</h2>
+<p>Il $C$++ supporta il concetto di <mark style="background: #FFB86CA6;">overloading</mark> (sovraccaricamento) per il nome delle funzioni: è possibile definire più funzioni che condividono lo stesso nome e si differenziano solo per il numero e/o il tipo degli argomenti.</p>
+<p>L'overloading è utile, in generale, per evitare di dovere fornire un nome distinto a funzioni che, in buona sostanza, fanno operazioni del tutto analoghe, solo su argomenti di tipo diverso.</p>
+<p>Per esempio, nella libreria matematica del $C$ (linguaggio di programmazione che <em>NON</em> supporta il concetto di overloading), abbiamo le tre funzioni</p>
+<pre><code class="language-c"><span class="hljs-function"><span class="hljs-keyword">float</span> <span class="hljs-title">sqrtf</span><span class="hljs-params">(<span class="hljs-keyword">float</span> arg)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">sqrt</span><span class="hljs-params">(<span class="hljs-keyword">double</span> arg)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">long</span> <span class="hljs-keyword">double</span> <span class="hljs-title">sqrtl</span><span class="hljs-params">(<span class="hljs-keyword">long</span> <span class="hljs-keyword">double</span> arg)</span></span>;
+</code></pre>
+<p>che calcolano la radice quadrata di un float, un double e un long double.
+La differenziazione nel nome risulta alquanto artificiosa.
+In contrasto, nella libreria standard del $C$++ (header file <code>cmath</code>) si trovano le tre funzioni:</p>
+<pre><code class="language-cpp"><span class="hljs-function"><span class="hljs-keyword">float</span> <span class="hljs-title">sqrt</span><span class="hljs-params">(<span class="hljs-keyword">float</span> arg)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">sqrt</span><span class="hljs-params">(<span class="hljs-keyword">double</span> arg)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">long</span> <span class="hljs-keyword">double</span> <span class="hljs-title">sqrt</span><span class="hljs-params">(<span class="hljs-keyword">long</span> <span class="hljs-keyword">double</span> arg)</span></span>;
+</code></pre>
+<p>Per il programmatore è più semplice ricordare un solo nome.
+La differenza tra i due approcci può diventare ancora più evidente se si pensa ad una funzione di stampa (per esempio <code>print</code>) che debba essere applicata a dozzine o centinaia di tipi di dato diversi.</p>
+<blockquote>
+<p>Va comunque notato che anche il $C$ supporta una forma ristretta di overloading, che però è confinata al caso degli operatori definiti sui tipi built-in. Per esempio, nell'espressione <code>v + 1</code> l'operatore <code>+</code> corrisponde alla somma di interi se <code>v</code> è di tipo intero, alla somma di double se <code>v</code> è di tipo double, ecc...</p>
+</blockquote>
+<p>Oltre ai suddetti motivi di comodità, vedremo come l'overloading di funzione risulterà essenziale quando dovremo scrivere codice generico (utilizzando template di classe e template di funzione).</p>
+<p>Quando però si passa dal ruolo di utente di una interfaccia software al ruolo di sviluppatore dell'interfaccia stessa, occorre prestare molta attenzione a non creare un insieme di funzioni in overloading che sia "fuorviante" per l'utente dell'interfaccia.</p>
+<p>È quindi necessario capire a fondo i meccanismi della cosiddetta <mark style="background: #ABF7F7A6;">"risoluzione dell'overloading"</mark>, che è il processo seguito dal compilatore all'atto di esaminare ogni singola chiamata di funzione allo scopo di stabilire quale delle funzioni dichiarate debba essere invocata per quella chiamata.</p>
+<p><a href="#overloading"><em>Torna all'indice</em></a></p>
+<hr>
+<h2 id="le-tre-fasi-della-risoluzione-delloverloading-di-funzione" tabindex="-1"><a class="anchor" href="#le-tre-fasi-della-risoluzione-delloverloading-di-funzione" aria-hidden="true"><span class="octicon octicon-link"></span></a> Le tre fasi della risoluzione dell'overloading di funzione</h2>
+<p>Come detto, <mark style="background: #BBFABBA6;">la risoluzione dell'overloading è un processo svolto staticamente dal compilatore</mark>, quando trasforma in assembler il codice contenuto nell'unità di traduzione (prodotta dal preprocessore).
+In particolare, non può essere influenzata dalle informazioni presenti in altre unità di traduzione (compilazione separata) e neanche dalle informazioni disponibili a tempo di esecuzione.</p>
+<p>Daremo una descrizione abbastanza dettagliata (ma comunque incompleta) del processo, che si suddivide in tre fasi. Queste fasi vengono ripetute per ogni singola chiamata di funzione presente nel codice sorgente:</p>
+<ol>
+<li>individuazione delle funzioni candidate;</li>
+<li>selezione delle funzioni utilizzabili;</li>
+<li>scelta della migliore funzione utilizzabile (se esiste).</li>
+</ol>
+<p><a href="#overloading"><em>Torna all'indice</em></a></p>
+<hr>
+<h3 id="fase-1-le-funzioni-candidate" tabindex="-1"><a class="anchor" href="#fase-1-le-funzioni-candidate" aria-hidden="true"><span class="octicon octicon-link"></span></a> Fase 1: le funzioni candidate</h3>
+<p><mark style="background: #FFB8EBA6;">L'insieme delle funzioni candidate</mark> per una specifica chiamata di funzione è un sottoinsieme delle funzioni che sono state dichiarate all'interno dell'unità di traduzione.
+In particolare, le funzioni candidate:</p>
+<ol>
+<li>hanno lo stesso nome della funzione chiamata (non importa numero e tipo degli argomenti)</li>
+<li>sono visibili nel punto della chiamata</li>
+</ol>
+<p>Nella valutazione del primo punto (<em>nome</em>) occorre comunque tenere presente che, per gli operatori, la sintassi della chiamata di funzione può variare nella forma:</p>
+<ul>
+<li>operatore prefisso: <code>++a</code></li>
+<li>operatore postfisso: <code>ai[5]</code></li>
+<li>operatore infisso:  <code>a - b</code></li>
+<li>sintassi funzionale: <code>operator*(a, b)</code></li>
+</ul>
+<p>mentre la corrispondente dichiarazione utilizzerà sempre la forma del nome esteso (rispettivamente, <code>operator++</code>, <code>operator[]</code>, <code>operator-</code> e <code>operator*</code>).</p>
+<p>Più interessante (e complicato) è il secondo punto, riguardante la visibilità delle dichiarazioni nel punto di chiamata. Occorre infatti prestare attenzione alle seguenti casistiche:</p>
+<ol>
+<li>
+<p><mark style="background: #D2B3FFA6;">Nel caso di invocazione di un metodo di una classe mediante la sintassi obj.metodo</mark> (oppure <code>ptr-&gt;metodo</code>), se l'oggetto <code>obj</code> (oppure il puntatore <code>ptr</code>) hanno come tipo statico <code>S</code>, allora la ricerca inizierà nello scope di classe <code>S</code>.</p>
+<blockquote>
+<p>Si noti che viene considerato il tipo <em>statico</em> (cioè il tipo noto a tempo di compilazione), mentre viene ignorato il tipo <em>dinamico</em> (che è noto solo a tempo di esecuzione).</p>
+</blockquote>
+<p>Esempio:</p>
+</li>
+</ol>
+<pre><code class="language-cpp"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">S</span> {</span> <span class="hljs-comment">/* ... */</span> };
+<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">T</span> :</span> <span class="hljs-keyword">public</span> S { <span class="hljs-comment">/* ... */</span> };
+S* ptr = <span class="hljs-keyword">new</span> T;
+ptr-&gt;<span class="hljs-built_in">foo</span>(); <span class="hljs-comment">// chiamata</span>
+<span class="hljs-comment">// ptr ha tipo statico S* e tipo dinamico T* (esempio Java Quadr./Rett.)</span>
+<span class="hljs-comment">// quindi la ricerca di foo avviene a partire dallo scope di S</span>
+<span class="hljs-comment">// (eventuali funzioni T::foo non sono visibili nel punto di chiamata)</span>
+</code></pre>
+<ol start="2">
+<li><mark style="background: #D2B3FFA6;">Nel caso di qualificazione della funzione chiamata</mark>, la ricerca delle funzioni candidate inizierà nel corrispondente scope.
+Esempio:</li>
+</ol>
+<pre><code class="language-cpp"><span class="hljs-keyword">namespace</span> N { 
+	<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">foo</span><span class="hljs-params">(<span class="hljs-keyword">int</span>)</span></span>; 
+}
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">foo</span><span class="hljs-params">(<span class="hljs-keyword">char</span>)</span></span>; <span class="hljs-comment">// dichiarazione NON visibile per la chiamata</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    N::<span class="hljs-built_in">foo</span>(<span class="hljs-string">'c'</span>); <span class="hljs-comment">// la ricerca inizia nello scope di namespace N</span>
+}
+</code></pre>
+<ol start="3">
+<li><mark style="background: #FF5582A6;">Attenzione a non confondere l'overloading con l'hiding</mark>
+Esempio:</li>
+</ol>
+<pre><code class="language-cpp"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">S</span> {</span> <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">foo</span><span class="hljs-params">(<span class="hljs-keyword">int</span>)</span></span>; };
+<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">T</span> :</span> <span class="hljs-keyword">public</span> S { <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">foo</span><span class="hljs-params">(<span class="hljs-keyword">char</span>)</span></span>; };
+T t; <span class="hljs-comment">// tipo statico e dinamico coincidono (T)</span>
+t.<span class="hljs-built_in">foo</span>(<span class="hljs-number">5</span>);
+<span class="hljs-comment">// la ricerca inizia nello scope di T; la funzione S::foo</span>
+<span class="hljs-comment">// non va in overloading, perché viene nascosta (hiding);</span>
+</code></pre>
+<ol start="4">
+<li>
+<p><mark style="background: #FF5582A6;">Attenzione ad eventuali dichiarazioni e direttive di using</mark>, che modificano la visibilità delle dichiarazioni: nell'esempio precedente, se nella classe T fosse aggiunto <code>using S::foo;</code>  allora <code>S::foo</code> e <code>T::foo</code> sarebbero entrambe visibili e andrebbero in overloading.</p>
+</li>
+<li>
+<p><mark style="background: #FF5582A6;">Attenzione all'ADL (Argument Dependent Lookup)</mark></p>
+</li>
+</ol>
+<p><a href="#overloading"><em>Torna all'indice</em></a></p>
+<hr>
+<h4 id="adl---argument-dependent-lookup" tabindex="-1"><a class="anchor" href="#adl---argument-dependent-lookup" aria-hidden="true"><span class="octicon octicon-link"></span></a> ADL - Argument Dependent Lookup</h4>
+<p>La regola <mark style="background: #FFB86CA6;">ADL</mark> (Argument Dependent Lookup), detta anche <em>Koenig's lookup</em>, stabilisce che</p>
+<ol>
+<li>nel caso di una chiamata di funzione NON qualificata,</li>
+<li>se vi sono (uno o più) argomenti "<code>arg</code>" aventi un tipo definito dall'utente (cioè hanno tipo <code>struct/class/enum S</code>, o riferimento a <code>S</code> o puntatore a <code>S</code>, possibilmente qualificati) e</li>
+<li>il tipo suddetto è definito nel <code>namespace N</code></li>
+</ol>
+<p>allora la ricerca delle funzioni candidate viene effettuta anche all'interno del namespace N.</p>
+<p>Esempio:</p>
+<pre><code class="language-cpp"><span class="hljs-keyword">namespace</span> N {
+	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">S</span> {</span> };
+	<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">foo</span><span class="hljs-params">(S s)</span></span>;
+	<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">bar</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span></span>;
+} <span class="hljs-comment">// namespace N</span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+	N::S s;
+	<span class="hljs-built_in">foo</span>(s);   <span class="hljs-comment">// chiamata 1</span>
+	<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>;
+	<span class="hljs-built_in">bar</span>(i);   <span class="hljs-comment">// chiamata 2</span>
+}
+</code></pre>
+<ol>
+<li>
+<p>Per la chiamata 1, <mark style="background: #ABF7F7A6;">si applica la regola ADL</mark>, perché il nome <code>foo</code> non è qualificato e l'argomento <code>s</code> ha tipo <code>struct S</code> definito dall'utente all'interno del <code>namespace N</code>.
+Quindi il <code>namespace N</code> viene "aperto" rendendo visibile la dichiarazione di <code>N::foo(S)</code> nel punto della chiamata (e quindi rendendola candidata).</p>
+</li>
+<li>
+<p>In contrasto, per la chiamata 2, <mark style="background: #ABF7F7A6;">NON si applica la regola ADL</mark>, perché l'argomento ha tipo <code>int</code> (che non è definito dall'utente) e quindi non viene aperto nessun namespace.</p>
+</li>
+</ol>
+<blockquote>
+<p><mark style="background: #FF5582A6;">NOTA BENE:</mark> la regola ADL è quella che consente al programma <code>"Hello, world!"</code> di funzionare come ci si aspetta.
+La chiamata <code>std::cout &lt;&lt; "Hello, world!"</code> corrisponde alla invocazione di funzione <code>operator&lt;&lt;(std::cout, "Hello, world!")</code>
+La chiamata non è qualificata e il primo argomento ha tipo <code>std::ostream</code>, che è un tipo definito dall'utente all'interno del <code>namespace std</code>.
+Quindi, il <code>namespace std</code> viene "aperto" e tutte le funzioni di nome <code>operator&lt;&lt;</code> dichiarate al suo interno diventano visibili (e quindi candidate).</p>
+</blockquote>
+<p><a href="#overloading"><em>Torna all'indice</em></a></p>
+<hr>
+<h3 id="fase-2-selezione-delle-funzioni-utilizzabili" tabindex="-1"><a class="anchor" href="#fase-2-selezione-delle-funzioni-utilizzabili" aria-hidden="true"><span class="octicon octicon-link"></span></a> Fase 2: selezione delle funzioni utilizzabili</h3>
+<p>Effettuata la scelta delle funzioni candidate, <mark style="background: #FFB8EBA6;">occorre verificare quali di queste funzioni potrebbero essere effettivamente utilizzabili</mark> (<em>viable</em>) per risolvere la specifica chiamata considerata.</p>
+<p>Per decidere se una funzione candidata è utilizzabile, <mark style="background: #ABF7F7A6;">è necessario verificare che:</mark></p>
+<ol>
+<li>il numero degli argomenti (nella chiamata di funzione) sia compatibile con il numero parametri (nella dichiarazione di funzione);</li>
+<li>ogni argomento (nella chiamata di funzione) abbia un tipo compatibile con il corrispondente parametro (nella dichiarazione di funzione).</li>
+</ol>
+<p>Con riferimento alla compatibilità del numero di argomenti:</p>
+<ul>
+<li>attenzione ad eventuali valori di default per i parametri;</li>
+<li>attenzione all'argomento implicito (<code>this</code>) nelle chiamate di metodi non statici.</li>
+</ul>
+<p>Con riferimento alla compatibilità dei tipi argomento/parametro, occorre tenere conto che, oltre al caso della corrispondenza perfetta tra i due tipi (chiamata <u>conversione identità</u> o <u>match perfetto</u>, anche se tecnicamente in questo caso non si effettua nessuna conversione), è applicabile tutta una serie di conversioni implicite che potrebbero consentire di convertire il tipo dell'argomento nella chiamata nel tipo del parametro nella dichiarazione di funzione.</p>
+<p>Si coglie l'occasione per ricordare la classificazione delle conversioni implicite in:</p>
+<ol>
+<li>corrispondenze esatte (identità, trasformazioni di lvalue, qualificazioni);</li>
+<li>promozioni;</li>
+<li>conversioni standard;</li>
+<li>conversioni definite dall'utente.</li>
+</ol>
+<p><a href="#overloading"><em>Torna all'indice</em></a></p>
+<hr>
+<h4 id="sequenza-di-conversioni" tabindex="-1"><a class="anchor" href="#sequenza-di-conversioni" aria-hidden="true"><span class="octicon octicon-link"></span></a> Sequenza di conversioni</h4>
+<p>Quando si verifica se una funzione è utilizzabile, per ogni argomento della chiamata è possibile effettuare una <mark style="background: #FFB86CA6;">sequenza di conversioni</mark> (i.e., non ci si limita ad usare una sola conversione implicita).</p>
+<p><mark style="background: #BBFABBA6;">Una sequenza di conversione "standard"</mark> è composta da:
+$$
+\text{trasf. di lvalue + (promozione o conv. standard) + qualificazione}
+$$
+Le varie componenti sono opzionali, ma se presenti devono essere nell'ordine specificato.</p>
+<p>Esempio: supponendo che la classe D è derivata dalla classe base B,</p>
+<pre><code class="language-cpp"><span class="hljs-keyword">double</span> d = <span class="hljs-number">3.1415</span>; <span class="hljs-comment">// un lvalue di tipo double</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">foo</span><span class="hljs-params">(<span class="hljs-keyword">int</span>)</span></span>;     <span class="hljs-comment">// funzione che accetta un intero per valore</span>
+
+<span class="hljs-built_in">foo</span>(d); <span class="hljs-comment">// chiamata</span>
+</code></pre>
+<p>la funzione <code>void foo(int)</code>, se candidata, è anche utilizzabile.</p>
+<p>Si applica prima una trasformazione di lvalue (nello specifico, una trasformazione da lvalue a rvalue, che corrisponde alla lettura del valore contenuto nella locazione d) e quindi una conversione standard (da double a int).</p>
+<p><mark style="background: #BBFABBA6;">Una sequenza di conversione "utente"</mark> è composta da:
+$$
+\text{seq. conv. standard + conv. utente + seq. conv. standard}
+$$</p>
+<p><a href="#overloading"><em>Torna all'indice</em></a></p>
+<hr>
+<h3 id="fase-3-selezione-della-migliore-utilizzabile" tabindex="-1"><a class="anchor" href="#fase-3-selezione-della-migliore-utilizzabile" aria-hidden="true"><span class="octicon octicon-link"></span></a> Fase 3: selezione della migliore utilizzabile</h3>
+<p>Sia N il numero di funzioni utilizzabili:</p>
+<ul>
+<li>se <mark style="background: #FFB86CA6;">N = 0</mark>, allora ho un errore di compilazione;</li>
+<li>se <mark style="background: #FFB86CA6;">N = 1</mark>, allora l'unica utilizzabile è la migliore;</li>
+<li>se <mark style="background: #FFB86CA6;">N &gt; 1</mark>, allora occorre classificare le funzioni utilizzabili in base alla "qualità" delle conversioni richieste; se la classificazione (spiegata sotto) determina un'unica vincitrice, quella funzione è la migliore utilizzabile; altrimenti si ottiene un errore di compilazione (<em>chiamata ambigua</em>).</li>
+</ul>
+<p><mark style="background: #ABF7F7A6;">Per ognuno degli M argomenti presenti nella chiamata, si crea una classifica delle funzioni utilizzabili.</mark> La funzione migliore (se esiste) è quella che è preferibile rispetto a tutte le altre.
+Per decidere se <code>X</code> è preferibile rispetto ad <code>Y</code>, si confrontano <code>X</code> e <code>Y</code> su tutte le M classifiche corrispondenti agli M argimenti.
+<code>X</code> è preferibile a <code>Y</code> se:</p>
+<ul>
+<li>non perde in nessuno degli M confronti (i.e., vince o pareggia);</li>
+<li>vince almeno uno degli M confronti.</li>
+</ul>
+<p>Fissato un argomento <code>A_i</code>, la funzione X vince rispetto alla funzione Y se la sequenza di conversioni <code>X_i</code> usata da X per <code>A_i</code> vince rispetto alla sequenza <code>Y_i</code> usata da Y.</p>
+<p>Le regole del linguaggio per stabilire se una sequenza <code>X_i </code>vince sulla sequenza <code>Y_i</code> sono abbastanza intricate e non uniformi (sono elencate un certo numero di eccezioni).
+Nello standard $C$++14 la loro spegazione occupa almeno 3 pagine dense.
+A scopo didattico, usiamo quindi una versione semplificata.</p>
+<p>Una sequenza <code>X_i </code>vince sulla sequenza <code>Y_i</code> se la peggiore conversione <code>X_worst</code> usata in <code>X_i</code> vince sulla peggiore conversione <code>Y_worst</code> usata in <code>Y_i</code>.
+Una conversione <code>X_worst</code> vince sulla conversione <code>Y_worst</code> se ha un "rank" migliore (corrispondenze esatte vincono sulle promozioni, che vincono sulle conversioni standard, che vincono sulle conversioni utente).</p>
+<p><a href="#overloading"><em>Torna all'indice</em></a></p>
+<hr>
+<h3 id="esempio" tabindex="-1"><a class="anchor" href="#esempio" aria-hidden="true"><span class="octicon octicon-link"></span></a> Esempio</h3>
+<p><img src="images/overloading_esempio.jpg" alt="overloading_esempio.jpg"></p>
+<p><a href="#overloading"><em>Torna all'indice</em></a></p>
+<hr>
+<h2 id="ulteriori-osservazioni" tabindex="-1"><a class="anchor" href="#ulteriori-osservazioni" aria-hidden="true"><span class="octicon octicon-link"></span></a> Ulteriori osservazioni</h2>
+<ol>
+<li>
+<p>Le regole fin qui esposte NON prendono in considerazione alcuni casi speciali che si applicano in presenza di funzioni candidate ottenute istanziando (o specializzando) template di funzione. Questi casi verranno introdotti al momento opportuno.</p>
+</li>
+<li>
+<p>Vale la pena sottolineare che, quando si scelgono le funzioni candidate per una chiamata, il numero e il tipo dei parametri della funzione NON sono considerati in alcun modo (entrano in gioco solo nella seconda fase, quando si restringe l'insieme delle candidate al sottoinsieme delle funzioni utilizzabili).</p>
+</li>
+<li>
+<p>Analogamente, è opportuno sottolineare che, nel caso di invocazione di un metodo di una classe, il fatto che tale metodo sia dichiarato con accesso <code>public</code>, <code>private</code> o <code>protected</code> NON ha nessun impatto sul processo di risoluzione dell'overloading. Il processo determina la migliore funzione utilizzabile (se esiste); in seguito, se la funzione scelta non è accessibile per il chiamante, verrà segnalato un errore di compilazione, che però NON ha nulla a che fare con la risoluzione dell'overloading (in particolare, la migliore funzione utilizzabile ma non accessibile NON viene mai sostituita da un'altra funzione utilizzabile e accessibile).</p>
+</li>
+</ol>
+<p><a href="#overloading"><em>Torna all'indice</em></a></p>
+
+		</main>
+	</body>
+</html>

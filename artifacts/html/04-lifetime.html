@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+		<title>04-lifetime</title>
+		<style>
+			/* PDF Specific */
+
+@media print {
+  body {
+    min-width: initial;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+}
+
+/* General */
+
+.octicon {
+  display: inline-block;
+  fill: currentColor;
+  vertical-align: text-bottom;
+}
+
+.anchor {
+  float: left;
+  line-height: 1;
+  margin-left: -20px;
+  padding-right: 4px;
+}
+
+.anchor:focus {
+  outline: none;
+}
+
+h1 .octicon-link,
+h2 .octicon-link,
+h3 .octicon-link,
+h4 .octicon-link,
+h5 .octicon-link,
+h6 .octicon-link {
+  color: #1b1f23;
+  vertical-align: middle;
+  visibility: hidden;
+}
+
+h1:hover .anchor,
+h2:hover .anchor,
+h3:hover .anchor,
+h4:hover .anchor,
+h5:hover .anchor,
+h6:hover .anchor {
+  text-decoration: none;
+}
+
+h1:hover .anchor .octicon-link,
+h2:hover .anchor .octicon-link,
+h3:hover .anchor .octicon-link,
+h4:hover .anchor .octicon-link,
+h5:hover .anchor .octicon-link,
+h6:hover .anchor .octicon-link {
+  visibility: visible;
+}
+
+h1:hover .anchor .octicon-link:before,
+h2:hover .anchor .octicon-link:before,
+h3:hover .anchor .octicon-link:before,
+h4:hover .anchor .octicon-link:before,
+h5:hover .anchor .octicon-link:before,
+h6:hover .anchor .octicon-link:before {
+  width: 16px;
+  height: 16px;
+  content: ' ';
+  display: inline-block;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' version='1.1' width='16' height='16' aria-hidden='true'%3E%3Cpath fill-rule='evenodd' d='M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z'%3E%3C/path%3E%3C/svg%3E");
+}
+
+body {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -webkit-print-color-adjust: exact;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
+    sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #24292e;
+  word-wrap: break-word;
+  box-sizing: border-box;
+  min-width: 200px;
+  max-width: 980px;
+  margin: 1rem auto;
+}
+
+details {
+  display: block;
+}
+
+summary {
+  display: list-item;
+}
+
+a {
+  background-color: initial;
+}
+
+a:active,
+a:hover {
+  outline-width: 0;
+}
+
+strong {
+  font-weight: inherit;
+  font-weight: bolder;
+}
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+img {
+  border-style: none;
+}
+
+code,
+kbd,
+pre {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+hr {
+  box-sizing: initial;
+  height: 0;
+  overflow: visible;
+}
+
+input {
+  font: inherit;
+  margin: 0;
+}
+
+input {
+  overflow: visible;
+}
+
+[type='checkbox'] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+input {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+a {
+  color: #0366d6;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+strong {
+  font-weight: 600;
+}
+
+hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #dfe2e5;
+}
+
+hr:after,
+hr:before {
+  display: table;
+  content: '';
+}
+
+hr:after {
+  clear: both;
+}
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+td,
+th {
+  padding: 0;
+}
+
+details summary {
+  cursor: pointer;
+}
+
+kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #d1d5da;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+h1 {
+  font-size: 32px;
+}
+
+h1,
+h2 {
+  font-weight: 600;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+h3 {
+  font-size: 20px;
+}
+
+h3,
+h4 {
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h5,
+h6 {
+  font-weight: 600;
+}
+
+h6 {
+  font-size: 12px;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+blockquote {
+  margin: 0;
+}
+
+ol,
+ul {
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+ol ol,
+ul ol {
+  list-style-type: lower-roman;
+}
+
+ol ol ol,
+ol ul ol,
+ul ol ol,
+ul ul ol {
+  list-style-type: lower-alpha;
+}
+
+dd {
+  margin-left: 0;
+}
+
+code,
+pre {
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 12px;
+}
+
+pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+:checked + .radio-label {
+  position: relative;
+  z-index: 1;
+  border-color: #0366d6;
+}
+
+.border {
+  border: 1px solid #e1e4e8 !important;
+}
+
+.border-0 {
+  border: 0 !important;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #e1e4e8 !important;
+}
+
+.rounded-1 {
+  border-radius: 3px !important;
+}
+
+.bg-white {
+  background-color: #fff !important;
+}
+
+.bg-gray-light {
+  background-color: #fafbfc !important;
+}
+
+.text-gray-light {
+  color: #6a737d !important;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+
+.my-2 {
+  margin-top: 8px !important;
+  margin-bottom: 8px !important;
+}
+
+.pl-0 {
+  padding-left: 0 !important;
+}
+
+.py-0 {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.pl-1 {
+  padding-left: 4px !important;
+}
+
+.pl-2 {
+  padding-left: 8px !important;
+}
+
+.py-2 {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+.pl-3,
+.px-3 {
+  padding-left: 16px !important;
+}
+
+.px-3 {
+  padding-right: 16px !important;
+}
+
+.pl-4 {
+  padding-left: 24px !important;
+}
+
+.pl-5 {
+  padding-left: 32px !important;
+}
+
+.pl-6 {
+  padding-left: 40px !important;
+}
+
+.f6 {
+  font-size: 12px !important;
+}
+
+.lh-condensed {
+  line-height: 1.25 !important;
+}
+
+.text-bold {
+  font-weight: 600 !important;
+}
+
+.pl-c {
+  color: #6a737d;
+}
+
+.pl-c1,
+.pl-s .pl-v {
+  color: #005cc5;
+}
+
+.pl-e,
+.pl-en {
+  color: #6f42c1;
+}
+
+.pl-s .pl-s1,
+.pl-smi {
+  color: #24292e;
+}
+
+.pl-ent {
+  color: #22863a;
+}
+
+.pl-k {
+  color: #d73a49;
+}
+
+.pl-pds,
+.pl-s,
+.pl-s .pl-pse .pl-s1,
+.pl-sr,
+.pl-sr .pl-cce,
+.pl-sr .pl-sra,
+.pl-sr .pl-sre {
+  color: #032f62;
+}
+
+.pl-smw,
+.pl-v {
+  color: #e36209;
+}
+
+.pl-bu {
+  color: #b31d28;
+}
+
+.pl-ii {
+  color: #fafbfc;
+  background-color: #b31d28;
+}
+
+.pl-c2 {
+  color: #fafbfc;
+  background-color: #d73a49;
+}
+
+.pl-c2:before {
+  content: '^M';
+}
+
+.pl-sr .pl-cce {
+  font-weight: 700;
+  color: #22863a;
+}
+
+.pl-ml {
+  color: #735c0f;
+}
+
+.pl-mh,
+.pl-mh .pl-en,
+.pl-ms {
+  font-weight: 700;
+  color: #005cc5;
+}
+
+.pl-mi {
+  font-style: italic;
+  color: #24292e;
+}
+
+.pl-mb {
+  font-weight: 700;
+  color: #24292e;
+}
+
+.pl-md {
+  color: #b31d28;
+  background-color: #ffeef0;
+}
+
+.pl-mi1 {
+  color: #22863a;
+  background-color: #f0fff4;
+}
+
+.pl-mc {
+  color: #e36209;
+  background-color: #ffebda;
+}
+
+.pl-mi2 {
+  color: #f6f8fa;
+  background-color: #005cc5;
+}
+
+.pl-mdr {
+  font-weight: 700;
+  color: #6f42c1;
+}
+
+.pl-ba {
+  color: #586069;
+}
+
+.pl-sg {
+  color: #959da5;
+}
+
+.pl-corl {
+  text-decoration: underline;
+  color: #032f62;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+
+.my-2 {
+  margin-bottom: 8px !important;
+}
+
+.my-2 {
+  margin-top: 8px !important;
+}
+
+.pl-0 {
+  padding-left: 0 !important;
+}
+
+.py-0 {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.pl-1 {
+  padding-left: 4px !important;
+}
+
+.pl-2 {
+  padding-left: 8px !important;
+}
+
+.py-2 {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+.pl-3 {
+  padding-left: 16px !important;
+}
+
+.pl-4 {
+  padding-left: 24px !important;
+}
+
+.pl-5 {
+  padding-left: 32px !important;
+}
+
+.pl-6 {
+  padding-left: 40px !important;
+}
+
+.pl-7 {
+  padding-left: 48px !important;
+}
+
+.pl-8 {
+  padding-left: 64px !important;
+}
+
+.pl-9 {
+  padding-left: 80px !important;
+}
+
+.pl-10 {
+  padding-left: 96px !important;
+}
+
+.pl-11 {
+  padding-left: 112px !important;
+}
+
+.pl-12 {
+  padding-left: 128px !important;
+}
+
+hr {
+  border-bottom-color: #eee;
+}
+
+kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #d1d5da;
+}
+
+body:after,
+body:before {
+  display: table;
+  content: '';
+}
+
+body:after {
+  clear: both;
+}
+
+body > :first-child {
+  margin-top: 0 !important;
+}
+
+body > :last-child {
+  margin-bottom: 0 !important;
+}
+
+a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+blockquote,
+details,
+dl,
+ol,
+p,
+pre,
+table,
+ul {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+hr {
+  height: 0.25em;
+  padding: 0;
+  margin: 24px 0;
+  background-color: #e1e4e8;
+  border: 0;
+}
+
+blockquote {
+  padding: 0 1em;
+  color: #6a737d;
+  border-left: 0.25em solid #dfe2e5;
+}
+
+blockquote > :first-child {
+  margin-top: 0;
+}
+
+blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+h1,
+h2 {
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid #eaecef;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
+  font-size: 1.25em;
+}
+
+h4 {
+  font-size: 1em;
+}
+
+h5 {
+  font-size: 0.875em;
+}
+
+h6 {
+  font-size: 0.85em;
+  color: #6a737d;
+}
+
+ol,
+ul {
+  padding-left: 2em;
+}
+
+ol ol,
+ol ul,
+ul ol,
+ul ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+li {
+  word-wrap: break-all;
+}
+
+li > p {
+  margin-top: 16px;
+}
+
+li + li {
+  margin-top: 0.25em;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: 600;
+}
+
+dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+}
+
+table th {
+  font-weight: 600;
+}
+
+table td,
+table th {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+table tr {
+  background-color: #fff;
+  border-top: 1px solid #c6cbd1;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+img {
+  max-width: 80%;
+  box-sizing: initial;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #fff;
+}
+
+code {
+  padding: 0.2em 0.4em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(27, 31, 35, 0.05);
+  border-radius: 3px;
+}
+
+pre {
+  word-wrap: normal;
+}
+
+pre > code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #333;
+  -webkit-print-color-adjust: exact;
+  background: #f8f8f8;
+}
+
+.hljs pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.hljs pre,
+pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f6f8fa;
+  -webkit-print-color-adjust: exact;
+
+  border-radius: 3px;
+}
+
+pre code {
+  display: inline;
+  max-width: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: initial;
+  border: 0;
+}
+
+.commit-tease-sha {
+  display: inline-block;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 90%;
+  color: #444d56;
+}
+
+.full-commit .btn-outline:not(:disabled):hover {
+  color: #005cc5;
+  border-color: #005cc5;
+}
+
+.blob-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.blob-wrapper-embedded {
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.blob-num {
+  width: 1%;
+  min-width: 50px;
+  padding-right: 10px;
+  padding-left: 10px;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 12px;
+  line-height: 20px;
+  color: rgba(27, 31, 35, 0.3);
+  text-align: right;
+  white-space: nowrap;
+  vertical-align: top;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.blob-num:hover {
+  color: rgba(27, 31, 35, 0.6);
+}
+
+.blob-num:before {
+  content: attr(data-line-number);
+}
+
+.blob-code {
+  position: relative;
+  padding-right: 10px;
+  padding-left: 10px;
+  line-height: 20px;
+  vertical-align: top;
+}
+
+.blob-code-inner {
+  overflow: visible;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 12px;
+  color: #24292e;
+  word-wrap: normal;
+  white-space: pre;
+}
+
+.pl-token.active,
+.pl-token:hover {
+  cursor: pointer;
+  background: #ffea7f;
+}
+
+.tab-size[data-tab-size='1'] {
+  -moz-tab-size: 1;
+  tab-size: 1;
+}
+
+.tab-size[data-tab-size='2'] {
+  -moz-tab-size: 2;
+  tab-size: 2;
+}
+
+.tab-size[data-tab-size='3'] {
+  -moz-tab-size: 3;
+  tab-size: 3;
+}
+
+.tab-size[data-tab-size='4'] {
+  -moz-tab-size: 4;
+  tab-size: 4;
+}
+
+.tab-size[data-tab-size='5'] {
+  -moz-tab-size: 5;
+  tab-size: 5;
+}
+
+.tab-size[data-tab-size='6'] {
+  -moz-tab-size: 6;
+  tab-size: 6;
+}
+
+.tab-size[data-tab-size='7'] {
+  -moz-tab-size: 7;
+  tab-size: 7;
+}
+
+.tab-size[data-tab-size='8'] {
+  -moz-tab-size: 8;
+  tab-size: 8;
+}
+
+.tab-size[data-tab-size='9'] {
+  -moz-tab-size: 9;
+  tab-size: 9;
+}
+
+.tab-size[data-tab-size='10'] {
+  -moz-tab-size: 10;
+  tab-size: 10;
+}
+
+.tab-size[data-tab-size='11'] {
+  -moz-tab-size: 11;
+  tab-size: 11;
+}
+
+.tab-size[data-tab-size='12'] {
+  -moz-tab-size: 12;
+  tab-size: 12;
+}
+
+.task-list-item {
+  list-style-type: none;
+}
+
+.task-list-item + .task-list-item {
+  margin-top: 3px;
+}
+
+.task-list-item input {
+  margin: 0 0.2em 0.25em -1.6em;
+  vertical-align: middle;
+}
+/*
+github.com style (c) Vasily Polovnyov <vast@whiteants.net>
+*/
+  
+  .hljs-comment,
+  .hljs-quote {
+    color: #998;
+    font-style: italic;
+  }
+  
+  .hljs-keyword,
+  .hljs-selector-tag,
+  .hljs-subst {
+    color: #333;
+    font-weight: bold;
+  }
+  
+  .hljs-number,
+  .hljs-literal,
+  .hljs-variable,
+  .hljs-template-variable,
+  .hljs-tag .hljs-attr {
+    color: #008080;
+  }
+  
+  .hljs-string,
+  .hljs-doctag {
+    color: #d14;
+  }
+  
+  .hljs-title,
+  .hljs-section,
+  .hljs-selector-id {
+    color: #900;
+    font-weight: bold;
+  }
+  
+  .hljs-subst {
+    font-weight: normal;
+  }
+  
+  .hljs-type,
+  .hljs-class .hljs-title {
+    color: #458;
+    font-weight: bold;
+  }
+  
+  .hljs-tag,
+  .hljs-name,
+  .hljs-attribute {
+    color: #000080;
+    font-weight: normal;
+  }
+  
+  .hljs-regexp,
+  .hljs-link {
+    color: #009926;
+  }
+  
+  .hljs-symbol,
+  .hljs-bullet {
+    color: #990073;
+  }
+  
+  .hljs-built_in,
+  .hljs-builtin-name {
+    color: #0086b3;
+  }
+  
+  .hljs-meta {
+    color: #999;
+    font-weight: bold;
+  }
+  
+  .hljs-deletion {
+    background: #fdd;
+  }
+  
+  .hljs-addition {
+    background: #dfd;
+  }
+  
+  .hljs-emphasis {
+    font-style: italic;
+  }
+  
+  .hljs-strong {
+    font-weight: bold;
+  }
+		</style>
+<script> MathJax = { tex: { inlineMath: [["$", "$"]] } }; </script>
+<script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+	</head>
+	<body>
+		<nav id="table-of-contents">
+			<ul><li><a href="#tempo-di-vita-lifetime"> Tempo di vita (lifetime)</a><ul><li><a href="#note-iniziali"> Note iniziali</a></li><li><a href="#storage-duration-allocazione"> Storage duration ("Allocazione")</a><ul><li><a href="#allocazione-statica"> Allocazione statica</a></li><li><a href="#allocazione-thread-local"> Allocazione thread local</a></li><li><a href="#allocazione-automatica"> Allocazione automatica</a></li><li><a href="#allocazione-automatica-di-temporanei"> Allocazione automatica di temporanei</a></li><li><a href="#allocazione-dinamica"> Allocazione dinamica</a></li></ul></li></ul></li></ul>
+		</nav>
+		<main>
+			<h1 id="tempo-di-vita-lifetime" tabindex="-1"><a class="anchor" href="#tempo-di-vita-lifetime" aria-hidden="true"><span class="octicon octicon-link"></span></a> Tempo di vita (lifetime)</h1>
+<pre><code class="language-toc"></code></pre>
+<hr>
+<p>Abbiamo visto come il concetto di scope consenta di stabilire in quali punti del codice (<mark style="background: #FFB86CA6;"><em>dove</em></mark>) è visibile il nome introdotto da una dichiarazione.  Oltre alla dimensione spaziale, è necessario prendere in considerazione anche la dimensione temporale, per stabilire in quali momenti (<mark style="background: #FFB86CA6;"><em>quando</em></mark>) è legittimo interagire con determinate entità.</p>
+<p>Alcune entità (tipi di dato, funzioni, etichette) possono essere riferite in qualunque momento durante l'esecuzione del programma.<br>
+Un oggetto memorizzato in memoria, invece, è utilizzabile solo dopo che è stato creato e soltanto fino a quando viene distrutto, ovvero ogni accesso è valido solo durante il suo tempo di vita (lifetime).</p>
+<hr>
+<h2 id="note-iniziali" tabindex="-1"><a class="anchor" href="#note-iniziali" aria-hidden="true"><span class="octicon octicon-link"></span></a> Note iniziali</h2>
+<p>Anche se il codice eseguibile delle funzioni è memorizzato in memoria, <mark style="background: #ABF7F7A6;">tecnicamente le funzioni <em>NON</em> sono considerate oggetti in memoria e quindi non se ne considera il lifetime.</mark></p>
+<p>Il <em>tempo di vita</em> di un oggetto è influenzato dal modo in cui questo viene creato.<br>
+Gli oggetti in memoria sono creati:</p>
+<ul>
+<li>da una <em>definizione</em> (non basta una dichiarazione pura);</li>
+<li>da una <em>chiamata dell'espressione <code>new</code></em> (oggetto nell'heap, senza nome);</li>
+<li>dalla <em>valutazione di una espressione</em> che crea implicitamente un nuovo oggetto (oggetto temporaneo, senza nome).</li>
+</ul>
+<p>Il tempo di vita di un oggetto:</p>
+<ol>
+<li><mark style="background: #D2B3FFA6;">inizia quando termina la sua costruzione</mark>, che è composta da due fasi distinte:
+<ul>
+<li>allocazione della memoria "grezza";</li>
+<li>inizializzazione della memoria (quando prevista);</li>
+</ul>
+</li>
+<li><mark style="background: #FFB8EBA6;">termina quando inizia la sua distruzione</mark>, che è anch'essa composta da due fasi distinte:
+<ul>
+<li>invocazione del distruttore (quando previsto);</li>
+<li>deallocazione della memoria "grezza".</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>Si noti che un oggetto la cui costruzione NON termina con successo, NON avendo iniziato il suo tempo di vita, NON dovrà terminarlo, ovvero per quell'oggetto NON verrà eseguita la distruzione.</p>
+</blockquote>
+<blockquote>
+<p>Si noti anche che DURANTE le fasi di creazione e di distruzione di un oggetto si è fuori dal suo tempo di vita, per cui le operazioni che è possibile effettuare sull'oggetto sono molto limitate (le regole del linguaggio sono complicate e comprendono numerosi casi particolari, che per il momento non è opportuno approfondire).</p>
+</blockquote>
+<p><a href="#Tempo%20di%20vita%20(lifetime)"><em>Torna all'indice</em></a></p>
+<hr>
+<h2 id="storage-duration-allocazione" tabindex="-1"><a class="anchor" href="#storage-duration-allocazione" aria-hidden="true"><span class="octicon octicon-link"></span></a> Storage duration ("Allocazione")</h2>
+<p>Vi sono diversi tipi di <em>storage duration</em> (aka allocazione) per gli oggetti in memoria:</p>
+<ol>
+<li><a href="#allocazione%20statica">Allocazione statica</a></li>
+<li><a href="#allocazione%20thread%20local">Allocazione thread local</a></li>
+<li><a href="#allocazione%20automatica">Allocazione automatica</a></li>
+<li><a href="#allocazione%20automatica%20di%20temporanei">Allocazione automatica di temporanei</a></li>
+<li><a href="#allocazione%20dinamica">Allocazione dinamica</a></li>
+</ol>
+<p><a href="#Tempo%20di%20vita%20(lifetime)"><em>Torna all'indice</em></a></p>
+<hr>
+<h3 id="allocazione-statica" tabindex="-1"><a class="anchor" href="#allocazione-statica" aria-hidden="true"><span class="octicon octicon-link"></span></a> Allocazione statica</h3>
+<p>La memoria di un oggetto ad allocazione statica dura per tutta l'esecuzione del programma.</p>
+<p>Sono dotate di memoria ad allocazione statica:</p>
+<ol>
+<li><mark style="background: #BBFABBA6;">Le variabili definite a namespace scope (dette globali).</mark> Queste sono create e inizializzate <em>prima</em> di iniziare l'esecuzione della funzione main, nell'ordine in cui compaiono nell'unità di traduzione in cui sono definite.
+<blockquote>
+<p>Nel caso di variabili globali definite in diverse unità di traduzione, l'ordine di inizializzazione <em>NON</em> è specificato.</p>
+</blockquote>
+</li>
+</ol>
+<pre><code class="language-cpp"><span class="hljs-comment">// Il seguente programma stampa due stringhe, </span>
+<span class="hljs-comment">// anche se il corpo della funzione main è vuoto</span>
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+
+<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">S</span> {</span>
+	<span class="hljs-built_in">S</span>() { std::cout &lt;&lt; <span class="hljs-string">"costruzione"</span> &lt;&lt; std::endl; }
+	~<span class="hljs-built_in">S</span>() { std::cout &lt;&lt; <span class="hljs-string">"distruzione"</span> &lt;&lt; std::endl; }
+};
+
+S s; <span class="hljs-comment">// allocazione globale</span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{}
+</code></pre>
+<ol start="2">
+<li>
+<p><mark style="background: #BBFABBA6;">I dati membro di classi dichiarati usando la parola 'static'.</mark> Questi sono creati come le variabili globali del punto precedente.</p>
+</li>
+<li>
+<p><mark style="background: #BBFABBA6;">Le variabili locali dichiarate usando la parole chiave 'static'.</mark> Queste sono allocate prima di iniziare l'esecuzione della funzione <code>main</code>, ma sono inizializzate (solo) la prima volta in cui il controllo di esecuzione incontra la corrispondente definizione (nelle esecuzioni successive l'inizializzazione non viene eseguita).</p>
+</li>
+</ol>
+<pre><code class="language-cpp"><span class="hljs-comment">// Il seguente programma stampa una stringha, </span>
+<span class="hljs-comment">// indicando il numero totale di volte in cui </span>
+<span class="hljs-comment">// la funzione `foo()` è stata chiamata:</span>
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+
+<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">S</span> {</span>
+	<span class="hljs-keyword">int</span> counter;
+	<span class="hljs-built_in">S</span>() : <span class="hljs-built_in">counter</span>(<span class="hljs-number">0</span>) { }
+	~<span class="hljs-built_in">S</span>() { std::cout &lt;&lt; <span class="hljs-string">"counter = "</span> &lt;&lt; counter &lt;&lt; std::endl; }
+};
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">foo</span><span class="hljs-params">()</span> </span>{
+	<span class="hljs-keyword">static</span> S s; <span class="hljs-comment">// allocazione locale statica</span>
+	++s.counter;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+	<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; ++i) {
+	    <span class="hljs-built_in">foo</span>();
+	}
+}
+</code></pre>
+<p><a href="#storage%20duration"><em>Torna all'indice</em></a></p>
+<hr>
+<h3 id="allocazione-thread-local" tabindex="-1"><a class="anchor" href="#allocazione-thread-local" aria-hidden="true"><span class="octicon octicon-link"></span></a> Allocazione thread local</h3>
+<p>Un oggetto thread local è simile ad un oggetto globale, ma il suo ciclo di vita non è collegato al programma, bensi ad ogni singolo thread di esecuzione creato dal programma (esiste una istanza distinta della variabile per ogni thread creato).
+Il supporto per il multithreading è stato introdotto con lo standard $C$++ 2011.</p>
+<p><a href="#storage%20duration"><em>Torna all'indice</em></a></p>
+<hr>
+<h3 id="allocazione-automatica" tabindex="-1"><a class="anchor" href="#allocazione-automatica" aria-hidden="true"><span class="octicon octicon-link"></span></a> Allocazione automatica</h3>
+<p>Una variabile locale ad un blocco di funzione è dotata di allocazione automatica: l'oggetto viene creato dinamicamente (sullo <em>stack</em>) ogni volta che il controllo entra nel blocco in cui si trova la dichiarazione e viene <mark style="background: #FF5582A6;">automaticamente distrutto</mark> (rimuovendolo dallo stack) ogni volta che il controllo esce da quel blocco.</p>
+<pre><code class="language-cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">foo</span><span class="hljs-params">()</span> </span>{
+	<span class="hljs-keyword">int</span> a = <span class="hljs-number">5</span>;
+	{
+	    <span class="hljs-keyword">int</span> b = <span class="hljs-number">7</span>;
+	    std::cout &lt;&lt; a + b;
+	} <span class="hljs-comment">// 'b' viene distrutta automaticamente all'uscita da questo blocco</span>
+	std::cout &lt;&lt; a;
+} <span class="hljs-comment">// 'a' viene distrutta automaticamente all'uscita da questo blocco</span>
+</code></pre>
+<blockquote>
+<p>Nel caso di funzioni ricorsive, sullo stack possono esistere contemporaneamente più istanze distinte della stessa variabile locale.</p>
+</blockquote>
+<p><a href="#storage%20duration"><em>Torna all'indice</em></a></p>
+<hr>
+<h3 id="allocazione-automatica-di-temporanei" tabindex="-1"><a class="anchor" href="#allocazione-automatica-di-temporanei" aria-hidden="true"><span class="octicon octicon-link"></span></a> Allocazione automatica di temporanei</h3>
+<p>L'allocazione automatica di temporanei avviene quando un oggetto viene creato per memorizzare il valore calcolato da una sottoespressione che compare all'interno di una espressione.</p>
+<pre><code class="language-cpp"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">S</span> {</span>
+	<span class="hljs-built_in">S</span>(<span class="hljs-keyword">int</span>);
+	<span class="hljs-built_in">S</span>(<span class="hljs-keyword">const</span> S&amp;);
+	~<span class="hljs-built_in">S</span>() { std::cout &lt;&lt; <span class="hljs-string">"distruzione"</span>; }
+};
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">foo</span><span class="hljs-params">(S s)</span></span>;
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">bar</span><span class="hljs-params">()</span> </span>{
+	<span class="hljs-built_in">foo</span>(<span class="hljs-built_in">S</span>(<span class="hljs-number">42</span>)); <span class="hljs-comment">// allocazione di un temporaneo per S(42)</span>
+	std::cout &lt;&lt; <span class="hljs-string">"fine"</span>;
+}
+</code></pre>
+<p>L'oggetto temporaneo viene <em>distrutto</em> quando termina la valutazione dell'espressione completa che contiene lessicalmente il punto di creazione.
+Nell'esempio precedente, il temporaneo è distrutto al termine dell'esecuzione di <code>foo</code>, ma prima della stampa di <em>"fine"</em>.</p>
+<blockquote>
+<p>Il lifetime di un oggetto temporaneo può essere esteso se l'oggetto viene utilizzato per inizializzare un riferimento; in tale caso, l'oggetto verrà distrutto nel momento in cui verrà distrutto il riferimento.<br>
+Per esempio:</p>
+</blockquote>
+<pre><code class="language-cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">bar2</span><span class="hljs-params">()</span> </span>{
+	<span class="hljs-comment">// il temporaneo S(42) è usato per inizializzare il riferimento s</span>
+	<span class="hljs-keyword">const</span> S&amp; s = <span class="hljs-built_in">S</span>(<span class="hljs-number">42</span>);
+	std::cout &lt;&lt; <span class="hljs-string">"fine"</span>;
+	
+	<span class="hljs-comment">// il temporaneo è distrutto quando si esce dal blocco,</span>
+	<span class="hljs-comment">// dopo avere stampato "fine"</span>
+}
+</code></pre>
+<p><a href="#storage%20duration"><em>Torna all'indice</em></a></p>
+<hr>
+<h3 id="allocazione-dinamica" tabindex="-1"><a class="anchor" href="#allocazione-dinamica" aria-hidden="true"><span class="octicon octicon-link"></span></a> Allocazione dinamica</h3>
+<p>Un oggetto (senza nome) può essere allocato dinamicamente nella memoria heap usando l'espressione <code>new</code> (che restituisce l'indirizzo dell'oggetto allocato, che va salvato in un opportuno puntatore).</p>
+<pre><code class="language-cpp"><span class="hljs-keyword">int</span>* pi = <span class="hljs-keyword">new</span> <span class="hljs-built_in"><span class="hljs-keyword">int</span></span>(<span class="hljs-number">42</span>);
+<span class="hljs-comment">// pi contiene l'indirizzo di un oggetto int di valore 42.</span>
+</code></pre>
+<p><mark style="background: #FF5582A6;">La distruzione dell'oggetto NON è automatica</mark>, ma viene effettuata sotto la responsabilità del programmatore utilizzando l'istruzione <code>delete</code> (sul puntatore che contiene l'indirizzo dell'oggetto).</p>
+<pre><code class="language-cpp">  <span class="hljs-keyword">delete</span> pi;
+  <span class="hljs-comment">// l'oggetto puntato da pi è stato distrutto,</span>
+  <span class="hljs-comment">// ma pi continua a contenere il suo indirizzo, non più valido;</span>
+  <span class="hljs-comment">// pi è diventato un "dangling pointer" (puntatore penzolante)</span>
+</code></pre>
+<p>L'allocazione dinamica è una sorgente inesauribile di <u>errori di programmazione</u>:</p>
+<ul>
+<li><mark style="background: #FFF3A3A6;">Errore "use after free":</mark> Usare (per leggere o scrivere sull'oggetto puntato) un puntatore dangling. In pratica si usa un oggetto dopo che il suo lifetime è concluso.</li>
+<li><mark style="background: #FFF3A3A6;">Errore "double free":</mark> Usare la delete due o più volte sullo stesso indirizzo, causando la distruzione di una porzione di memoria che non era più allocata (o era stata riutilizzata per altro).</li>
+<li><mark style="background: #FFF3A3A6;">"Memory leak":</mark> Si distrugge l'unico puntatore che contiene l'indirizzo dell'oggetto allocato prima di avere effettuato la delete (quindi l'oggetto non verrà mai più distrutto, causando come minimo uno spreco di memoria).</li>
+<li><mark style="background: #FFF3A3A6;">Accesso ad un "wild pointer":</mark> Variante della use after free; si segue un puntatore che indirizza memoria "causale", leggendo o scrivendo dove non c'è un oggetto (o non c'è l'oggetto inteso).</li>
+<li><mark style="background: #FFF3A3A6;">Accesso al "null pointer":</mark> Si prova ad accedere ad un puntatore nullo.</li>
+</ul>
+<p><a href="#storage%20duration"><em>Torna all'indice</em></a></p>
+
+		</main>
+	</body>
+</html>

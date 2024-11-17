@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+		<title>15-exception_safety</title>
+		<style>
+			/* PDF Specific */
+
+@media print {
+  body {
+    min-width: initial;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+}
+
+/* General */
+
+.octicon {
+  display: inline-block;
+  fill: currentColor;
+  vertical-align: text-bottom;
+}
+
+.anchor {
+  float: left;
+  line-height: 1;
+  margin-left: -20px;
+  padding-right: 4px;
+}
+
+.anchor:focus {
+  outline: none;
+}
+
+h1 .octicon-link,
+h2 .octicon-link,
+h3 .octicon-link,
+h4 .octicon-link,
+h5 .octicon-link,
+h6 .octicon-link {
+  color: #1b1f23;
+  vertical-align: middle;
+  visibility: hidden;
+}
+
+h1:hover .anchor,
+h2:hover .anchor,
+h3:hover .anchor,
+h4:hover .anchor,
+h5:hover .anchor,
+h6:hover .anchor {
+  text-decoration: none;
+}
+
+h1:hover .anchor .octicon-link,
+h2:hover .anchor .octicon-link,
+h3:hover .anchor .octicon-link,
+h4:hover .anchor .octicon-link,
+h5:hover .anchor .octicon-link,
+h6:hover .anchor .octicon-link {
+  visibility: visible;
+}
+
+h1:hover .anchor .octicon-link:before,
+h2:hover .anchor .octicon-link:before,
+h3:hover .anchor .octicon-link:before,
+h4:hover .anchor .octicon-link:before,
+h5:hover .anchor .octicon-link:before,
+h6:hover .anchor .octicon-link:before {
+  width: 16px;
+  height: 16px;
+  content: ' ';
+  display: inline-block;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' version='1.1' width='16' height='16' aria-hidden='true'%3E%3Cpath fill-rule='evenodd' d='M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z'%3E%3C/path%3E%3C/svg%3E");
+}
+
+body {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -webkit-print-color-adjust: exact;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
+    sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #24292e;
+  word-wrap: break-word;
+  box-sizing: border-box;
+  min-width: 200px;
+  max-width: 980px;
+  margin: 1rem auto;
+}
+
+details {
+  display: block;
+}
+
+summary {
+  display: list-item;
+}
+
+a {
+  background-color: initial;
+}
+
+a:active,
+a:hover {
+  outline-width: 0;
+}
+
+strong {
+  font-weight: inherit;
+  font-weight: bolder;
+}
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+img {
+  border-style: none;
+}
+
+code,
+kbd,
+pre {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+hr {
+  box-sizing: initial;
+  height: 0;
+  overflow: visible;
+}
+
+input {
+  font: inherit;
+  margin: 0;
+}
+
+input {
+  overflow: visible;
+}
+
+[type='checkbox'] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+input {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+a {
+  color: #0366d6;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+strong {
+  font-weight: 600;
+}
+
+hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #dfe2e5;
+}
+
+hr:after,
+hr:before {
+  display: table;
+  content: '';
+}
+
+hr:after {
+  clear: both;
+}
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+td,
+th {
+  padding: 0;
+}
+
+details summary {
+  cursor: pointer;
+}
+
+kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #d1d5da;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+h1 {
+  font-size: 32px;
+}
+
+h1,
+h2 {
+  font-weight: 600;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+h3 {
+  font-size: 20px;
+}
+
+h3,
+h4 {
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h5,
+h6 {
+  font-weight: 600;
+}
+
+h6 {
+  font-size: 12px;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+blockquote {
+  margin: 0;
+}
+
+ol,
+ul {
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+ol ol,
+ul ol {
+  list-style-type: lower-roman;
+}
+
+ol ol ol,
+ol ul ol,
+ul ol ol,
+ul ul ol {
+  list-style-type: lower-alpha;
+}
+
+dd {
+  margin-left: 0;
+}
+
+code,
+pre {
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 12px;
+}
+
+pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+:checked + .radio-label {
+  position: relative;
+  z-index: 1;
+  border-color: #0366d6;
+}
+
+.border {
+  border: 1px solid #e1e4e8 !important;
+}
+
+.border-0 {
+  border: 0 !important;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #e1e4e8 !important;
+}
+
+.rounded-1 {
+  border-radius: 3px !important;
+}
+
+.bg-white {
+  background-color: #fff !important;
+}
+
+.bg-gray-light {
+  background-color: #fafbfc !important;
+}
+
+.text-gray-light {
+  color: #6a737d !important;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+
+.my-2 {
+  margin-top: 8px !important;
+  margin-bottom: 8px !important;
+}
+
+.pl-0 {
+  padding-left: 0 !important;
+}
+
+.py-0 {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.pl-1 {
+  padding-left: 4px !important;
+}
+
+.pl-2 {
+  padding-left: 8px !important;
+}
+
+.py-2 {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+.pl-3,
+.px-3 {
+  padding-left: 16px !important;
+}
+
+.px-3 {
+  padding-right: 16px !important;
+}
+
+.pl-4 {
+  padding-left: 24px !important;
+}
+
+.pl-5 {
+  padding-left: 32px !important;
+}
+
+.pl-6 {
+  padding-left: 40px !important;
+}
+
+.f6 {
+  font-size: 12px !important;
+}
+
+.lh-condensed {
+  line-height: 1.25 !important;
+}
+
+.text-bold {
+  font-weight: 600 !important;
+}
+
+.pl-c {
+  color: #6a737d;
+}
+
+.pl-c1,
+.pl-s .pl-v {
+  color: #005cc5;
+}
+
+.pl-e,
+.pl-en {
+  color: #6f42c1;
+}
+
+.pl-s .pl-s1,
+.pl-smi {
+  color: #24292e;
+}
+
+.pl-ent {
+  color: #22863a;
+}
+
+.pl-k {
+  color: #d73a49;
+}
+
+.pl-pds,
+.pl-s,
+.pl-s .pl-pse .pl-s1,
+.pl-sr,
+.pl-sr .pl-cce,
+.pl-sr .pl-sra,
+.pl-sr .pl-sre {
+  color: #032f62;
+}
+
+.pl-smw,
+.pl-v {
+  color: #e36209;
+}
+
+.pl-bu {
+  color: #b31d28;
+}
+
+.pl-ii {
+  color: #fafbfc;
+  background-color: #b31d28;
+}
+
+.pl-c2 {
+  color: #fafbfc;
+  background-color: #d73a49;
+}
+
+.pl-c2:before {
+  content: '^M';
+}
+
+.pl-sr .pl-cce {
+  font-weight: 700;
+  color: #22863a;
+}
+
+.pl-ml {
+  color: #735c0f;
+}
+
+.pl-mh,
+.pl-mh .pl-en,
+.pl-ms {
+  font-weight: 700;
+  color: #005cc5;
+}
+
+.pl-mi {
+  font-style: italic;
+  color: #24292e;
+}
+
+.pl-mb {
+  font-weight: 700;
+  color: #24292e;
+}
+
+.pl-md {
+  color: #b31d28;
+  background-color: #ffeef0;
+}
+
+.pl-mi1 {
+  color: #22863a;
+  background-color: #f0fff4;
+}
+
+.pl-mc {
+  color: #e36209;
+  background-color: #ffebda;
+}
+
+.pl-mi2 {
+  color: #f6f8fa;
+  background-color: #005cc5;
+}
+
+.pl-mdr {
+  font-weight: 700;
+  color: #6f42c1;
+}
+
+.pl-ba {
+  color: #586069;
+}
+
+.pl-sg {
+  color: #959da5;
+}
+
+.pl-corl {
+  text-decoration: underline;
+  color: #032f62;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+
+.my-2 {
+  margin-bottom: 8px !important;
+}
+
+.my-2 {
+  margin-top: 8px !important;
+}
+
+.pl-0 {
+  padding-left: 0 !important;
+}
+
+.py-0 {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.pl-1 {
+  padding-left: 4px !important;
+}
+
+.pl-2 {
+  padding-left: 8px !important;
+}
+
+.py-2 {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+.pl-3 {
+  padding-left: 16px !important;
+}
+
+.pl-4 {
+  padding-left: 24px !important;
+}
+
+.pl-5 {
+  padding-left: 32px !important;
+}
+
+.pl-6 {
+  padding-left: 40px !important;
+}
+
+.pl-7 {
+  padding-left: 48px !important;
+}
+
+.pl-8 {
+  padding-left: 64px !important;
+}
+
+.pl-9 {
+  padding-left: 80px !important;
+}
+
+.pl-10 {
+  padding-left: 96px !important;
+}
+
+.pl-11 {
+  padding-left: 112px !important;
+}
+
+.pl-12 {
+  padding-left: 128px !important;
+}
+
+hr {
+  border-bottom-color: #eee;
+}
+
+kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #d1d5da;
+}
+
+body:after,
+body:before {
+  display: table;
+  content: '';
+}
+
+body:after {
+  clear: both;
+}
+
+body > :first-child {
+  margin-top: 0 !important;
+}
+
+body > :last-child {
+  margin-bottom: 0 !important;
+}
+
+a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+blockquote,
+details,
+dl,
+ol,
+p,
+pre,
+table,
+ul {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+hr {
+  height: 0.25em;
+  padding: 0;
+  margin: 24px 0;
+  background-color: #e1e4e8;
+  border: 0;
+}
+
+blockquote {
+  padding: 0 1em;
+  color: #6a737d;
+  border-left: 0.25em solid #dfe2e5;
+}
+
+blockquote > :first-child {
+  margin-top: 0;
+}
+
+blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+h1,
+h2 {
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid #eaecef;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
+  font-size: 1.25em;
+}
+
+h4 {
+  font-size: 1em;
+}
+
+h5 {
+  font-size: 0.875em;
+}
+
+h6 {
+  font-size: 0.85em;
+  color: #6a737d;
+}
+
+ol,
+ul {
+  padding-left: 2em;
+}
+
+ol ol,
+ol ul,
+ul ol,
+ul ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+li {
+  word-wrap: break-all;
+}
+
+li > p {
+  margin-top: 16px;
+}
+
+li + li {
+  margin-top: 0.25em;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: 600;
+}
+
+dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+}
+
+table th {
+  font-weight: 600;
+}
+
+table td,
+table th {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+table tr {
+  background-color: #fff;
+  border-top: 1px solid #c6cbd1;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+img {
+  max-width: 80%;
+  box-sizing: initial;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #fff;
+}
+
+code {
+  padding: 0.2em 0.4em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(27, 31, 35, 0.05);
+  border-radius: 3px;
+}
+
+pre {
+  word-wrap: normal;
+}
+
+pre > code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #333;
+  -webkit-print-color-adjust: exact;
+  background: #f8f8f8;
+}
+
+.hljs pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.hljs pre,
+pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f6f8fa;
+  -webkit-print-color-adjust: exact;
+
+  border-radius: 3px;
+}
+
+pre code {
+  display: inline;
+  max-width: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: initial;
+  border: 0;
+}
+
+.commit-tease-sha {
+  display: inline-block;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 90%;
+  color: #444d56;
+}
+
+.full-commit .btn-outline:not(:disabled):hover {
+  color: #005cc5;
+  border-color: #005cc5;
+}
+
+.blob-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.blob-wrapper-embedded {
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.blob-num {
+  width: 1%;
+  min-width: 50px;
+  padding-right: 10px;
+  padding-left: 10px;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 12px;
+  line-height: 20px;
+  color: rgba(27, 31, 35, 0.3);
+  text-align: right;
+  white-space: nowrap;
+  vertical-align: top;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.blob-num:hover {
+  color: rgba(27, 31, 35, 0.6);
+}
+
+.blob-num:before {
+  content: attr(data-line-number);
+}
+
+.blob-code {
+  position: relative;
+  padding-right: 10px;
+  padding-left: 10px;
+  line-height: 20px;
+  vertical-align: top;
+}
+
+.blob-code-inner {
+  overflow: visible;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  font-size: 12px;
+  color: #24292e;
+  word-wrap: normal;
+  white-space: pre;
+}
+
+.pl-token.active,
+.pl-token:hover {
+  cursor: pointer;
+  background: #ffea7f;
+}
+
+.tab-size[data-tab-size='1'] {
+  -moz-tab-size: 1;
+  tab-size: 1;
+}
+
+.tab-size[data-tab-size='2'] {
+  -moz-tab-size: 2;
+  tab-size: 2;
+}
+
+.tab-size[data-tab-size='3'] {
+  -moz-tab-size: 3;
+  tab-size: 3;
+}
+
+.tab-size[data-tab-size='4'] {
+  -moz-tab-size: 4;
+  tab-size: 4;
+}
+
+.tab-size[data-tab-size='5'] {
+  -moz-tab-size: 5;
+  tab-size: 5;
+}
+
+.tab-size[data-tab-size='6'] {
+  -moz-tab-size: 6;
+  tab-size: 6;
+}
+
+.tab-size[data-tab-size='7'] {
+  -moz-tab-size: 7;
+  tab-size: 7;
+}
+
+.tab-size[data-tab-size='8'] {
+  -moz-tab-size: 8;
+  tab-size: 8;
+}
+
+.tab-size[data-tab-size='9'] {
+  -moz-tab-size: 9;
+  tab-size: 9;
+}
+
+.tab-size[data-tab-size='10'] {
+  -moz-tab-size: 10;
+  tab-size: 10;
+}
+
+.tab-size[data-tab-size='11'] {
+  -moz-tab-size: 11;
+  tab-size: 11;
+}
+
+.tab-size[data-tab-size='12'] {
+  -moz-tab-size: 12;
+  tab-size: 12;
+}
+
+.task-list-item {
+  list-style-type: none;
+}
+
+.task-list-item + .task-list-item {
+  margin-top: 3px;
+}
+
+.task-list-item input {
+  margin: 0 0.2em 0.25em -1.6em;
+  vertical-align: middle;
+}
+/*
+github.com style (c) Vasily Polovnyov <vast@whiteants.net>
+*/
+  
+  .hljs-comment,
+  .hljs-quote {
+    color: #998;
+    font-style: italic;
+  }
+  
+  .hljs-keyword,
+  .hljs-selector-tag,
+  .hljs-subst {
+    color: #333;
+    font-weight: bold;
+  }
+  
+  .hljs-number,
+  .hljs-literal,
+  .hljs-variable,
+  .hljs-template-variable,
+  .hljs-tag .hljs-attr {
+    color: #008080;
+  }
+  
+  .hljs-string,
+  .hljs-doctag {
+    color: #d14;
+  }
+  
+  .hljs-title,
+  .hljs-section,
+  .hljs-selector-id {
+    color: #900;
+    font-weight: bold;
+  }
+  
+  .hljs-subst {
+    font-weight: normal;
+  }
+  
+  .hljs-type,
+  .hljs-class .hljs-title {
+    color: #458;
+    font-weight: bold;
+  }
+  
+  .hljs-tag,
+  .hljs-name,
+  .hljs-attribute {
+    color: #000080;
+    font-weight: normal;
+  }
+  
+  .hljs-regexp,
+  .hljs-link {
+    color: #009926;
+  }
+  
+  .hljs-symbol,
+  .hljs-bullet {
+    color: #990073;
+  }
+  
+  .hljs-built_in,
+  .hljs-builtin-name {
+    color: #0086b3;
+  }
+  
+  .hljs-meta {
+    color: #999;
+    font-weight: bold;
+  }
+  
+  .hljs-deletion {
+    background: #fdd;
+  }
+  
+  .hljs-addition {
+    background: #dfd;
+  }
+  
+  .hljs-emphasis {
+    font-style: italic;
+  }
+  
+  .hljs-strong {
+    font-weight: bold;
+  }
+		</style>
+<script> MathJax = { tex: { inlineMath: [["$", "$"]] } }; </script>
+<script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+	</head>
+	<body>
+		<nav id="table-of-contents">
+			<ul><li><a href="#exception-safety"> Exception Safety</a><ul><li><a href="#livelli-di-exception-safety"> Livelli di exception safety</a><ul><li><a href="#livello-base"> Livello base</a></li><li><a href="#livello-forte"> Livello forte</a><ul><li><a href="#esempio"> Esempio</a></li></ul></li><li><a href="#livello-nothrow"> Livello nothrow</a></li></ul></li><li><a href="#libreria-standard-e-exception-safety"> Libreria standard e exception safety</a><ul><li><a href="#esempio-strong-safety"> Esempio strong safety</a></li><li><a href="#esempio-base-safety"> Esempio base safety</a></li></ul></li><li><a href="#approcci-alternativi-per-gestire-le-risorse"> Approcci alternativi per gestire le risorse</a><ul><li><a href="#errori-tradizionali-no-eccezioni"> Errori "tradizionali" (no eccezioni)</a></li><li><a href="#uso-di-blocchi-trycatch"> Uso di blocchi try/catch</a></li><li><a href="#uso-dellidioma-raii-rrid"> Uso dell'idioma RAII-RRID</a></li></ul></li><li><a href="#esercizio"> Esercizio</a></li><li><a href="#altro-materiale"> Altro materiale</a></li></ul></li></ul>
+		</nav>
+		<main>
+			<h1 id="exception-safety" tabindex="-1"><a class="anchor" href="#exception-safety" aria-hidden="true"><span class="octicon octicon-link"></span></a> Exception Safety</h1>
+<pre><code class="language-toc"></code></pre>
+<hr>
+<p>Una porzione di codice si dice <mark style="background: #FFB86CA6;">exception safe</mark> quando si comporta in maniera "adeguata" anche in presenza di comportamenti anomali segnalati tramite il lancio di eccezioni.</p>
+<p>In particolare, occorre valutare se la porzione di codice, in seguito al comportamento eccezionale, non abbia compromesso lo stato del programma in maniera irreparabile: esempi di compromissione sono il mancato rilascio (cioè la perdita) di risorse oppure la corruzione dello stato interno di una risorsa (ad esempio, l'invariante di classe non è più verificata), con la conseguenza che qualunque ulteriore tentativo di interagire con la risorsa si risolve in un comportamento non definito (<em>undefined behavior</em>).</p>
+<hr>
+<h2 id="livelli-di-exception-safety" tabindex="-1"><a class="anchor" href="#livelli-di-exception-safety" aria-hidden="true"><span class="octicon octicon-link"></span></a> Livelli di exception safety</h2>
+<p>Esistono tre diversi livelli di exception safety:</p>
+<ul>
+<li><a href="#livello%20base">base</a></li>
+<li><a href="#livello%20forte">forte</a></li>
+<li><a href="#livello%20nothrow">nothrow</a></li>
+</ul>
+<hr>
+<h3 id="livello-base" tabindex="-1"><a class="anchor" href="#livello-base" aria-hidden="true"><span class="octicon octicon-link"></span></a> Livello base</h3>
+<p>Una porzione di codice (una funzione o una classe) si dice exception safe a livello base se, anche nel caso in cui si verifichino delle eccezioni durante la sua esecuzione:</p>
+<ol>
+<li>Non si hanno perdite di risorse (resource leak).</li>
+<li>Si è neutrali rispetto alle eccezioni quando, ogni qual volta viene ricevuta un'eccezione questa viene catturata momentaneamente, gestita in modo "locale", e successivamente viene rilasciata al chiamante (permettendo così la sua <mark style="background: #ABF7F7A6;">propagazione</mark> così che possa prenderne atto ed eseguire a sua volta eventuali azioni correttive necessarie).</li>
+<li>Anche in caso di uscita in modalità eccezionale, gli oggetti sui quali si stava lavorando sono distruggibili senza causare comportamenti non definiti. Quindi lo stato interno di un oggetto, anche se parzialmente inconsistente, deve comunque consentirne la corretta distruzione (o riassegnamento).</li>
+</ol>
+<p>Questo è il <mark style="background: #ABF7F7A6;">livello minimo</mark> che deve essere garantito per poter parlare di exception safety.</p>
+<blockquote>
+<p>Gli altri livelli, che forniscono garanzie maggiori, sono spesso considerati opzionali (perché più costosi da ottenere).</p>
+</blockquote>
+<p><a href="#exception%20safety"><em>Torna all'indice</em></a></p>
+<hr>
+<h3 id="livello-forte" tabindex="-1"><a class="anchor" href="#livello-forte" aria-hidden="true"><span class="octicon octicon-link"></span></a> Livello forte</h3>
+<p>Il <mark style="background: #FFB8EBA6;">livello forte (strong)</mark> di exception safety si ottiene quando, oltre a tutte le garanzie fornite dal <mark style="background: #ABF7F7A6;">livello base</mark>, si aggiunge come ulteriore garanzia una sorta di <mark style="background: #FF5582A6;">atomicità</mark> delle operazioni (tutto o niente). Intuitivamente, l'invocazione di una funzione exception safe forte, in caso di eccezione, garantisce che lo stato degli oggetti manipolati è rimasto inalterato, identico allo stato precedente la chiamata.</p>
+<blockquote>
+<p>es: <em>Rollback</em> dei DBMS.</p>
+</blockquote>
+<h4 id="esempio" tabindex="-1"><a class="anchor" href="#esempio" aria-hidden="true"><span class="octicon octicon-link"></span></a> Esempio</h4>
+<p>Supponiamo di avere una classe che implementa una collezione ordinata di oggetti e di avere un metodo <code>insert</code> che inserisce un nuovo oggetto nella collezione esistente.</p>
+<p>Se il metodo in questione garantisce l'exception safety forte, allora in seguito ad una eccezione durante una operazione di insert la collezione si troverà esattamente nello stesso stato precedente all'operazione di <code>insert</code> (cioè, conterrà esattamente gli stessi elementi che conteneva prima della chiamata alla insert).</p>
+<p>Se invece fosse garantita solo l'exception safety a livello base, non avendo la proprietà di atomicità, in caso di uscita con eccezione la collezione si troverebbe in uno stato consistente, ma potenzialmente in nessun rapporto con lo stato precedente alla chiamata (per esempio, potrebbe essere vuota o contenere elementi diversi rispetto a quelli contenuti precedentemente).</p>
+<p><a href="#exception%20safety"><em>Torna all'indice</em></a></p>
+<hr>
+<h3 id="livello-nothrow" tabindex="-1"><a class="anchor" href="#livello-nothrow" aria-hidden="true"><span class="octicon octicon-link"></span></a> Livello nothrow</h3>
+<p>È il <mark style="background: #BBFABBA6;">livello massimo</mark>: una funzione è nothrow se la sua esecuzione è <mark style="background: #ABF7F7A6;">garantita</mark>, non terminare in modalità eccezionale.</p>
+<p>Questo livello lo si raggiunge in un numero limitato di casi:</p>
+<ul>
+<li>
+<p>Quando l'operazione è così semplice che <mark style="background: #FF5582A6;">non</mark> c'è alcuna possibilità di generare eccezioni (esempio, assegnamento di tipi built-in).</p>
+</li>
+<li>
+<p>Quando la funzione è in grado di <mark style="background: #FF5582A6;">gestire completamente al suo interno eventuali eccezioni</mark>, risolvendo eventuali problemi e portando comunque a termine con successo l'operazione richiesta.</p>
+</li>
+<li>
+<p>Quando la funzione, di fronte a eventuali eccezioni interne, nell'impossibilità di attuare azioni correttive, determina la <mark style="background: #FF5582A6;">terminazione di tutto il programma.</mark> Questo è il caso delle funzioni che sono dichiarate (implicitamente o esplicitamente) <code>noexcept</code>, come i <em>distruttori</em>: in caso di eccezione non catturata, viene automaticamente invocata la terminazione del programma.</p>
+<blockquote>
+<p>Intuitivamente, devono garantire il livello nothow i distruttori e le funzioni che implementano il rilascio delle risorse (non è ipotizzabile ottenere l'exception safety se l'operazione di rilascio delle risorse può non avere successo).</p>
+</blockquote>
+</li>
+</ul>
+<p>Si noti che il livello nothrow, per definizione, <em>NON</em> è neutrale rispetto alle eccezioni.</p>
+<p><a href="#exception%20safety"><em>Torna all'indice</em></a></p>
+<hr>
+<h2 id="libreria-standard-e-exception-safety" tabindex="-1"><a class="anchor" href="#libreria-standard-e-exception-safety" aria-hidden="true"><span class="octicon octicon-link"></span></a> Libreria standard e exception safety</h2>
+<p><mark style="background: #FFB86CA6;">I contenitori (vector, deque, list, set, map, ...) forniti dalla libreria standard sono exception safe. </mark></p>
+<p>Tale affermazione vale sotto determinate condizioni.
+Dato che si parla di contenitori templatici, quindi possono essere istanziati a partire da un qualunque tipo di dato <code>T</code>, le garanzie di exception safety del contenitore sono valide a condizione che il tipo di dato <code>T</code> degli elementi contenuti fornisca analoghe garanzie.</p>
+<blockquote>
+<p>Molte operazioni su questi contenitori forniscono la garanzia forte (strong exception safety). Alcune però forniscono solo una garanzia base, tipicamente quando si opera su molti elementi contemporaneamente, perché quella strong sarebbe troppo costosa.</p>
+</blockquote>
+<hr>
+<h3 id="esempio-strong-safety" tabindex="-1"><a class="anchor" href="#esempio-strong-safety" aria-hidden="true"><span class="octicon octicon-link"></span></a> Esempio strong safety</h3>
+<p>Se viene invocato il metodo <code>void push_back(const T&amp; t)</code> su di un oggetto di tipo <code>std::vector&lt;T&gt;</code> e il tentativo di copiare l'oggetto <code>t</code> all'interno del <em>vector</em> dovesse fallire lanciando una eccezione (per esempio, perché il costruttore di copia di <code>T</code> ha esaurito le risorse a disposizione e non può effettuare la copia), si può essere sicuri che il vector <em>NON</em> è stato modificato.
+Se prima della chiamata conteneva gli $n$ elementi <code>[t1, ..., tn]</code>, in uscita dalla chiamata contiene ancora gli stessi elementi (nello stesso ordine).</p>
+<hr>
+<h3 id="esempio-base-safety" tabindex="-1"><a class="anchor" href="#esempio-base-safety" aria-hidden="true"><span class="octicon octicon-link"></span></a> Esempio base safety</h3>
+<p>Il metodo <code>void assign(size_type n, const T&amp; val)</code> sostituisce il contenuto del vector con $n$ copie del valore <code>val</code>, siccome un'eccezione potrebbe essere lanciata da una qualunque delle $n$ operazioni di costruzione, il <em>vector</em>, in caso di eccezione, rimane in uno stato valido, ma il suo contenuto non è predicibile (in particolare, molto probabilmente il contenuto precedente è irrecuperabile).</p>
+<p><a href="#exception%20safety"><em>Torna all'indice</em></a></p>
+<hr>
+<h2 id="approcci-alternativi-per-gestire-le-risorse" tabindex="-1"><a class="anchor" href="#approcci-alternativi-per-gestire-le-risorse" aria-hidden="true"><span class="octicon octicon-link"></span></a> Approcci alternativi per gestire le risorse</h2>
+<p>Un esempio su tre approcci possibili che l'utente può adottare per ottenere un uso corretto di una risorsa anche in presenza di segnalazioni di errore:</p>
+<ul>
+<li><a href="#Errori%20tradizionali%20(no%20eccezioni)">Errori tradizionali (no eccezioni)</a></li>
+<li><a href="#Uso%20di%20blocchi%20try/catch">Uso di blocchi try/catch</a></li>
+<li><a href="#Uso%20dell'idioma%20RAII-RRID">Uso dell'idioma RAII-RRID</a></li>
+</ul>
+<hr>
+<h3 id="errori-tradizionali-no-eccezioni" tabindex="-1"><a class="anchor" href="#errori-tradizionali-no-eccezioni" aria-hidden="true"><span class="octicon octicon-link"></span></a> Errori "tradizionali" (no eccezioni)</h3>
+<p><em>risorsa_no_exc.hh</em></p>
+<pre><code class="language-cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">ifndef</span> GUARDIA_risorsa_no_exc_hh</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> GUARDIA_risorsa_no_exc_hh 1</span>
+
+<span class="hljs-comment">// Tipo dichiarato ma non definito (per puntatori "opachi")</span>
+<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Risorsa</span>;</span>
+
+<span class="hljs-comment">// Restituisce un puntatore nullo se l'acquisizione fallisce.</span>
+<span class="hljs-function">Risorsa* <span class="hljs-title">acquisisci_risorsa</span><span class="hljs-params">()</span></span>;
+
+<span class="hljs-comment">// Restituisce true se si è verificato un problema.</span>
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">usa_risorsa</span><span class="hljs-params">(Risorsa* r)</span></span>;
+
+<span class="hljs-comment">// Restituisce true se si è verificato un problema.</span>
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">usa_risorse</span><span class="hljs-params">(Risorsa* r1, Risorsa* r2)</span></span>;
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">restituisci_risorsa</span><span class="hljs-params">(Risorsa* r)</span></span>;
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span> <span class="hljs-comment">// GUARDIA_risorsa_no_exc_hh</span></span>
+</code></pre>
+<p><em>user_no_exc.cc</em></p>
+<pre><code class="language-cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"risorsa_no_exc.hh"</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">codice_utente</span><span class="hljs-params">()</span> </span>{
+	Risorsa* r1 = <span class="hljs-built_in">acquisisci_risorsa</span>();
+	
+	<span class="hljs-keyword">if</span> (r1 == <span class="hljs-literal">nullptr</span>) {
+		<span class="hljs-comment">// errore durante acquisizione di r1: non devo rilasciare nulla</span>
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+	}
+	
+	<span class="hljs-comment">// acquisita r1: devo ricordarmi di rilasciarla</span>
+	
+	<span class="hljs-keyword">if</span> (<span class="hljs-built_in">usa_risorsa</span>(r1)) {
+		<span class="hljs-comment">// errore durante l'uso: rilascio r1</span>
+		<span class="hljs-built_in">restituisci_risorsa</span>(r1);
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+	}
+	
+	Risorsa* r2 = <span class="hljs-built_in">acquisisci_risorsa</span>();
+	
+	<span class="hljs-keyword">if</span> (r2 == <span class="hljs-literal">nullptr</span>) {
+		<span class="hljs-comment">// errore durante acquisizione di r2: rilascio di r1</span>
+		<span class="hljs-built_in">restituisci_risorsa</span>(r1);
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+	}
+	
+	<span class="hljs-comment">// acquisita r2: devo ricordarmi di rilasciare r2 e r1</span>
+	
+	<span class="hljs-keyword">if</span> (<span class="hljs-built_in">usa_risorse</span>(r1, r2)) {
+		<span class="hljs-comment">// errore durante l'uso: rilascio r2 e r1</span>
+		<span class="hljs-built_in">restituisci_risorsa</span>(r2);
+		<span class="hljs-built_in">restituisci_risorsa</span>(r1);
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+	}
+	
+	<span class="hljs-comment">// fine uso di r2: la rilascio</span>
+	<span class="hljs-built_in">restituisci_risorsa</span>(r2);
+	<span class="hljs-comment">// ho ancora r1: devo ricordarmi di rilasciarla</span>
+	
+	Risorsa* r3 = <span class="hljs-built_in">acquisisci_risorsa</span>();
+	
+	<span class="hljs-keyword">if</span> (r3 == <span class="hljs-literal">nullptr</span>) {
+		<span class="hljs-comment">// errore durante acquisizione di r3: rilascio di r1</span>
+		<span class="hljs-built_in">restituisci_risorsa</span>(r1);
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+	}
+	
+	<span class="hljs-comment">// acquisita r3: devo ricordarmi di rilasciare r3 e r1</span>
+	
+	<span class="hljs-keyword">if</span> (<span class="hljs-built_in">usa_risorse</span>(r1, r3)) {
+		<span class="hljs-comment">// errore durante l'uso: rilascio r3 e r1</span>
+		<span class="hljs-built_in">restituisci_risorsa</span>(r3);
+		<span class="hljs-built_in">restituisci_risorsa</span>(r1);
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+	}
+	
+	<span class="hljs-comment">// fine uso di r3 e r1: le rilascio</span>
+	<span class="hljs-built_in">restituisci_risorsa</span>(r3);
+	<span class="hljs-built_in">restituisci_risorsa</span>(r1);
+	
+	<span class="hljs-comment">// Tutto ok: lo segnalo ritornando false</span>
+	<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+}
+
+</code></pre>
+<p><a href="#exception%20safety"><em>Torna all'indice</em></a></p>
+<hr>
+<h3 id="uso-di-blocchi-trycatch" tabindex="-1"><a class="anchor" href="#uso-di-blocchi-trycatch" aria-hidden="true"><span class="octicon octicon-link"></span></a> Uso di blocchi try/catch</h3>
+<p><em>risorsa_exc.hh</em></p>
+<pre><code class="language-cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">ifndef</span> GUARDIA_risorsa_exc_hh</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> GUARDIA_risorsa_exc_hh 1</span>
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"risorsa_no_exc.hh"</span></span>
+
+<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">exception_acq_risorsa</span> {</span>};
+<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">exception_uso_risorsa</span> {</span>};
+
+<span class="hljs-comment">// Lancia una eccezione se non riesce ad acquisire la risorsa.</span>
+<span class="hljs-function"><span class="hljs-keyword">inline</span> Risorsa*
+<span class="hljs-title">acquisisci_risorsa_exc</span><span class="hljs-params">()</span> </span>{
+	Risorsa* r = <span class="hljs-built_in">acquisisci_risorsa</span>();
+	<span class="hljs-keyword">if</span> (r == <span class="hljs-literal">nullptr</span>)
+		<span class="hljs-keyword">throw</span> <span class="hljs-built_in">exception_acq_risorsa</span>();
+	<span class="hljs-keyword">return</span> r;
+}
+
+<span class="hljs-comment">// Lancia una eccezione se si è verificato un problema.</span>
+<span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">void</span>
+<span class="hljs-title">usa_risorsa_exc</span><span class="hljs-params">(Risorsa* r)</span> </span>{
+	<span class="hljs-keyword">if</span> (<span class="hljs-built_in">usa_risorsa</span>(r))
+		<span class="hljs-keyword">throw</span> <span class="hljs-built_in">exception_uso_risorsa</span>();
+}
+
+<span class="hljs-comment">// Lancia una eccezione se si è verificato un problema.</span>
+<span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">void</span>
+<span class="hljs-title">usa_risorse_exc</span><span class="hljs-params">(Risorsa* r1, Risorsa* r2)</span> </span>{
+	<span class="hljs-keyword">if</span> (<span class="hljs-built_in">usa_risorse</span>(r1, r2))
+		<span class="hljs-keyword">throw</span> <span class="hljs-built_in">exception_uso_risorsa</span>();
+}
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span> <span class="hljs-comment">// GUARDIA_risorsa_exc_hh</span></span>
+</code></pre>
+<p><em>user_try_catch.cc</em></p>
+<pre><code class="language-cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"risorsa_exc.hh"</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">codice_utente</span><span class="hljs-params">()</span> </span>{
+	Risorsa* r1 = <span class="hljs-built_in">acquisisci_risorsa_exc</span>();
+	
+	<span class="hljs-keyword">try</span> { <span class="hljs-comment">// blocco try che protegge la risorsa r1</span>
+		<span class="hljs-built_in">usa_risorsa_exc</span>(r1);
+		
+		Risorsa* r2 = <span class="hljs-built_in">acquisisci_risorsa_exc</span>();
+		
+		<span class="hljs-keyword">try</span> { <span class="hljs-comment">// blocco try che protegge la risorsa r2</span>
+			<span class="hljs-built_in">usa_risorse_exc</span>(r1, r2);
+			<span class="hljs-built_in">restituisci_risorsa</span>(r2);
+		} <span class="hljs-comment">// fine try che protegge r2</span>
+		<span class="hljs-built_in"><span class="hljs-keyword">catch</span></span> (...) {
+			<span class="hljs-built_in">restituisci_risorsa</span>(r2);
+			<span class="hljs-keyword">throw</span>;
+		}
+		
+		Risorsa* r3 = <span class="hljs-built_in">acquisisci_risorsa_exc</span>();
+		<span class="hljs-keyword">try</span> { <span class="hljs-comment">// blocco try che protegge la risorsa r3</span>
+			<span class="hljs-built_in">usa_risorse_exc</span>(r1, r3);
+			<span class="hljs-built_in">restituisci_risorsa</span>(r3);
+		} <span class="hljs-comment">// fine try che protegge r3</span>
+		<span class="hljs-built_in"><span class="hljs-keyword">catch</span></span> (...) {
+			<span class="hljs-built_in">restituisci_risorsa</span>(r3);
+			<span class="hljs-keyword">throw</span>;
+		}
+		<span class="hljs-built_in">restituisci_risorsa</span>(r1);
+	
+	} <span class="hljs-comment">// fine try che protegge r1</span>
+	<span class="hljs-built_in"><span class="hljs-keyword">catch</span></span> (...) {
+		<span class="hljs-built_in">restituisci_risorsa</span>(r1);
+		<span class="hljs-keyword">throw</span>;
+	}
+}
+</code></pre>
+<p>Osservazioni:</p>
+<ol>
+<li>Si crea un blocco try/catch per ogni singola risorsa acquisita.</li>
+<li>Il blocco si apre subito <em>dopo</em> l'acquisizione della risorsa (se l'acquisizione fallisce, non c'è nulla da rilasciare).</li>
+<li>La responsabilità del blocco try/catch è di proteggere <em>quella</em> singola risorsa (ignorando le altre).</li>
+<li>Al termine del blocco try (prima del catch) va effettuata la "normale" restituzione della risorsa (caso NON eccezionale).</li>
+<li>La clausola catch usa $\cdots$ per catturare qualunque eccezione: non ci interessa sapere che errore si è verificato (non è nostro compito), dobbiamo solo rilasciare la risorsa protetta.</li>
+<li>Nella clausola catch, dobbiamo fare due operazioni:
+<ul>
+<li>rilasciare la risorsa protetta;</li>
+<li>rilanciare l'eccezione catturata (senza modificarla) usando l'istruzione <code>throw;</code>.</li>
+</ul>
+</li>
+</ol>
+<p>Il rilancio dell'eccezione catturata garantisce la "neutralità rispetto alle eccezioni": i blocchi catch catturano le eccezioni solo temporaneamente, lasciandole poi proseguire. In questo modo anche gli altri blocchi catch potranno fare i loro rilasci di risorse e l'utente otterrà comunque l'eccezione, con le informazioni annesse, potendo quindi decidere come "gestirla".</p>
+<p><a href="#exception%20safety"><em>Torna all'indice</em></a></p>
+<hr>
+<h3 id="uso-dellidioma-raii-rrid" tabindex="-1"><a class="anchor" href="#uso-dellidioma-raii-rrid" aria-hidden="true"><span class="octicon octicon-link"></span></a> Uso dell'idioma RAII-RRID</h3>
+<ul>
+<li>RAII: Resource Acquisition Is Initialization</li>
+<li>RRID: Resource Release Is Destruction</li>
+</ul>
+<p><em>risorsa_raii.hh</em></p>
+<pre><code class="language-cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">ifndef</span> GUARDIA_risorsa_raii_hh</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> GUARDIA_risorsa_raii_hh 1</span>
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"risorsa_exc.hh"</span></span>
+
+<span class="hljs-comment">// classe RAII-RRID (spesso detta solo RAII, per brevità)</span>
+<span class="hljs-comment">// RAII: Resource Acquisition Is Initialization</span>
+<span class="hljs-comment">// RRID: Resource Release Is Destruction</span>
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Gestore_Risorsa</span> {</span>
+<span class="hljs-keyword">private</span>:
+	Risorsa* res_ptr;
+<span class="hljs-keyword">public</span>:
+	<span class="hljs-comment">// Costruttore: acquisisce la risorsa (RAII)</span>
+	<span class="hljs-built_in">Gestore_Risorsa</span>() : <span class="hljs-built_in">res_ptr</span>(<span class="hljs-built_in">acquisisci_risorsa_exc</span>()) { }
+	
+	<span class="hljs-comment">// Distruttore: rilascia la risorsa (RRID)</span>
+	~<span class="hljs-built_in">Gestore_Risorsa</span>() {
+		<span class="hljs-comment">// Nota: si assume che restituisci_risorsa si comporti correttamente</span>
+		<span class="hljs-comment">// quando l'argimento è il puntatore nullo; se questo non è il caso,</span>
+		<span class="hljs-comment">// è sufficiente aggiungere un test prima dell'invocazione.</span>
+		<span class="hljs-built_in">restituisci_risorsa</span>(res_ptr);
+	}
+	
+	<span class="hljs-comment">// Disabilitazione delle copie</span>
+	<span class="hljs-built_in">Gestore_Risorsa</span>(<span class="hljs-keyword">const</span> Gestore_Risorsa&amp;) = <span class="hljs-keyword">delete</span>;
+	Gestore_Risorsa&amp; <span class="hljs-keyword">operator</span>=(<span class="hljs-keyword">const</span> Gestore_Risorsa&amp;) = <span class="hljs-keyword">delete</span>;
+	
+	<span class="hljs-comment">// Costruzione per spostamento (C++11)</span>
+	<span class="hljs-built_in">Gestore_Risorsa</span>(Gestore_Risorsa&amp;&amp; y)
+		: <span class="hljs-built_in">res_ptr</span>(y.res_ptr) {
+		y.res_ptr = <span class="hljs-literal">nullptr</span>;
+	}
+	
+	<span class="hljs-comment">// Assegnamento per spostamento (C++11)</span>
+	Gestore_Risorsa&amp; <span class="hljs-keyword">operator</span>=(Gestore_Risorsa&amp;&amp; y) {
+		<span class="hljs-built_in">restituisci_risorsa</span>(res_ptr);
+		res_ptr = y.res_ptr;
+		y.res_ptr = <span class="hljs-literal">nullptr</span>;
+		<span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;
+	}
+	
+	<span class="hljs-comment">// Accessori per l'uso (const e non-const)</span>
+	<span class="hljs-function"><span class="hljs-keyword">const</span> Risorsa* <span class="hljs-title">get</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>{ <span class="hljs-keyword">return</span> res_ptr; }
+	<span class="hljs-function">Risorsa* <span class="hljs-title">get</span><span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">return</span> res_ptr; }
+	
+	<span class="hljs-comment">// Alternativa agli accessori: operatori di conversione implicita</span>
+	<span class="hljs-comment">// operator Risorsa*() { return res_ptr; }</span>
+	<span class="hljs-comment">// operator const Risorsa*() const { return res_ptr; }</span>
+
+}; <span class="hljs-comment">// class Gestore_Risorsa</span>
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span> <span class="hljs-comment">// GUARDIA_risorsa_raii_hh</span></span>
+</code></pre>
+<p><em>user_raii.cc</em></p>
+<pre><code class="language-cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"risorsa_raii.hh"</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">codice_utente</span><span class="hljs-params">()</span> </span>{
+	Gestore_Risorsa r1;
+	<span class="hljs-built_in">usa_risorsa_exc</span>(r1.<span class="hljs-built_in">get</span>());
+{
+    Gestore_Risorsa r2;
+    <span class="hljs-built_in">usa_risorse_exc</span>(r1.<span class="hljs-built_in">get</span>(), r2.<span class="hljs-built_in">get</span>());
+}     <span class="hljs-comment">// L'inserimento di questo blocco serve per fare in modo che </span>
+	  <span class="hljs-comment">// lo scope di r2 finisca proprio in questo punto,</span>
+	  <span class="hljs-comment">// prima di inizializzare r3</span>
+	Gestore_Risorsa r3;
+	<span class="hljs-built_in">usa_risorse_exc</span>(r1.<span class="hljs-built_in">get</span>(), r3.<span class="hljs-built_in">get</span>());
+}
+</code></pre>
+<p><a href="#exception%20safety"><em>Torna all'indice</em></a></p>
+<hr>
+<h2 id="esercizio" tabindex="-1"><a class="anchor" href="#esercizio" aria-hidden="true"><span class="octicon octicon-link"></span></a> Esercizio</h2>
+<p><img src="images/eccezioni_esempio.jpg" alt="eccezioni_esempio.jpg"></p>
+<p>Soluzione:</p>
+<pre><code class="language-cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">job</span><span class="hljs-params">()</span></span>{
+	Res* r1 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Res</span>(<span class="hljs-string">"res1"</span>);
+	<span class="hljs-keyword">try</span> {
+		Res* r2 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Res</span>(<span class="hljs-string">"res2"</span>);
+		<span class="hljs-keyword">try</span> {
+			<span class="hljs-built_in">do_task</span>(r1, r2);
+			<span class="hljs-keyword">delete</span> res1;
+			<span class="hljs-keyword">delete</span> res2;
+		} <span class="hljs-built_in"><span class="hljs-keyword">catch</span></span> (...) {
+			<span class="hljs-keyword">delete</span> res2;
+			<span class="hljs-keyword">throw</span>;
+		}
+	} <span class="hljs-built_in"><span class="hljs-keyword">catch</span></span> (...) {
+		<span class="hljs-keyword">delete</span> res1;
+		<span class="hljs-keyword">throw</span>;
+	}
+}
+</code></pre>
+<p><a href="#exception%20safety"><em>Torna all'indice</em></a></p>
+<hr>
+<h2 id="altro-materiale" tabindex="-1"><a class="anchor" href="#altro-materiale" aria-hidden="true"><span class="octicon octicon-link"></span></a> Altro materiale</h2>
+<ul>
+<li>Articolo di Stroustroup
+Exception Safety: Concepts and Techniques http://www.stroustrup.com/except.pdf</li>
+<li>Video e lucidi della presentazione di Jon Kalb al CppCon 2014 (con bonus per i fan di Star Wars)
+Video parte 1: https://www.youtube.com/watch?v=W7fIy_54y-w
+Video parte 2: https://www.youtube.com/watch?v=b9xMIKb1jMk
+Video parte 3: https://www.youtube.com/watch?v=MiKxfdkMJW8
+Ludici: http://exceptionsafecode.com/slides/esc.pdf</li>
+</ul>
+<p><a href="#exception%20safety"><em>Torna all'indice</em></a></p>
+
+		</main>
+	</body>
+</html>
