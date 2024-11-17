@@ -1,5 +1,8 @@
 name: Docs to HTML
 
+permissions:
+  contents: write
+  
 on:
   push:
     branches:
